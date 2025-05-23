@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.root
+package ru.practicum.android.diploma.ui.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,4 +15,4 @@ class MainFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
-} 
+}

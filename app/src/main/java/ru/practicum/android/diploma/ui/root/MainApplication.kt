@@ -6,13 +6,13 @@ import ru.practicum.android.diploma.di.AppModule
 import ru.practicum.android.diploma.di.DataModule
 import ru.practicum.android.diploma.di.DomainModule
 
-class VacancyMainApplication : Application() {
+class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
-            this@VacancyMainApplication
+            this@MainApplication
             modules(AppModule, DomainModule, DataModule)
         }
     }
