@@ -18,6 +18,7 @@ targetSdk = "33"
 detekt = "1.23.3"
 detektTwitterComposeRules ="0.0.26"
 koin-bom = "4.0.4"
+navigationFragmentKtx = "2.9.0"
 
 [libraries]
 
@@ -30,7 +31,6 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndr
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-v290 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 staticAnalysis-detektPlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
@@ -55,5 +55,7 @@ unitTests-junit = "junit:junit:4.13.2"
 # UI tests
 uiTests-junitExt = "androidx.test.ext:junit:1.2.1"
 uiTests-espressoCore = "androidx.test.espresso:espresso-core:3.6.1"
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+[plugins]
 
 [bundles]
