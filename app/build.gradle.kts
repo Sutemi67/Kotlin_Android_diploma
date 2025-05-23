@@ -58,20 +58,20 @@ dependencies {
     androidTestImplementation(libs.uiTests.espressoCore)
     // endregion
 
-    //Room
+    // Room
     implementation(libs.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
-    //Glide
-    implementation (libs.glide)
+    // Glide
+    implementation(libs.glide)
 
-    //Retrofit
-    implementation (libs.retrofit.v290)
-    implementation (libs.converter.gson)
-    implementation (libs.picasso)
+    // Retrofit
+    implementation(libs.retrofit.v290)
+    implementation(libs.converter.gson)
+    implementation(libs.picasso)
 
-    //Koin
+    // Koin
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)

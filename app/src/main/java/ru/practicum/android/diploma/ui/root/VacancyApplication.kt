@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.ui.root
 
 import android.app.Application
-import android.provider.ContactsContract
 import org.koin.core.context.startKoin
 import ru.practicum.android.diploma.di.AppModule
 import ru.practicum.android.diploma.di.DataModule
