@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import ru.practicum.android.diploma.domain.VacancyRepositoryInterface
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+import java.io.IOException
 
 class MainViewModel(
     private val repository: VacancyRepositoryInterface
@@ -49,14 +51,21 @@ class MainViewModel(
                 _vacancies.value = currentList
 
                 currentPage++
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 _error.value = e.message
+            } catch (e: HttpException) {
+                _error.value = when (e.code()) {
+                    403 -> "Ошибка авторизации. Проверьте токен доступа"
+                    404 -> "Вакансии не найдены"
+                    else -> "Ошибка сервера: ${e.code()}"
+                }
             } finally {
                 _isLoading.value = false
                 isLoadingMore = false
             }
         }
     }
+
 
     fun getToken() = viewModelScope.launch { repository.getToken() }
 
