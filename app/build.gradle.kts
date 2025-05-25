@@ -50,18 +50,13 @@ dependencies {
     implementation(libs.ui.constraintLayout)
 
     // Navigation Component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
 
-    // region Unit tests
     testImplementation(libs.unitTests.junit)
-    // endregion
 
-    // region UI tests
     androidTestImplementation(libs.uiTests.junitExt)
     androidTestImplementation(libs.uiTests.espressoCore)
-    // endregion
 
     // Room
     implementation(libs.room.runtime)
@@ -75,6 +70,10 @@ dependencies {
     implementation(libs.retrofit.v290)
     implementation(libs.converter.gson)
     implementation(libs.picasso)
+
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 
     // Koin
     implementation(project.dependencies.platform(libs.koin.bom))
