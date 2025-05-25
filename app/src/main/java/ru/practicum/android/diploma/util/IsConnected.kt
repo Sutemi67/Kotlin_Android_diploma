@@ -14,5 +14,5 @@ fun isConnected(context: Context): Boolean {
             hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
     } ?: false
 
-    return false
+    return isConnected
 }
