@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.screens.main_screen
+package ru.practicum.android.diploma.ui.screens.mainScreen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

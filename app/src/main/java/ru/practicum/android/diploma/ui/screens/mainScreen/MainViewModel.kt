@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.screens.main_screen
+package ru.practicum.android.diploma.ui.screens.mainScreen
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,7 +33,7 @@ class MainViewModel(
             _vacancies.value = emptyList()
         }
 
-        if (isLoadingMore || (currentPage >= totalPages && currentPage > 0)) return
+        if (isLoadingMore || currentPage >= totalPages && currentPage > 0) return
 
         viewModelScope.launch {
             try {
