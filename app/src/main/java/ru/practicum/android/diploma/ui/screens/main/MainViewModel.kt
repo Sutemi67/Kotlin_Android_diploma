@@ -14,6 +14,12 @@ class MainViewModel(
     private val repository: VacancyRepositoryInterface
 ) : ViewModel() {
 
+    companion object {
+        private const val HTTP_FORBIDDEN = 403
+        private const val HTTP_NOT_FOUND = 404
+        private const val HTTP_SERVER_ERROR = 500
+    }
+
     private val _vacancies = MutableLiveData<List<VacancyDetails>>()
     val vacancies: LiveData<List<VacancyDetails>> = _vacancies
 
@@ -55,8 +61,9 @@ class MainViewModel(
                 _error.value = e.message
             } catch (e: HttpException) {
                 _error.value = when (e.code()) {
-                    403 -> "Ошибка авторизации. Проверьте токен доступа"
-                    404 -> "Вакансии не найдены"
+                    HTTP_FORBIDDEN -> "Ошибка авторизации. Проверьте токен доступа"
+                    HTTP_NOT_FOUND -> "Вакансии не найдены"
+                    HTTP_SERVER_ERROR -> "Ошибка сервера"
                     else -> "Ошибка сервера: ${e.code()}"
                 }
             } finally {
@@ -65,7 +72,6 @@ class MainViewModel(
             }
         }
     }
-
 
     fun getToken() = viewModelScope.launch { repository.getToken() }
 
