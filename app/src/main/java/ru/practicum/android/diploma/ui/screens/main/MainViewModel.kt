@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.screens.mainScreen
+package ru.practicum.android.diploma.ui.screens.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

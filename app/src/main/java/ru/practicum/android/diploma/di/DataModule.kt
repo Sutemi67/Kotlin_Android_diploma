@@ -11,6 +11,8 @@ import ru.practicum.android.diploma.data.db.AppDatabase
 import ru.practicum.android.diploma.domain.network.api.HhApi
 import java.util.concurrent.TimeUnit
 
+private const val TIMEOUT = 30L
+
 val DataModule = module {
 
     single {
@@ -24,7 +26,6 @@ val DataModule = module {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
-        val TIMEOUT = 30L
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)

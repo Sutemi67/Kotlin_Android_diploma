@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.screens.mainScreen
+package ru.practicum.android.diploma.ui.screens.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
-    private lateinit var adapter: VacancyAdapter
+    private val adapter: VacancyAdapter = VacancyAdapter()
     private val viewModel by viewModel<MainViewModel>()
 
     override fun onCreateView(
@@ -43,7 +43,6 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = VacancyAdapter()
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@MainFragment.adapter

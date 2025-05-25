@@ -1,23 +1,23 @@
-package ru.practicum.android.diploma.ui.screens
+package ru.practicum.android.diploma.ui.screens.favourites
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ru.practicum.android.diploma.databinding.FragmentTeamBinding
+import ru.practicum.android.diploma.databinding.FragmentFavouritesBinding
 
-class TeamFragment : Fragment() {
+class FavouritesFragment : Fragment() {
 
-    private var _binding: FragmentTeamBinding? = null
-    private val binding: FragmentTeamBinding get() = requireNotNull(_binding)
+    private var _binding: FragmentFavouritesBinding? = null
+    private val binding: FragmentFavouritesBinding get() = requireNotNull(_binding)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTeamBinding.inflate(inflater, container, false)
+        _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         return binding.root
     }
 

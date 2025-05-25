@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.domain
 
-import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.domain.network.models.AllVacancyResponse
+import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 
 interface VacancyRepositoryInterface {
     suspend fun getToken()
