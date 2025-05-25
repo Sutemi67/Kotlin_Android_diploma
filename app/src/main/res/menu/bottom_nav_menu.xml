@@ -3,13 +3,13 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_main"
-        android:title="Главная" />
+        android:title="@string/main" />
     <item
         android:id="@+id/favouriteFragment"
         android:icon="@drawable/ic_fav"
-        android:title="Избранное" />
+        android:title="@string/favourite" />
     <item
         android:id="@+id/teamFragment"
         android:icon="@drawable/ic_team"
-        android:title="Команда" />
+        android:title="@string/team" />
 </menu> 
