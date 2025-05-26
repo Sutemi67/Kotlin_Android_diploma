@@ -34,7 +34,6 @@ class MainFragment : Fragment() {
         setupSearchView()
         observeViewModel()
 
-//        viewModel.getToken() // использовать для получения нового токена, затем отключить
     }
 
     override fun onDestroyView() {
