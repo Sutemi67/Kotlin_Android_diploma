@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.screens.TeamFragment"
-    android:background="@color/white_black"
+    tools:context=".ui.screens.team.TeamFragment"
     android:orientation="vertical">
 
     <TextView

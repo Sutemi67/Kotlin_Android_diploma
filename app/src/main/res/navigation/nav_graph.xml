@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ru.practicum.android.diploma.ui.screens.MainFragment"
+        android:name="ru.practicum.android.diploma.ui.screens.main.MainFragment"
         android:label="Главная"
         tools:layout="@layout/fragment_main" />
 
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="ru.practicum.android.diploma.ui.screens.FavouritesFragment"
+        android:name="ru.practicum.android.diploma.ui.screens.favourites.FavouritesFragment"
         android:label="Избранное"
         tools:layout="@layout/fragment_favourites" />
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="ru.practicum.android.diploma.ui.screens.VacancyDetailsFragment"
+        android:name="ru.practicum.android.diploma.ui.screens.vacancy.VacancyDetailsFragment"
         android:label="Команда"
         tools:layout="@layout/fragment_details" />
 
     <fragment
         android:id="@+id/teamFragment"
-        android:name="ru.practicum.android.diploma.ui.screens.TeamFragment"
+        android:name="ru.practicum.android.diploma.ui.screens.team.TeamFragment"
         android:label="fragment_team"
         tools:layout="@layout/fragment_team" />
 
