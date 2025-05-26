@@ -73,8 +73,6 @@ class MainViewModel(
         }
     }
 
-    fun getToken() = viewModelScope.launch { repository.getToken() }
-
     fun loadMoreVacancies() {
         if (!isLoadingMore && currentPage < totalPages) {
             searchVacancies(currentQuery, false)
