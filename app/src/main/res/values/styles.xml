@@ -34,4 +34,29 @@
         <item name="itemTextColor">@drawable/bottom_navigation_selector</item>
         <item name="itemIconTint">@drawable/bottom_navigation_selector</item>
     </style>
+
+    <style name="ToolbarStyle">
+        <item name="android:textSize">@dimen/text_size_22sp</item>
+        <item name="android:textColor">@color/black_white</item>
+        <item name="android:drawableTint">@color/black_white</item>
+        <item name="titleTextAppearance">@style/Regular12</item>
+    </style>
+
+    <style name="LayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/white_black</item>
+    </style>
+
+    <style name="placeholderMessageStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black_white</item>
+    </style>
+
 </resources>

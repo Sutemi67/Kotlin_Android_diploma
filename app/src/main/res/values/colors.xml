@@ -9,4 +9,6 @@
     <color name="background">#7F1A1B22</color>
     <color name="black_universal">#1A1B22</color>
     <color name="white_universal">#FDFDFD</color>
+    <color name="gray_white">#AEAFB4</color>
+    <color name="lightGray_gray">#E6E8EB</color>
 </resources>

@@ -10,4 +10,8 @@
     <string name="main_screen">Main Screen</string>
     <string name="main">Главная</string>
     <string name="favourite">Избранное</string>
+    <string name="enter_request">Введите запрос</string>
+    <string name="empty_search">Не удалось получить список вакансий</string>
+    <string name="no_such_vacancies">Таких вакансий нет</string>
+    <string name="filtr">Фильтр</string>
 </resources>
