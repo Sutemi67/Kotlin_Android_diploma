@@ -21,27 +21,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-<!--        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="@dimen/indent_16dp"
-            android:layout_marginTop="@dimen/indent_8dp"
-            android:layout_marginEnd="@dimen/indent_16dp"
-            android:layout_marginBottom="@dimen/indent_8dp"
-            android:background="@drawable/edittext"
-            android:maxLines="1"
-            android:text="@string/enter_request"
-            android:textAppearance="@style/Medium16"
-            android:textColor="@color/black_universal"
-            android:textColorHint="@color/gray_white"
-            android:visibility="visible"
-            app:closeIcon="@drawable/close_24px"
-            app:dividerPadding="4dp"
-            app:queryHint="@string/enter_request"
-            app:searchHintIcon="@null"
-            app:searchIcon="@drawable/search_24px" />-->
-
             <EditText
                 android:id="@+id/searchView"
                 style="@style/Medium16"

@@ -4,12 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -66,28 +64,15 @@ class MainFragment : Fragment() {
     }
 
     private fun setupSearchView() {
-//                binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//                    override fun onQueryTextSubmit(query: String?): Boolean {
-//                        query?.let { viewModel.searchVacancies(it) }
-//                        return true
-//                    }
-//
-//                    override fun onQueryTextChange(newText: String?): Boolean {
-//                        return false
-//                    }
-//                })
         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
         binding.searchView.addTextChangedListener(
             onTextChanged = { p0: CharSequence?, _, _, _ ->
                 viewModel.searchVacancies(p0?.toString() ?: "")
                 if (binding.searchView.hasFocus() && binding.searchView.text.isEmpty()) {
-//                     viewModel.getHistoryTrackList()
-                    // Показываем иконку
                     binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)
                     binding.buttonCleanSearch.isVisible = false
                     binding.imageStart.isVisible = true
                 } else {
-                    // Убираем иконку
                     binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                     binding.buttonCleanSearch.isVisible = true
                 }
@@ -122,7 +107,6 @@ class MainFragment : Fragment() {
             imageView.setImageResource(drawable)
             if (text.isNotEmpty()) {
                 errorMessage.isVisible = true
-//v                adapter.currentList.clear()
                 adapter.notifyDataSetChanged()
                 errorText.text = text
             } else {
