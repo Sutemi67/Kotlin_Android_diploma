@@ -13,4 +13,5 @@
     <string name="enter_request">Введите запрос</string>
     <string name="empty_search">Не удалось получить список вакансий</string>
     <string name="no_such_vacancies">Таких вакансий нет</string>
+    <string name="filtr">Фильтр</string>
 </resources>

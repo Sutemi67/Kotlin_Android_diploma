@@ -77,7 +77,6 @@ class MainFragment : Fragment() {
 //                    }
 //                })
         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
-        val closeDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.close_24px)
         binding.searchView.addTextChangedListener(
             onTextChanged = { p0: CharSequence?, _, _, _ ->
                 viewModel.searchVacancies(p0?.toString() ?: "")

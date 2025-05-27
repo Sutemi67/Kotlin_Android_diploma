@@ -3,6 +3,6 @@
     <item
         android:id="@+id/action_filter"
         android:icon="@drawable/filter_off__24px"
-        android:title="Фильтр"
+        android:title="@string/filtr"
         app:showAsAction="always" />
 </menu>
