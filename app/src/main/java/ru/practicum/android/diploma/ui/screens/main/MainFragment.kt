@@ -83,7 +83,6 @@ class MainFragment : Fragment() {
         )
     }
 
-
     private fun observeViewModel() {
         viewModel.vacancies.observe(viewLifecycleOwner) { vacancies ->
             adapter.submitList(vacancies)
