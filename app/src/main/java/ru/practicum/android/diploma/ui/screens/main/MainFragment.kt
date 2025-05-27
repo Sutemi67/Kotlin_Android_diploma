@@ -1,14 +1,21 @@
 package ru.practicum.android.diploma.ui.screens.main
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -34,6 +41,16 @@ class MainFragment : Fragment() {
         setupSearchView()
         observeViewModel()
 
+        binding.buttonCleanSearch.setOnClickListener {
+            binding.searchView.setText("")
+            val inputMethodManager =
+                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
+            //   adapter.notifyDataSetChanged()
+            binding.errorMessage.isVisible = false
+            binding.imageStart.isVisible = true
+        }
+
     }
 
     override fun onDestroyView() {
@@ -49,17 +66,39 @@ class MainFragment : Fragment() {
     }
 
     private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { viewModel.searchVacancies(it) }
-                return true
+//                binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//                    override fun onQueryTextSubmit(query: String?): Boolean {
+//                        query?.let { viewModel.searchVacancies(it) }
+//                        return true
+//                    }
+//
+//                    override fun onQueryTextChange(newText: String?): Boolean {
+//                        return false
+//                    }
+//                })
+        val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
+        val closeDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.close_24px)
+        binding.searchView.addTextChangedListener(
+            onTextChanged = { p0: CharSequence?, _, _, _ ->
+                viewModel.searchVacancies(p0?.toString() ?: "")
+                if (binding.searchView.hasFocus() && binding.searchView.text.isEmpty()) {
+//                     viewModel.getHistoryTrackList()
+                    // Показываем иконку
+                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)
+                    binding.buttonCleanSearch.isVisible = false
+                    binding.imageStart.isVisible = true
+                } else {
+                    // Убираем иконку
+                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                    binding.buttonCleanSearch.isVisible = true
+                }
+            },
+            afterTextChanged = { _: Editable? ->
+                binding.errorMessage.isVisible = false
             }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
+        )
     }
+
 
     private fun observeViewModel() {
         viewModel.vacancies.observe(viewLifecycleOwner) { vacancies ->
@@ -68,13 +107,27 @@ class MainFragment : Fragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isVisible = isLoading
+            binding.imageStart.isVisible = false
         }
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
-            binding.errorMessage.apply {
-                isVisible = error != null
-                text = error
-            }
+            showMessage(getString(R.string.empty_search), "", R.drawable.image_kat)
         }
     }
+
+    private fun showMessage(text: String, additionalMessage: String, drawable: Int) =
+        with(binding) {
+            imageStart.isVisible = false
+            progressBar.isVisible = false
+            recyclerView.isVisible = false
+            imageView.setImageResource(drawable)
+            if (text.isNotEmpty()) {
+                errorMessage.isVisible = true
+//v                adapter.currentList.clear()
+                adapter.notifyDataSetChanged()
+                errorText.text = text
+            } else {
+                errorMessage.isVisible = false
+            }
+        }
 }
