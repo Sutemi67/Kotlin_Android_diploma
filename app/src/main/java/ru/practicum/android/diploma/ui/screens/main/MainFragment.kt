@@ -73,7 +73,7 @@ class MainFragment : Fragment() {
                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
                     if (!viewModel.isLoading.value!! &&
-                        (visibleItemCount + firstVisibleItemPosition) >= totalItemCount &&
+                        visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
                         firstVisibleItemPosition >= 0
                     ) {
                         viewModel.loadMoreItems()
@@ -123,7 +123,7 @@ class MainFragment : Fragment() {
             when (state) {
                 is Resource.Success -> {
                     uiState(UiState.Success)
-                    binding.infoSearch.text = "Найдено ${state.itemsCount} вакансий" //todo
+                    binding.infoSearch.text = "Найдено ${state.itemsCount} вакансий" // todo
                     adapter.submitList(state.data)
                 }
 
