@@ -29,7 +29,6 @@ class MainViewModel(
     private var isLoadingMore = false
 
     fun searchVacancies(query: String, isNewSearch: Boolean = true) {
-
         if (isNewSearch) {
             currentPage = 0
             currentQuery = query

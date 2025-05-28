@@ -67,7 +67,6 @@ class MainFragment : Fragment() {
 
     private fun setupSearchView() {
         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
-        
         val debouncedSearch = debounce(
             delayMillis = 1000L,
             coroutineScope = viewLifecycleOwner.lifecycleScope,
