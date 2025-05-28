@@ -21,28 +21,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/searchView"
-                style="@style/Medium16"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/indent_16dp"
-                android:layout_marginTop="@dimen/indent_8dp"
-                android:layout_marginEnd="@dimen/indent_16dp"
-                android:layout_marginBottom="@dimen/indent_8dp"
-                android:inputType="text"
-                android:paddingEnd="@dimen/indent_16dp"
-                android:paddingStart="@dimen/indent_16dp"
-                android:background="@drawable/edittext"
-                android:drawableEnd="@drawable/search_24px"
-                android:hint="@string/enter_request"
-                android:imeOptions="actionDone"
-                android:importantForAutofill="no"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/black_universal"
-                android:textColorHint="@color/gray_white"
-                android:textCursorDrawable="@drawable/cursor_color" />
+        <EditText
+            android:id="@+id/searchView"
+            style="@style/Medium16"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="@dimen/indent_16dp"
+            android:layout_marginTop="@dimen/indent_8dp"
+            android:layout_marginEnd="@dimen/indent_16dp"
+            android:layout_marginBottom="@dimen/indent_8dp"
+            android:background="@drawable/edittext"
+            android:drawableEnd="@drawable/search_24px"
+            android:hint="@string/enter_request"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="@dimen/indent_16dp"
+            android:paddingEnd="@dimen/indent_16dp"
+            android:singleLine="true"
+            android:textColor="@color/black_universal"
+            android:textColorHint="@color/gray_white"
+            android:textCursorDrawable="@drawable/cursor_color" />
 
         <ImageView
             android:id="@+id/buttonCleanSearch"
@@ -63,8 +63,8 @@
         android:background="@drawable/bg_blue_rounded"
         android:gravity="center"
         android:paddingStart="@dimen/indent_12dp"
-        android:paddingEnd="@dimen/indent_12dp"
         android:paddingTop="@dimen/indent_4dp"
+        android:paddingEnd="@dimen/indent_12dp"
         android:paddingBottom="@dimen/indent_4dp"
         android:text="@string/no_such_vacancies"
         android:textAppearance="@style/Regular16"
@@ -127,11 +127,11 @@
             android:layout_height="@dimen/indent_223dp"
             android:scaleType="centerCrop"
             android:src="@drawable/image_kat"
-            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintBottom_toTopOf="@+id/errorText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/errorText"

@@ -11,10 +11,12 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
+import ru.practicum.android.diploma.util.debounce
 
 class MainFragment : Fragment() {
 
@@ -65,9 +67,18 @@ class MainFragment : Fragment() {
 
     private fun setupSearchView() {
         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
+        
+        val debouncedSearch = debounce(
+            delayMillis = 1000L,
+            coroutineScope = viewLifecycleOwner.lifecycleScope,
+            useLastParam = true
+        ) { query: String ->
+            viewModel.searchVacancies(query)
+        }
+
         binding.searchView.addTextChangedListener(
             onTextChanged = { p0: CharSequence?, _, _, _ ->
-                viewModel.searchVacancies(p0?.toString() ?: "")
+                debouncedSearch(p0?.toString() ?: "")
                 if (binding.searchView.hasFocus() && binding.searchView.text.isEmpty()) {
                     binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)
                     binding.buttonCleanSearch.isVisible = false

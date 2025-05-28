@@ -14,12 +14,6 @@ class MainViewModel(
     private val repository: VacancyRepositoryInterface
 ) : ViewModel() {
 
-    companion object {
-        private const val HTTP_FORBIDDEN = 403
-        private const val HTTP_NOT_FOUND = 404
-        private const val HTTP_SERVER_ERROR = 500
-    }
-
     private val _vacancies = MutableLiveData<List<VacancyDetails>>()
     val vacancies: LiveData<List<VacancyDetails>> = _vacancies
 
@@ -35,6 +29,7 @@ class MainViewModel(
     private var isLoadingMore = false
 
     fun searchVacancies(query: String, isNewSearch: Boolean = true) {
+
         if (isNewSearch) {
             currentPage = 0
             currentQuery = query
@@ -52,9 +47,10 @@ class MainViewModel(
                 val response = repository.searchVacancies(currentQuery, currentPage)
                 totalPages = response.pages
 
-                val currentList = _vacancies.value?.toMutableList() ?: mutableListOf()
-                currentList.addAll(response.items)
-                _vacancies.value = currentList
+//                val currentList = _vacancies.value?.toMutableList() ?: mutableListOf()
+//                currentList.addAll(response.items)
+                _vacancies.value = response.items
+//                _vacancies.value = currentList
 
                 currentPage++
             } catch (e: IOException) {
@@ -77,5 +73,11 @@ class MainViewModel(
         if (!isLoadingMore && currentPage < totalPages) {
             searchVacancies(currentQuery, false)
         }
+    }
+
+    companion object {
+        private const val HTTP_FORBIDDEN = 403
+        private const val HTTP_NOT_FOUND = 404
+        private const val HTTP_SERVER_ERROR = 500
     }
 }
