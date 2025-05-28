@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.ui.screens.main
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -58,9 +57,9 @@ class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHol
                     .load(vacancyDetails.employer.logoUrls?.original)
                     .placeholder(R.drawable.empty_image)
                     .fitCenter()
-                    .transform(RoundedCorners(10))
+                    .transform(RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.indent_12dp)))
                     .into(image)
-                }
+            }
         }
     }
 

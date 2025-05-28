@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.ui.screens.main
 
 import android.content.Context
-import android.content.IntentFilter
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -18,9 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
-import ru.practicum.android.diploma.util.isConnected
-import ru.practicum.android.diploma.util.debounce
 import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.util.debounce
 
 class MainFragment : Fragment() {
 
@@ -113,11 +110,11 @@ class MainFragment : Fragment() {
                     binding.imageStart.isVisible = false
                     adapter.submitList(state.data)
                 }
+
                 is Resource.Error -> {
-                    showMessage(getString(R.string.empty_search),"",R.drawable.image_kat)
+                    showMessage(getString(R.string.empty_search), "", R.drawable.image_kat)
                     binding.errorText.text = state.message
                 }
-
             }
         }
 
