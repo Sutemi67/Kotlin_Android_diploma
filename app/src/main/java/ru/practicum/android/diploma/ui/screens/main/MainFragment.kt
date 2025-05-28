@@ -17,6 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.util.debounce
+import ru.practicum.android.diploma.util.Resource
 
 class MainFragment : Fragment() {
 
@@ -72,7 +73,14 @@ class MainFragment : Fragment() {
             coroutineScope = viewLifecycleOwner.lifecycleScope,
             useLastParam = true
         ) { query: String ->
-            viewModel.searchVacancies(query)
+            if (query.isBlank()) {
+                binding.recyclerView.isVisible = false
+                binding.errorMessage.isVisible = false
+                binding.imageStart.isVisible = true
+                adapter.submitList(emptyList())
+            } else {
+                viewModel.searchVacancies(query)
+            }
         }
 
         binding.searchView.addTextChangedListener(
@@ -94,17 +102,29 @@ class MainFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.vacancies.observe(viewLifecycleOwner) { vacancies ->
-            adapter.submitList(vacancies)
+        viewModel.searchState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is Resource.Success -> {
+                    binding.recyclerView.isVisible = true
+                    binding.errorMessage.isVisible = false
+                    binding.imageStart.isVisible = false
+                    adapter.submitList(state.data)
+                }
+                is Resource.Error -> {
+                    binding.recyclerView.isVisible = false
+                    binding.errorMessage.isVisible = true
+                    binding.imageStart.isVisible = true
+                    binding.errorText.text = state.message
+                    adapter.submitList(emptyList())
+                }
+            }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isVisible = isLoading
-            binding.imageStart.isVisible = false
-        }
-
-        viewModel.error.observe(viewLifecycleOwner) { error ->
-            showMessage(getString(R.string.empty_search), "", R.drawable.image_kat)
+            if (isLoading) {
+                binding.imageStart.isVisible = false
+            }
         }
     }
 

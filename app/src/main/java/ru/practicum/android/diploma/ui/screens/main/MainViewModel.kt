@@ -8,20 +8,17 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import ru.practicum.android.diploma.domain.VacancyRepositoryInterface
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
-import java.io.IOException
+import ru.practicum.android.diploma.util.Resource
 
 class MainViewModel(
     private val repository: VacancyRepositoryInterface
 ) : ViewModel() {
 
-    private val _vacancies = MutableLiveData<List<VacancyDetails>>()
-    val vacancies: LiveData<List<VacancyDetails>> = _vacancies
+    private val _searchState = MutableLiveData<Resource<List<VacancyDetails>>>()
+    val searchState: LiveData<Resource<List<VacancyDetails>>> = _searchState
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
 
     private var currentPage = 0
     private var totalPages = 0
@@ -32,7 +29,7 @@ class MainViewModel(
         if (isNewSearch) {
             currentPage = 0
             currentQuery = query
-            _vacancies.value = emptyList()
+            _searchState.value = Resource.Success(emptyList())
         }
 
         if (isLoadingMore || currentPage >= totalPages && currentPage > 0) return
@@ -41,26 +38,26 @@ class MainViewModel(
             try {
                 isLoadingMore = true
                 _isLoading.value = true
-                _error.value = null
 
                 val response = repository.searchVacancies(currentQuery, currentPage)
                 totalPages = response.pages
 
-//                val currentList = _vacancies.value?.toMutableList() ?: mutableListOf()
-//                currentList.addAll(response.items)
-                _vacancies.value = response.items
-//                _vacancies.value = currentList
+                if (response.items.isEmpty()) {
+                    _searchState.value = Resource.Error("По вашему запросу ничего не найдено")
+                } else {
+                    _searchState.value = Resource.Success(response.items)
+                }
 
                 currentPage++
-            } catch (e: IOException) {
-                _error.value = e.message
             } catch (e: HttpException) {
-                _error.value = when (e.code()) {
-                    HTTP_FORBIDDEN -> "Ошибка авторизации. Проверьте токен доступа"
-                    HTTP_NOT_FOUND -> "Вакансии не найдены"
-                    HTTP_SERVER_ERROR -> "Ошибка сервера"
-                    else -> "Ошибка сервера: ${e.code()}"
-                }
+                _searchState.value = Resource.Error(
+                    when (e.code()) {
+                        HTTP_FORBIDDEN -> "Ошибка авторизации. Проверьте токен доступа"
+                        HTTP_NOT_FOUND -> "Вакансии не найдены"
+                        HTTP_SERVER_ERROR -> "Ошибка сервера"
+                        else -> "Ошибка сервера: ${e.code()}"
+                    }
+                )
             } finally {
                 _isLoading.value = false
                 isLoadingMore = false
