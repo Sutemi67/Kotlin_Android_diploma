@@ -5,7 +5,7 @@
     <dimen name="indent_32dp">32dp</dimen>
     <dimen name="indent_12dp">12dp</dimen>
     <dimen name="indent_4dp">4dp</dimen>
-    <dimen name="indent_44dp">44dp</dimen>
+    <dimen name="indent_48dp">48dp</dimen>
     <dimen name="indent_328dp">328dp</dimen>
     <dimen name="indent_223dp">223dp</dimen>
 </resources>

@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
-import ru.practicum.android.diploma.util.debounce
 import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.util.debounce
 
 class MainFragment : Fragment() {
 
@@ -47,7 +47,7 @@ class MainFragment : Fragment() {
             val inputMethodManager =
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
-            //   adapter.notifyDataSetChanged()
+            adapter.submitList(emptyList())
             binding.errorMessage.isVisible = false
             binding.imageStart.isVisible = true
         }
@@ -110,12 +110,10 @@ class MainFragment : Fragment() {
                     binding.imageStart.isVisible = false
                     adapter.submitList(state.data)
                 }
+
                 is Resource.Error -> {
-                    binding.recyclerView.isVisible = false
-                    binding.errorMessage.isVisible = true
-                    binding.imageStart.isVisible = true
+                    showMessage(getString(R.string.empty_search), "", R.drawable.image_kat)
                     binding.errorText.text = state.message
-                    adapter.submitList(emptyList())
                 }
             }
         }
@@ -136,7 +134,7 @@ class MainFragment : Fragment() {
             imageView.setImageResource(drawable)
             if (text.isNotEmpty()) {
                 errorMessage.isVisible = true
-                adapter.notifyDataSetChanged()
+                adapter.submitList(emptyList())
                 errorText.text = text
             } else {
                 errorMessage.isVisible = false
