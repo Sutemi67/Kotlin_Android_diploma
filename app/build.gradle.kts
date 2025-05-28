@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    id("com.google.devtools.ksp") version "2.1.21-2.0.1"
 }
 
 android {
@@ -36,6 +37,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -47,12 +49,34 @@ dependencies {
     implementation(libs.ui.material)
     implementation(libs.ui.constraintLayout)
 
-    // region Unit tests
-    testImplementation(libs.unitTests.junit)
-    // endregion
+    // Navigation Component
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
 
-    // region UI tests
+    testImplementation(libs.unitTests.junit)
+
     androidTestImplementation(libs.uiTests.junitExt)
     androidTestImplementation(libs.uiTests.espressoCore)
-    // endregion
+
+    // Room
+    implementation(libs.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    // Glide
+    implementation(libs.glide)
+
+    // Retrofit
+    implementation(libs.retrofit.v290)
+    implementation(libs.converter.gson)
+    implementation(libs.picasso)
+
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    // Koin
+    implementation(project.dependencies.platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }
