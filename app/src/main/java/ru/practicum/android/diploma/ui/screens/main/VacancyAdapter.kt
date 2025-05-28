@@ -1,10 +1,14 @@
 package ru.practicum.android.diploma.ui.screens.main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemVacancyBinding
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 
@@ -30,9 +34,12 @@ class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHol
         fun bind(vacancyDetails: VacancyDetails) {
             val value = vacancyDetails.salary
             binding.apply {
-                jobTitle.text = vacancyDetails.name
+                jobTitle.text = buildString {
+                    append(vacancyDetails.name)
+                    append(",")
+                    append(vacancyDetails.area.name)
+                }
                 companyName.text = vacancyDetails.employer.name
-                location.text = vacancyDetails.area.name
 
                 salary.text = when {
                     value?.from != null && value.to != null ->
@@ -46,7 +53,14 @@ class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHol
 
                     else -> "Зарплата не указана"
                 }
-            }
+
+                Glide.with(itemView)
+                    .load(vacancyDetails.employer.logoUrls?.original)
+                    .placeholder(R.drawable.empty_image)
+                    .fitCenter()
+                    .transform(RoundedCorners(10))
+                    .into(image)
+                }
         }
     }
 
