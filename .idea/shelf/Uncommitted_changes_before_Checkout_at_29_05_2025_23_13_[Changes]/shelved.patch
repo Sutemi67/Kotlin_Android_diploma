@@ -1,0 +1,995 @@
+Index: app/src/main/res/layout/fragment_details.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/white_black\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/details_screen\"\r\n        android:textSize=\"24sp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout> \r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_details.xml b/app/src/main/res/layout/fragment_details.xml
+--- a/app/src/main/res/layout/fragment_details.xml	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/res/layout/fragment_details.xml	(date 1748549043731)
+@@ -5,14 +5,193 @@
+     android:layout_height="match_parent"
+     android:background="@color/white_black">
+ 
+-    <TextView
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:text="@string/details_screen"
+-        android:textSize="24sp"
++    <androidx.appcompat.widget.Toolbar
++        android:id="@+id/toolbar"
++        android:layout_width="match_parent"
++        android:layout_height="?attr/actionBarSize"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:menu="@menu/toolbar_menu_detalies"
++        app:navigationIcon="@drawable/arrow_back_24px"
++        app:title="Вакансия"
++        app:titleTextAppearance="@style/Medium22" />
++
++    <ScrollView
++        android:layout_width="match_parent"
++        android:layout_height="0dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/toolbar">
++
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="0dp"
++        android:orientation="vertical"
++        android:paddingStart="@dimen/indent_16dp"
++        android:paddingEnd="@dimen/indent_16dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
++        app:layout_constraintTop_toBottomOf="@+id/toolbar">
++
++        <TextView
++            android:id="@+id/jobTitle"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:text="Android-разработчик"
++            android:textAppearance="@style/Bold32" />
++        <TextView
++            android:id="@+id/jobsalary"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:text="от 100 000 ₽"
++            android:textAppearance="@style/Medium22" />
++
++        <androidx.cardview.widget.CardView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_16dp"
++            android:paddingTop="@dimen/indent_16dp"
++            app:cardCornerRadius="16dp"
++            app:cardBackgroundColor="@color/lightGray">
++
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="80dp"
++                android:orientation="horizontal"
++                android:gravity="center_vertical"
++                android:padding="12dp">
++
++                <ImageView
++                    android:id="@+id/icon"
++                    android:layout_width="48dp"
++                    android:layout_height="48dp"
++                    android:src="@drawable/empty_image"/>
++
++                <LinearLayout
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:layout_weight="1"
++                    android:paddingStart="@dimen/indent_8dp"
++                    android:orientation="vertical">
++
++                    <TextView
++                        android:id="@+id/titleCadr"
++                        android:layout_width="wrap_content"
++                        android:layout_height="wrap_content"
++                        android:text="Еда"
++                        android:textAppearance="@style/Medium22" />
++
++                    <TextView
++                        android:id="@+id/subtitleCard"
++                        android:layout_width="wrap_content"
++                        android:layout_height="wrap_content"
++                        android:text="Москва"
++                        android:textAppearance="@style/Regular16" />
++                </LinearLayout>
++            </LinearLayout>
++        </androidx.cardview.widget.CardView>
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="24dp"
++            android:text="Требуемый опыт"
++            android:textAppearance="@style/Regular16" />
++
++        <TextView
++            android:id="@+id/companyName"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:text="От 1 года до 3 лет"
++            android:textAppearance="@style/Regular16" />
++
++        <TextView
++            android:id="@+id/salary"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_8dp"
++            android:text="Полная занятость, Удаленная работа"
++            android:textAppearance="@style/Regular16" />
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_32dp"
++            android:text="Описание вакансии"
++            android:textAppearance="@style/Medium22" />
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_16dp"
++            android:text="Обязанности"
++            android:textAppearance="@style/Medium16" />
++
++        <TextView
++            android:id="@+id/Text1"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_4dp"
++            android:text="Разрабатывать новую функциональность приложения\n
++Помогать с интеграцией нашего SDK в другие приложения\n
++Проектировать большие новые модули\n
++Писать UI- и unit-тесты\n
++Следить за работоспособностью сервиса и устранять технический долг"
++            android:textAppearance="@style/Regular16" />
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_16dp"
++            android:text="Требования"
++            android:textAppearance="@style/Medium16" />
++
++        <TextView
++            android:id="@+id/Text2"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_4dp"
++            android:text="100% Kotlin \nWebRTCCI по модели Trunk \nBased Development"
++            android:textAppearance="@style/Regular16" />
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_16dp"
++            android:text="Условия"
++            android:textAppearance="@style/Medium16" />
++
++        <TextView
++            android:id="@+id/Text3"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_4dp"
++            android:text="сильная команда, с которой можно расти\n
++возможность влиять на процесс и результат\n
++расширенная программа ДМС: стоматология, обследования, вызов врача на дом и многое другое"
++            android:textAppearance="@style/Regular16" />
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="24dp"
++            android:text="Ключевые навыки"
++            android:textAppearance="@style/Medium22" />
++
++        <TextView
++            android:id="@+id/Text4"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_16dp"
++            android:text="Знание классических алгоритмов и структуры данных\n
++Программирование для Android больше одного года\n
++Знание WebRTC"
++            android:textAppearance="@style/Regular16" />
++
++    </LinearLayout>
++    </ScrollView>
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout> 
+Index: app/src/main/res/layout/fragment_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    style=\"@style/LayoutStyle\">\r\n\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:id=\"@+id/toolbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"?attr/actionBarSize\"\r\n        app:contentInsetStartWithNavigation=\"0dp\"\r\n        app:menu=\"@menu/toolbar_menu\"\r\n        app:title=\"@string/app_name\"\r\n        app:titleMargin=\"@dimen/indent_8dp\"\r\n        app:titleTextAppearance=\"@style/Medium22\">\r\n\r\n    </androidx.appcompat.widget.Toolbar>\r\n\r\n    <FrameLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <EditText\r\n            android:id=\"@+id/searchView\"\r\n            style=\"@style/Medium16\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"56dp\"\r\n            android:layout_marginStart=\"@dimen/indent_16dp\"\r\n            android:layout_marginTop=\"@dimen/indent_8dp\"\r\n            android:layout_marginEnd=\"@dimen/indent_16dp\"\r\n            android:layout_marginBottom=\"@dimen/indent_8dp\"\r\n            android:background=\"@drawable/edittext\"\r\n            android:drawableEnd=\"@drawable/search_24px\"\r\n            android:hint=\"@string/enter_request\"\r\n            android:imeOptions=\"actionDone\"\r\n            android:importantForAutofill=\"no\"\r\n            android:inputType=\"text\"\r\n            android:maxLines=\"1\"\r\n            android:paddingStart=\"@dimen/indent_16dp\"\r\n            android:paddingEnd=\"@dimen/indent_16dp\"\r\n            android:singleLine=\"true\"\r\n            android:textColor=\"@color/black_universal\"\r\n            android:textColorHint=\"@color/gray_white\"\r\n            android:textCursorDrawable=\"@drawable/cursor_color\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/buttonCleanSearch\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center|end\"\r\n            android:padding=\"@dimen/indent_16dp\"\r\n            android:paddingEnd=\"@dimen/indent_32dp\"\r\n            android:visibility=\"invisible\"\r\n            app:srcCompat=\"@drawable/close_24px\" />\r\n    </FrameLayout>\r\n\r\n    <TextView\r\n        android:id=\"@+id/infoSearch\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center_horizontal\"\r\n        android:background=\"@drawable/bg_blue_rounded\"\r\n        android:gravity=\"center\"\r\n        android:paddingStart=\"@dimen/indent_12dp\"\r\n        android:paddingTop=\"@dimen/indent_4dp\"\r\n        android:paddingEnd=\"@dimen/indent_12dp\"\r\n        android:paddingBottom=\"@dimen/indent_4dp\"\r\n        android:text=\"@string/no_such_vacancies\"\r\n        android:textAppearance=\"@style/Regular16\"\r\n        android:textColor=\"@color/white_universal\"\r\n        android:visibility=\"visible\"\r\n        tools:visibility=\"visible\" />\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n        <androidx.constraintlayout.widget.Group\r\n            android:id=\"@+id/errorMessage\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:visibility=\"invisible\"\r\n            app:constraint_referenced_ids=\"imageView,errorText\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/imageStart\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:importantForAccessibility=\"no\"\r\n            android:src=\"@drawable/image_man_big_eyes\"\r\n            android:visibility=\"visible\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n        <ProgressBar\r\n            android:id=\"@+id/progressBar\"\r\n            android:layout_width=\"@dimen/indent_48dp\"\r\n            android:layout_height=\"@dimen/indent_48dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:indeterminateTint=\"@color/blue\"\r\n            android:visibility=\"invisible\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/recyclerView\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"0dp\"\r\n            app:layoutManager=\"androidx.recyclerview.widget.LinearLayoutManager\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            tools:listitem=\"@layout/item_vacancy\"\r\n            tools:visibility=\"invisible\">\r\n\r\n        </androidx.recyclerview.widget.RecyclerView>\r\n\r\n        <ImageView\r\n            android:id=\"@+id/imageView\"\r\n            android:layout_width=\"@dimen/indent_328dp\"\r\n            android:layout_height=\"@dimen/indent_223dp\"\r\n            android:scaleType=\"centerCrop\"\r\n            android:src=\"@drawable/image_kat\"\r\n            app:layout_constraintBottom_toTopOf=\"@+id/errorText\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintVertical_chainStyle=\"packed\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/errorText\"\r\n            style=\"@style/placeholderMessageStyle\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"16dp\"\r\n            android:textAppearance=\"@style/Medium22\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/imageView\" />\r\n\r\n        <ProgressBar\r\n            android:id=\"@+id/bottom_progress_bar\"\r\n            android:layout_width=\"@dimen/indent_48dp\"\r\n            android:layout_height=\"@dimen/indent_48dp\"\r\n            android:indeterminateTint=\"@color/blue\"\r\n            android:indeterminateTintMode=\"src_in\"\r\n            android:paddingBottom=\"64dp\"\r\n            android:visibility=\"invisible\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\" />\r\n\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_main.xml b/app/src/main/res/layout/fragment_main.xml
+--- a/app/src/main/res/layout/fragment_main.xml	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/res/layout/fragment_main.xml	(date 1748549043737)
+@@ -9,7 +9,7 @@
+         android:layout_width="match_parent"
+         android:layout_height="?attr/actionBarSize"
+         app:contentInsetStartWithNavigation="0dp"
+-        app:menu="@menu/toolbar_menu"
++        app:menu="@menu/toolbar_menu_detalies"
+         app:title="@string/app_name"
+         app:titleMargin="@dimen/indent_8dp"
+         app:titleTextAppearance="@style/Medium22">
+@@ -112,7 +112,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="0dp"
+             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+-            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintBottom_toTopOf="@id/bottom_progress_bar"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+@@ -148,10 +148,10 @@
+             android:id="@+id/bottom_progress_bar"
+             android:layout_width="@dimen/indent_48dp"
+             android:layout_height="@dimen/indent_48dp"
++            android:layout_gravity="center"
+             android:indeterminateTint="@color/blue"
+-            android:indeterminateTintMode="src_in"
+-            android:paddingBottom="64dp"
+             android:visibility="invisible"
++            app:layout_constraintTop_toBottomOf="@id/recyclerView"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent" />
+Index: app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma.ui.screens.main\r\n\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport android.text.Editable\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.view.inputmethod.InputMethodManager\r\nimport androidx.appcompat.content.res.AppCompatResources\r\nimport androidx.core.view.isVisible\r\nimport androidx.core.widget.addTextChangedListener\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.lifecycle.lifecycleScope\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport org.koin.androidx.viewmodel.ext.android.viewModel\r\nimport ru.practicum.android.diploma.R\r\nimport ru.practicum.android.diploma.databinding.FragmentMainBinding\r\nimport ru.practicum.android.diploma.util.Resource\r\nimport ru.practicum.android.diploma.util.debounce\r\n\r\nclass MainFragment : Fragment() {\r\n\r\n    private var _binding: FragmentMainBinding? = null\r\n    private val binding: FragmentMainBinding get() = requireNotNull(_binding)\r\n    private val adapter: VacancyAdapter = VacancyAdapter()\r\n    private val viewModel by viewModel<MainViewModel>()\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater,\r\n        container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        _binding = FragmentMainBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        setupRecyclerView()\r\n        setupSearchView()\r\n        observeViewModel()\r\n\r\n        binding.buttonCleanSearch.setOnClickListener {\r\n            binding.searchView.setText(\"\")\r\n            val inputMethodManager =\r\n                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager\r\n            inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)\r\n            binding.errorMessage.isVisible = false\r\n            binding.imageStart.isVisible = true\r\n        }\r\n    }\r\n\r\n    override fun onDestroyView() {\r\n        super.onDestroyView()\r\n        _binding = null\r\n    }\r\n\r\n    private fun setupRecyclerView() {\r\n        binding.recyclerView.apply {\r\n            layoutManager = LinearLayoutManager(requireContext())\r\n            adapter = this@MainFragment.adapter\r\n\r\n            addOnScrollListener(object : RecyclerView.OnScrollListener() {\r\n                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {\r\n                    super.onScrolled(recyclerView, dx, dy)\r\n\r\n                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager\r\n                    val visibleItemCount = layoutManager.childCount\r\n                    val totalItemCount = layoutManager.itemCount\r\n                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()\r\n\r\n                    if (!viewModel.isLoading.value!! &&\r\n                        visibleItemCount + firstVisibleItemPosition >= totalItemCount &&\r\n                        firstVisibleItemPosition >= 0\r\n                    ) {\r\n                        viewModel.loadMoreItems()\r\n                    }\r\n                }\r\n            })\r\n        }\r\n    }\r\n\r\n    private fun setupSearchView() {\r\n        val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)\r\n        val debouncedSearch = debounce(\r\n            delayMillis = 1000L,\r\n            coroutineScope = viewLifecycleOwner.lifecycleScope,\r\n            useLastParam = true\r\n        ) { query: String ->\r\n            if (query.isBlank()) {\r\n                binding.recyclerView.isVisible = false\r\n                binding.errorMessage.isVisible = false\r\n                binding.imageStart.isVisible = true\r\n                adapter.submitList(emptyList())\r\n            } else {\r\n                viewModel.searchVacancies(query)\r\n            }\r\n        }\r\n\r\n        binding.searchView.addTextChangedListener(\r\n            onTextChanged = { p0: CharSequence?, _, _, _ ->\r\n                debouncedSearch(p0?.toString() ?: \"\")\r\n                if (binding.searchView.hasFocus() && binding.searchView.text.isEmpty()) {\r\n                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)\r\n                    binding.buttonCleanSearch.isVisible = false\r\n                    binding.imageStart.isVisible = true\r\n                } else {\r\n                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)\r\n                    binding.buttonCleanSearch.isVisible = true\r\n                }\r\n            },\r\n            afterTextChanged = { _: Editable? ->\r\n                binding.errorMessage.isVisible = false\r\n            }\r\n        )\r\n    }\r\n\r\n    private fun observeViewModel() {\r\n        viewModel.searchState.observe(viewLifecycleOwner) { state ->\r\n            when (state) {\r\n                is Resource.Success -> {\r\n                    uiState(UiState.Success)\r\n                    binding.infoSearch.text = \"Найдено ${state.itemsCount} вакансий\" // todo\r\n                    adapter.submitList(state.data)\r\n                }\r\n\r\n                is Resource.Error -> {\r\n                    uiState(UiState.Error)\r\n                    binding.errorText.text = state.message\r\n                    adapter.submitList(emptyList())\r\n                }\r\n            }\r\n        }\r\n\r\n        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->\r\n            binding.progressBar.isVisible = isLoading\r\n            if (isLoading) {\r\n                binding.imageStart.isVisible = false\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun uiState(state: UiState) {\r\n        when (state) {\r\n            UiState.Idle -> TODO()\r\n            UiState.NothingFound -> TODO()\r\n            UiState.Success -> {\r\n                binding.recyclerView.isVisible = true\r\n                binding.errorMessage.isVisible = false\r\n                binding.imageStart.isVisible = false\r\n            }\r\n\r\n            UiState.Error -> {\r\n                binding.recyclerView.isVisible = false\r\n                binding.errorMessage.isVisible = true\r\n                binding.imageStart.isVisible = true\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun showMessage(text: String, additionalMessage: String, drawable: Int) =\r\n        with(binding) {\r\n            imageStart.isVisible = false\r\n            progressBar.isVisible = false\r\n            recyclerView.isVisible = false\r\n            imageView.setImageResource(drawable)\r\n            if (text.isNotEmpty()) {\r\n                errorMessage.isVisible = true\r\n                adapter.submitList(emptyList())\r\n                errorText.text = text\r\n            } else {\r\n                errorMessage.isVisible = false\r\n            }\r\n        }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt	(date 1748549587581)
+@@ -12,20 +12,23 @@
+ import androidx.core.widget.addTextChangedListener
+ import androidx.fragment.app.Fragment
+ import androidx.lifecycle.lifecycleScope
++import androidx.navigation.fragment.findNavController
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
+ import org.koin.androidx.viewmodel.ext.android.viewModel
+ import ru.practicum.android.diploma.R
+ import ru.practicum.android.diploma.databinding.FragmentMainBinding
+-import ru.practicum.android.diploma.util.Resource
++import ru.practicum.android.diploma.domain.OnItemClickListener
++import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+ import ru.practicum.android.diploma.util.debounce
+ 
+ class MainFragment : Fragment() {
+ 
+     private var _binding: FragmentMainBinding? = null
+     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
+-    private val adapter: VacancyAdapter = VacancyAdapter()
++    lateinit var adapter: VacancyAdapter
+     private val viewModel by viewModel<MainViewModel>()
++    private var isClickAllowed = true
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater,
+@@ -59,7 +62,16 @@
+     }
+ 
+     private fun setupRecyclerView() {
++
++        val onItemClickListener = OnItemClickListener<VacancyDetails> { vacancy ->
++            if (clickDebounce()) {
++                val action = MainFragmentDirections.actionHomeFragmentToDetailsFragment(vacancy.id)
++                findNavController().navigate(action)
++            }
++        }
++
+         binding.recyclerView.apply {
++            this@MainFragment.adapter = VacancyAdapter(onItemClickListener)
+             layoutManager = LinearLayoutManager(requireContext())
+             adapter = this@MainFragment.adapter
+ 
+@@ -86,7 +98,7 @@
+     private fun setupSearchView() {
+         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
+         val debouncedSearch = debounce(
+-            delayMillis = 1000L,
++            delayMillis = CLICK_DEBOUNCE_DELAY,
+             coroutineScope = viewLifecycleOwner.lifecycleScope,
+             useLastParam = true
+         ) { query: String ->
+@@ -121,42 +133,44 @@
+     private fun observeViewModel() {
+         viewModel.searchState.observe(viewLifecycleOwner) { state ->
+             when (state) {
+-                is Resource.Success -> {
+-                    uiState(UiState.Success)
+-                    binding.infoSearch.text = "Найдено ${state.itemsCount} вакансий" // todo
+-                    adapter.submitList(state.data)
+-                }
+-
+-                is Resource.Error -> {
+-                    uiState(UiState.Error)
+-                    binding.errorText.text = state.message
+-                    adapter.submitList(emptyList())
+-                }
+-            }
+-        }
+-
+-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+-            binding.progressBar.isVisible = isLoading
+-            if (isLoading) {
+-                binding.imageStart.isVisible = false
+-            }
+-        }
+-    }
++                is UiState.Loading -> {
++                    binding.progressBar.isVisible = true
++                    binding.imageStart.isVisible = false
++                }
+ 
+-    private fun uiState(state: UiState) {
+-        when (state) {
+-            UiState.Idle -> TODO()
+-            UiState.NothingFound -> TODO()
+-            UiState.Success -> {
+-                binding.recyclerView.isVisible = true
+-                binding.errorMessage.isVisible = false
+-                binding.imageStart.isVisible = false
+-            }
++                is UiState.Content -> {
++                    binding.recyclerView.isVisible = true
++                    binding.errorMessage.isVisible = false
++                    binding.imageStart.isVisible = false
++                    binding.progressBar.isVisible = false
++                    binding.infoSearch.text = "Найдено ${state.vacancies.size} вакансий"
++                    adapter.submitList(state.vacancies)
++                }
++
++                is UiState.NotFound -> {
++                    binding.recyclerView.isVisible = false
++                    binding.errorMessage.isVisible = true
++                    binding.imageStart.isVisible = false
++                    binding.progressBar.isVisible = false
++                    binding.errorText.text = "Ошибка"
++                    adapter.submitList(emptyList())
++                }
+ 
+-            UiState.Error -> {
+-                binding.recyclerView.isVisible = false
+-                binding.errorMessage.isVisible = true
+-                binding.imageStart.isVisible = true
++                is UiState.Error -> {
++                    showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
++                    binding.recyclerView.isVisible = false
++                    binding.errorMessage.isVisible = true
++                    binding.imageStart.isVisible = false
++                    binding.progressBar.isVisible = false
++                    binding.errorText.text = state.errorMessage
++                    adapter.submitList(emptyList())
++                }
++
++                is UiState.Idle -> {
++                    binding.recyclerView.isVisible = false
++                    binding.errorMessage.isVisible = false
++                    binding.imageStart.isVisible = true
++                }
+             }
+         }
+     }
+@@ -175,4 +189,21 @@
+                 errorMessage.isVisible = false
+             }
+         }
++
++
++    private fun clickDebounce(): Boolean {
++        if (isClickAllowed) {
++            isClickAllowed = false
++            viewLifecycleOwner.lifecycleScope.launch {
++                delay(CLICK_DEBOUNCE_DELAY)
++                isClickAllowed = true
++            }
++        }
++        return true
++    }
++
++    companion object {
++        private const val CLICK_DEBOUNCE_DELAY = 1000L
++    }
++
+ }
+Index: app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma.ui.screens.main\r\n\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.lifecycle.viewModelScope\r\nimport kotlinx.coroutines.launch\r\nimport retrofit2.HttpException\r\nimport ru.practicum.android.diploma.domain.VacancyRepositoryInterface\r\nimport ru.practicum.android.diploma.domain.network.models.VacancyDetails\r\nimport ru.practicum.android.diploma.util.Resource\r\n\r\nclass MainViewModel(\r\n    private val repository: VacancyRepositoryInterface\r\n) : ViewModel() {\r\n\r\n    private val _searchState = MutableLiveData<Resource<List<VacancyDetails>>>()\r\n    val searchState: LiveData<Resource<List<VacancyDetails>>> = _searchState\r\n\r\n    private val _isLoading = MutableLiveData<Boolean>()\r\n    val isLoading: LiveData<Boolean> = _isLoading\r\n\r\n    private var currentPage = 0\r\n    private var totalPages = 0\r\n    private var totalVacancies = 0\r\n    private var currentQuery = \"\"\r\n    private var isLoadingMore = false\r\n    private var currentItems = mutableListOf<VacancyDetails>()\r\n\r\n    fun searchVacancies(query: String, isNewSearch: Boolean = true) {\r\n        if (isNewSearch) {\r\n            currentPage = 0\r\n            currentQuery = query\r\n            currentItems.clear()\r\n            _searchState.value = Resource.Success(emptyList(), totalVacancies)\r\n        }\r\n\r\n        if (isLoadingMore || currentPage >= totalPages && currentPage > 0) return\r\n\r\n        viewModelScope.launch {\r\n            try {\r\n                isLoadingMore = true\r\n                _isLoading.value = true\r\n\r\n                val response = repository.searchVacancies(currentQuery, currentPage)\r\n                totalPages = response.pages\r\n\r\n                if (response.items.isEmpty() && currentPage == 0) {\r\n                    _searchState.value = Resource.Error(\"По вашему запросу ничего не найдено\")\r\n                } else {\r\n                    currentItems.addAll(response.items)\r\n                    totalVacancies = currentItems.size\r\n                    _searchState.value = Resource.Success(currentItems.toList(), totalVacancies)\r\n                }\r\n\r\n                currentPage++\r\n            } catch (e: HttpException) {\r\n                _searchState.value = Resource.Error(\r\n                    when (e.code()) {\r\n                        HTTP_FORBIDDEN -> \"Ошибка авторизации. Проверьте токен доступа\"\r\n                        HTTP_NOT_FOUND -> \"Вакансии не найдены\"\r\n                        HTTP_SERVER_ERROR -> \"Ошибка сервера\"\r\n                        else -> \"Ошибка сервера: ${e.code()}\"\r\n                    }\r\n                )\r\n            } finally {\r\n                isLoadingMore = false\r\n                _isLoading.value = false\r\n            }\r\n        }\r\n    }\r\n\r\n    fun loadMoreItems() {\r\n        if (!isLoadingMore && currentPage < totalPages) {\r\n            searchVacancies(currentQuery, false)\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        private const val HTTP_FORBIDDEN = 403\r\n        private const val HTTP_NOT_FOUND = 404\r\n        private const val HTTP_SERVER_ERROR = 500\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt	(date 1748549587574)
+@@ -5,17 +5,16 @@
+ import androidx.lifecycle.ViewModel
+ import androidx.lifecycle.viewModelScope
+ import kotlinx.coroutines.launch
+-import retrofit2.HttpException
+-import ru.practicum.android.diploma.domain.VacancyRepositoryInterface
++import ru.practicum.android.diploma.domain.VacancyInteractorInterface
+ import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+ import ru.practicum.android.diploma.util.Resource
+ 
+ class MainViewModel(
+-    private val repository: VacancyRepositoryInterface
++    private val interactor: VacancyInteractorInterface
+ ) : ViewModel() {
+ 
+-    private val _searchState = MutableLiveData<Resource<List<VacancyDetails>>>()
+-    val searchState: LiveData<Resource<List<VacancyDetails>>> = _searchState
++    private val _searchState = MutableLiveData<UiState>()
++    val searchState: LiveData<UiState> = _searchState
+ 
+     private val _isLoading = MutableLiveData<Boolean>()
+     val isLoading: LiveData<Boolean> = _isLoading
+@@ -28,46 +27,34 @@
+     private var currentItems = mutableListOf<VacancyDetails>()
+ 
+     fun searchVacancies(query: String, isNewSearch: Boolean = true) {
+-        if (isNewSearch) {
+-            currentPage = 0
+-            currentQuery = query
+-            currentItems.clear()
+-            _searchState.value = Resource.Success(emptyList(), totalVacancies)
+-        }
+-
+-        if (isLoadingMore || currentPage >= totalPages && currentPage > 0) return
++        if (query.isNotEmpty()) {
++            _searchState.postValue(UiState.Loading)
+ 
+-        viewModelScope.launch {
+-            try {
+-                isLoadingMore = true
+-                _isLoading.value = true
++            viewModelScope.launch {
++                interactor
++                    .searchVacancy(query)
++                    .collect { pair ->
++                        processResult(pair.first, pair.second)
++                    }
++            }
+ 
+-                val response = repository.searchVacancies(currentQuery, currentPage)
+-                totalPages = response.pages
++        }
++    }
+ 
+-                if (response.items.isEmpty() && currentPage == 0) {
+-                    _searchState.value = Resource.Error("По вашему запросу ничего не найдено")
+-                } else {
+-                    currentItems.addAll(response.items)
+-                    totalVacancies = currentItems.size
+-                    _searchState.value = Resource.Success(currentItems.toList(), totalVacancies)
+-                }
++    private fun processResult(vacancy: List<VacancyDetails>?, errorMessage: String?) {
++        val vacancys = mutableListOf<VacancyDetails>()
++        if (vacancy != null) {
++            vacancys.addAll(vacancy)
++        }
+ 
+-                currentPage++
+-            } catch (e: HttpException) {
+-                _searchState.value = Resource.Error(
+-                    when (e.code()) {
+-                        HTTP_FORBIDDEN -> "Ошибка авторизации. Проверьте токен доступа"
+-                        HTTP_NOT_FOUND -> "Вакансии не найдены"
+-                        HTTP_SERVER_ERROR -> "Ошибка сервера"
+-                        else -> "Ошибка сервера: ${e.code()}"
+-                    }
+-                )
+-            } finally {
+-                isLoadingMore = false
+-                _isLoading.value = false
+-            }
++        when {
++            errorMessage != null -> _searchState.postValue(UiState.Error(errorMessage))
++
++            vacancys.isEmpty() -> _searchState.postValue(UiState.NotFound)
++
++            else -> _searchState.postValue(UiState.Content(vacancys))
+         }
++
+     }
+ 
+     fun loadMoreItems() {
+@@ -76,9 +63,4 @@
+         }
+     }
+ 
+-    companion object {
+-        private const val HTTP_FORBIDDEN = 403
+-        private const val HTTP_NOT_FOUND = 404
+-        private const val HTTP_SERVER_ERROR = 500
+-    }
+ }
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"black_white\">#1A1B22</color>\r\n    <color name=\"white_black\">#FDFDFD</color>\r\n    <color name=\"blue\">#3772E7</color>\r\n    <color name=\"red\">#F56B6C</color>\r\n    <color name=\"gray\">#AEAFB4</color>\r\n    <color name=\"light_gray\">#E6E8EB</color>\r\n    <color name=\"background\">#7F1A1B22</color>\r\n    <color name=\"black_universal\">#1A1B22</color>\r\n    <color name=\"white_universal\">#FDFDFD</color>\r\n    <color name=\"gray_white\">#AEAFB4</color>\r\n    <color name=\"lightGray_gray\">#E6E8EB</color>\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/res/values/colors.xml	(date 1748549043743)
+@@ -5,7 +5,7 @@
+     <color name="blue">#3772E7</color>
+     <color name="red">#F56B6C</color>
+     <color name="gray">#AEAFB4</color>
+-    <color name="light_gray">#E6E8EB</color>
++    <color name="lightGray">#E6E8EB</color>
+     <color name="background">#7F1A1B22</color>
+     <color name="black_universal">#1A1B22</color>
+     <color name="white_universal">#FDFDFD</color>
+Index: app/src/main/java/ru/practicum/android/diploma/ui/root/RootActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma.ui.root\r\n\r\nimport android.os.Bundle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.navigation.fragment.NavHostFragment\r\nimport androidx.navigation.ui.setupWithNavController\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView\r\nimport ru.practicum.android.diploma.BuildConfig\r\nimport ru.practicum.android.diploma.R\r\n\r\nclass RootActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_root)\r\n\r\n        // Пример использования access token для HeadHunter API\r\n        networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)\r\n\r\n        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment\r\n        val navController = navHostFragment.navController\r\n\r\n        findViewById<BottomNavigationView>(R.id.bottom_navigation).setupWithNavController(navController)\r\n\r\n    }\r\n\r\n    private fun networkRequestExample(accessToken: String) {\r\n        // ...\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/root/RootActivity.kt b/app/src/main/java/ru/practicum/android/diploma/ui/root/RootActivity.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/ui/root/RootActivity.kt	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/root/RootActivity.kt	(date 1748549043755)
+@@ -2,16 +2,22 @@
+ 
+ import android.os.Bundle
+ import androidx.appcompat.app.AppCompatActivity
++import androidx.core.view.isVisible
+ import androidx.navigation.fragment.NavHostFragment
+ import androidx.navigation.ui.setupWithNavController
+ import com.google.android.material.bottomnavigation.BottomNavigationView
+ import ru.practicum.android.diploma.BuildConfig
+ import ru.practicum.android.diploma.R
++import ru.practicum.android.diploma.databinding.ActivityRootBinding
+ 
+ class RootActivity : AppCompatActivity() {
++
++    private lateinit var binding: ActivityRootBinding
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_root)
++        binding = ActivityRootBinding.inflate(layoutInflater)
++        setContentView(binding.root)
+ 
+         // Пример использования access token для HeadHunter API
+         networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
+@@ -21,6 +27,17 @@
+ 
+         findViewById<BottomNavigationView>(R.id.bottom_navigation).setupWithNavController(navController)
+ 
++        navController.addOnDestinationChangedListener { _, destination, _ ->
++            when (destination.id) {
++                R.id.detailsFragment -> {
++                    binding.bottomNavigation.isVisible = false
++                }
++
++                else -> {
++                    binding.bottomNavigation.isVisible = true
++                }
++            }
++        }
+     }
+ 
+     private fun networkRequestExample(accessToken: String) {
+Index: app/src/main/java/ru/practicum/android/diploma/ui/screens/vacancy/VacancyDetailsFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma.ui.screens.vacancy\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.Fragment\r\nimport ru.practicum.android.diploma.databinding.FragmentDetailsBinding\r\n\r\nclass VacancyDetailsFragment : Fragment() {\r\n\r\n    private var _binding: FragmentDetailsBinding? = null\r\n    private val binding: FragmentDetailsBinding get() = requireNotNull(_binding)\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater,\r\n        container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        _binding = FragmentDetailsBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onDestroyView() {\r\n        super.onDestroyView()\r\n        _binding = null\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/screens/vacancy/VacancyDetailsFragment.kt b/app/src/main/java/ru/practicum/android/diploma/ui/screens/vacancy/VacancyDetailsFragment.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/ui/screens/vacancy/VacancyDetailsFragment.kt	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/screens/vacancy/VacancyDetailsFragment.kt	(date 1748549043776)
+@@ -4,7 +4,10 @@
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.activity.OnBackPressedCallback
+ import androidx.fragment.app.Fragment
++import androidx.navigation.fragment.findNavController
++import ru.practicum.android.diploma.R
+ import ru.practicum.android.diploma.databinding.FragmentDetailsBinding
+ 
+ class VacancyDetailsFragment : Fragment() {
+@@ -21,6 +24,86 @@
+         return binding.root
+     }
+ 
++        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++            super.onViewCreated(view, savedInstanceState)
++            _binding = FragmentDetailsBinding.bind(view)
++
++
++            val args = arguments?.let { VacancyDetailsFragmentArgs.fromBundle(it) }
++            val vacancyId = args?.vacancyId
++
++            // Теперь vacancyId — это id переданной вакансии
++            // Можно использовать для загрузки данных
++
++            binding.toolbar.setNavigationOnClickListener {
++                findNavController().navigateUp()
++            }
++
++            binding.toolbar.setOnMenuItemClickListener { item ->
++                when (item.itemId) {
++                    R.id.action_share -> {
++                        // код для "Поделиться"
++                        true
++                    }
++                    R.id.action_favorite -> {
++                        //  код для "Избранное"
++                        true
++                    }
++                    else -> false
++                }
++            }
++        }
++
++    private fun handleSource(
++        source: String?,
++        playlistName: String?,
++        description: String?,
++        image: String?,
++        playListId: String
++    ) {
++        when (source) {
++            "screenPlaylist" -> {
++                binding.jobTitle.setText(playlistName)
++                binding.salary
++
++//                this.uri = image?.toUri()
++//
++//                Glide.with(this)
++//                    .load(image?.toUri())
++//                    .placeholder(R.drawable.vector)
++//                    .skipMemoryCache(true)
++//                    .transform(
++//                        CenterCrop(),
++//                        RoundedCorners(10),
++//                    )
++//                    .into(binding.pickerImage)
++//
++//                binding.buttonCreate.setOnClickListener {
++//                    viewModel.updatePlaylist(
++//                        playListId.toInt(),
++//                        binding.textInputName.text.toString(),
++//                        binding.textInputDescription.text.toString(),
++//                        uri
++//                    )
++//                    toast(getString(R.string.playlist_save, binding.textInputName.text.toString()))
++//                    findNavController().navigateUp()
++//                }
++
++                binding.toolbar.setNavigationOnClickListener {
++                    findNavController().navigateUp()
++                }
++
++                requireActivity().onBackPressedDispatcher.addCallback(
++                    viewLifecycleOwner,
++                    object : OnBackPressedCallback(true) {
++                        override fun handleOnBackPressed() {
++                            findNavController().navigateUp()
++                        }
++                    })
++            }
++        }
++    }
++
+     override fun onDestroyView() {
+         super.onDestroyView()
+         _binding = null
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id(\"com.android.application\")\r\n    id(\"org.jetbrains.kotlin.android\")\r\n    id(\"ru.practicum.android.diploma.plugins.developproperties\")\r\n    id(\"com.google.devtools.ksp\") version \"2.1.21-2.0.1\"\r\n}\r\n\r\nandroid {\r\n    namespace = \"ru.practicum.android.diploma\"\r\n    compileSdk = libs.versions.compileSdk.get().toInt()\r\n\r\n    defaultConfig {\r\n        applicationId = \"ru.practicum.android.diploma\"\r\n        minSdk = libs.versions.minSdk.get().toInt()\r\n        targetSdk = libs.versions.targetSdk.get().toInt()\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n\r\n        buildConfigField(type = \"String\", name = \"HH_ACCESS_TOKEN\", value = \"\\\"${developProperties.hhAccessToken}\\\"\")\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(getDefaultProguardFile(\"proguard-android-optimize.txt\"), \"proguard-rules.pro\")\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_1_8\r\n        targetCompatibility = JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = \"1.8\"\r\n    }\r\n\r\n    buildFeatures {\r\n        buildConfig = true\r\n        viewBinding = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation(libs.androidX.core)\r\n    implementation(libs.androidX.appCompat)\r\n\r\n    // UI layer libraries\r\n    implementation(libs.ui.material)\r\n    implementation(libs.ui.constraintLayout)\r\n\r\n    // Navigation Component\r\n    implementation(libs.androidx.navigation.ui.ktx)\r\n    implementation(libs.androidx.navigation.fragment.ktx)\r\n\r\n    testImplementation(libs.unitTests.junit)\r\n\r\n    androidTestImplementation(libs.uiTests.junitExt)\r\n    androidTestImplementation(libs.uiTests.espressoCore)\r\n\r\n    // Room\r\n    implementation(libs.room.runtime)\r\n    ksp(libs.androidx.room.compiler)\r\n    implementation(libs.androidx.room.ktx)\r\n\r\n    // Glide\r\n    implementation(libs.glide)\r\n\r\n    // Retrofit\r\n    implementation(libs.retrofit.v290)\r\n    implementation(libs.converter.gson)\r\n    implementation(libs.picasso)\r\n\r\n    // OkHttp\r\n    implementation(libs.okhttp)\r\n    implementation(libs.logging.interceptor)\r\n\r\n    // Koin\r\n    implementation(project.dependencies.platform(libs.koin.bom))\r\n    implementation(libs.koin.core)\r\n    implementation(libs.koin.android)\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/build.gradle.kts	(date 1748549043788)
+@@ -3,6 +3,7 @@
+     id("org.jetbrains.kotlin.android")
+     id("ru.practicum.android.diploma.plugins.developproperties")
+     id("com.google.devtools.ksp") version "2.1.21-2.0.1"
++    id ("androidx.navigation.safeargs.kotlin")
+ }
+ 
+ android {
+Index: app/src/main/java/ru/practicum/android/diploma/ui/screens/main/VacancyAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma.ui.screens.main\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.DiffUtil\r\nimport androidx.recyclerview.widget.ListAdapter\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.bumptech.glide.Glide\r\nimport com.bumptech.glide.load.resource.bitmap.RoundedCorners\r\nimport ru.practicum.android.diploma.R\r\nimport ru.practicum.android.diploma.databinding.ItemVacancyBinding\r\nimport ru.practicum.android.diploma.domain.network.models.VacancyDetails\r\n\r\nclass VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHolder>(VacancyDiffCallback()) {\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {\r\n        val binding = ItemVacancyBinding.inflate(\r\n            LayoutInflater.from(parent.context),\r\n            parent,\r\n            false\r\n        )\r\n        return VacancyViewHolder(binding)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {\r\n        holder.bind(getItem(position))\r\n    }\r\n\r\n    class VacancyViewHolder(\r\n        private val binding: ItemVacancyBinding\r\n    ) : RecyclerView.ViewHolder(binding.root) {\r\n\r\n        fun bind(vacancyDetails: VacancyDetails) {\r\n            val value = vacancyDetails.salary\r\n            binding.apply {\r\n                jobTitle.text = buildString {\r\n                    append(vacancyDetails.name)\r\n                    append(\",\")\r\n                    append(vacancyDetails.area.name)\r\n                }\r\n                companyName.text = vacancyDetails.employer.name\r\n\r\n                salary.text = when {\r\n                    value?.from != null && value.to != null ->\r\n                        \"от ${value.from} до ${value.to} ${value.currency}\"\r\n\r\n                    value?.from != null ->\r\n                        \"от ${value.from} ${value.currency}\"\r\n\r\n                    value?.to != null ->\r\n                        \"до ${value.to} ${value.currency}\"\r\n\r\n                    else -> \"Зарплата не указана\"\r\n                }\r\n\r\n                Glide.with(itemView)\r\n                    .load(vacancyDetails.employer.logoUrls?.original)\r\n                    .placeholder(R.drawable.empty_image)\r\n                    .fitCenter()\r\n                    .transform(RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.indent_12dp)))\r\n                    .into(image)\r\n            }\r\n        }\r\n    }\r\n\r\n    private class VacancyDiffCallback : DiffUtil.ItemCallback<VacancyDetails>() {\r\n        override fun areItemsTheSame(oldItem: VacancyDetails, newItem: VacancyDetails): Boolean {\r\n            return oldItem.id == newItem.id\r\n        }\r\n\r\n        override fun areContentsTheSame(oldItem: VacancyDetails, newItem: VacancyDetails): Boolean {\r\n            return oldItem == newItem\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/VacancyAdapter.kt b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/VacancyAdapter.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/VacancyAdapter.kt	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/VacancyAdapter.kt	(date 1748549043823)
+@@ -9,9 +9,11 @@
+ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+ import ru.practicum.android.diploma.R
+ import ru.practicum.android.diploma.databinding.ItemVacancyBinding
++import ru.practicum.android.diploma.domain.OnItemClickListener
+ import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+ 
+-class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHolder>(VacancyDiffCallback()) {
++class VacancyAdapter(private val onItemClickListener: OnItemClickListener<VacancyDetails>) :
++    ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHolder>(VacancyDiffCallback()) {
+ 
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
+         val binding = ItemVacancyBinding.inflate(
+@@ -19,7 +21,7 @@
+             parent,
+             false
+         )
+-        return VacancyViewHolder(binding)
++        return VacancyViewHolder(binding, onItemClickListener)
+     }
+ 
+     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
+@@ -27,7 +29,8 @@
+     }
+ 
+     class VacancyViewHolder(
+-        private val binding: ItemVacancyBinding
++        private val binding: ItemVacancyBinding,
++        private val onItemClickListener: OnItemClickListener<VacancyDetails>
+     ) : RecyclerView.ViewHolder(binding.root) {
+ 
+         fun bind(vacancyDetails: VacancyDetails) {
+@@ -59,6 +62,10 @@
+                     .fitCenter()
+                     .transform(RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.indent_12dp)))
+                     .into(image)
++
++                root.setOnClickListener {
++                    onItemClickListener.onItemClick(vacancyDetails)
++                }
+             }
+         }
+     }
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Поиск вакансий</string>\r\n    <string name=\"team\">Команда</string>\r\n    <string name=\"working_on_the_app\">Над приложением работали</string>\r\n    <string name=\"alexander_antipin\">Антипин Александр</string>\r\n    <string name=\"sergey_boikov\">Бойков Сергей</string>\r\n    <string name=\"sukhanov_temirlan\">Суханов Темирлан</string>\r\n    <string name=\"details_screen\">Vacancy Details Screen</string>\r\n    <string name=\"favourites_screen\">Favourites Screen</string>\r\n    <string name=\"main_screen\">Main Screen</string>\r\n    <string name=\"main\">Главная</string>\r\n    <string name=\"favourite\">Избранное</string>\r\n    <string name=\"enter_request\">Введите запрос</string>\r\n    <string name=\"empty_search\">Не удалось получить список вакансий</string>\r\n    <string name=\"no_such_vacancies\">Таких вакансий нет</string>\r\n    <string name=\"filtr\">Фильтр</string>\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/res/values/strings.xml	(date 1748549043828)
+@@ -14,4 +14,5 @@
+     <string name="empty_search">Не удалось получить список вакансий</string>
+     <string name="no_such_vacancies">Таких вакансий нет</string>
+     <string name="filtr">Фильтр</string>
++    <string name="no_internet">Нет интернета</string>
+ </resources>
+Index: app/src/main/res/drawable/arrow_back_24px.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/arrow_back_24px.xml b/app/src/main/res/drawable/arrow_back_24px.xml
+new file mode 100644
+--- /dev/null	(date 1748549043810)
++++ b/app/src/main/res/drawable/arrow_back_24px.xml	(date 1748549043810)
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M20,11H7.83L13.42,5.41L12,4L4,12L12,20L13.41,18.59L7.83,13H20V11Z"
++      android:fillColor="@color/black_white"/>
++</vector>
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetSelector\">\r\n    <selectionStates>\r\n      <SelectionState runConfigName=\"app\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n      </SelectionState>\r\n    </selectionStates>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+--- a/.idea/deploymentTargetSelector.xml	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/.idea/deploymentTargetSelector.xml	(date 1748549048714)
+@@ -5,6 +5,9 @@
+       <SelectionState runConfigName="app">
+         <option name="selectionMode" value="DROPDOWN" />
+       </SelectionState>
++      <SelectionState runConfigName="RootActivity (2)">
++        <option name="selectionMode" value="DROPDOWN" />
++      </SelectionState>
+     </selectionStates>
+   </component>
+ </project>
+\ No newline at end of file
+Index: app/src/main/res/drawable/favorites_on__24px.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/favorites_on__24px.xml b/app/src/main/res/drawable/favorites_on__24px.xml
+new file mode 100644
+--- /dev/null	(date 1748549043806)
++++ b/app/src/main/res/drawable/favorites_on__24px.xml	(date 1748549043806)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M12,22L10.405,20.561C4.74,15.471 1,12.114 1,7.995C1,4.638 3.662,2 7.05,2C8.964,2 10.801,2.883 12,4.278C13.199,2.883 15.036,2 16.95,2C20.338,2 23,4.638 23,7.995C23,12.114 19.26,15.471 13.595,20.572L12,22Z"
++      android:fillColor="#F56B6C"
++      android:fillType="evenOdd"/>
++</vector>
+Index: app/src/main/res/drawable/favorites_off__24px.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/favorites_off__24px.xml b/app/src/main/res/drawable/favorites_off__24px.xml
+new file mode 100644
+--- /dev/null	(date 1748549043784)
++++ b/app/src/main/res/drawable/favorites_off__24px.xml	(date 1748549043784)
+@@ -0,0 +1,12 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M12,22L10.405,20.561C4.74,15.471 1,12.114 1,7.995C1,4.638 3.662,2 7.05,2C8.964,2 10.801,2.883 12,4.278C13.199,2.883 15.036,2 16.95,2C20.338,2 23,4.638 23,7.995C23,12.114 19.26,15.471 13.595,20.572L12,22Z"
++      android:strokeWidth="2"
++      android:fillColor="#00000000"
++      android:fillType="evenOdd"
++      android:strokeColor="@color/black_white"/>
++</vector>
+Index: app/src/main/res/drawable/sharing_24px.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/sharing_24px.xml b/app/src/main/res/drawable/sharing_24px.xml
+new file mode 100644
+--- /dev/null	(date 1748549043781)
++++ b/app/src/main/res/drawable/sharing_24px.xml	(date 1748549043781)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M18,16.136C17.24,16.136 16.56,16.438 16.04,16.91L8.91,12.743C8.96,12.512 9,12.281 9,12.04C9,11.799 8.96,11.568 8.91,11.337L15.96,7.211C16.5,7.713 17.21,8.024 18,8.024C19.66,8.024 21,6.679 21,5.012C21,3.345 19.66,2 18,2C16.34,2 15,3.345 15,5.012C15,5.253 15.04,5.484 15.09,5.715L8.04,9.841C7.5,9.339 6.79,9.028 6,9.028C4.34,9.028 3,10.373 3,12.04C3,13.707 4.34,15.052 6,15.052C6.79,15.052 7.5,14.741 8.04,14.239L15.16,18.416C15.11,18.626 15.08,18.847 15.08,19.068C15.08,20.685 16.39,22 18,22C19.61,22 20.92,20.685 20.92,19.068C20.92,17.452 19.61,16.136 18,16.136Z"
++      android:fillColor="@color/black_white"
++      android:fillType="evenOdd"/>
++</vector>
+Index: build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nplugins {\r\n    id(\"com.android.application\") version \"8.10.0\" apply false\r\n    id(\"org.jetbrains.kotlin.android\") version \"2.1.0\" apply false\r\n    id(\"convention.detekt\")\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle.kts b/build.gradle.kts
+--- a/build.gradle.kts	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/build.gradle.kts	(date 1748549043832)
+@@ -4,3 +4,13 @@
+     id("org.jetbrains.kotlin.android") version "2.1.0" apply false
+     id("convention.detekt")
+ }
++
++buildscript {
++    repositories {
++        google()
++        mavenCentral()
++    }
++    dependencies {
++        classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.9.0")
++    }
++}
+Index: app/src/main/res/menu/toolbar_menu_detalies.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/toolbar_menu_detalies.xml b/app/src/main/res/menu/toolbar_menu_detalies.xml
+new file mode 100644
+--- /dev/null	(date 1748549043819)
++++ b/app/src/main/res/menu/toolbar_menu_detalies.xml	(date 1748549043819)
+@@ -0,0 +1,14 @@
++<menu xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto">
++    <item
++        android:id="@+id/action_share"
++        android:icon="@drawable/sharing_24px"
++        android:title="Поделиться"
++        app:showAsAction="ifRoom" />
++
++    <item
++        android:id="@+id/action_favorite"
++        android:icon="@drawable/favorites_off__24px"
++        android:title="В избранное"
++        app:showAsAction="ifRoom" />
++</menu>
+Index: app/src/main/java/ru/practicum/android/diploma/domain/OnItemClickListener.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/domain/OnItemClickListener.kt b/app/src/main/java/ru/practicum/android/diploma/domain/OnItemClickListener.kt
+new file mode 100644
+--- /dev/null	(date 1748549043815)
++++ b/app/src/main/java/ru/practicum/android/diploma/domain/OnItemClickListener.kt	(date 1748549043815)
+@@ -0,0 +1,5 @@
++package ru.practicum.android.diploma.domain
++
++fun interface OnItemClickListener <T> {
++    fun onItemClick(item : T)
++}
+Index: app/src/main/res/navigation/nav_graph.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<navigation xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/nav_graph\"\r\n    app:startDestination=\"@id/homeFragment\">\r\n\r\n    <fragment\r\n        android:id=\"@+id/homeFragment\"\r\n        android:name=\"ru.practicum.android.diploma.ui.screens.main.MainFragment\"\r\n        android:label=\"Главная\"\r\n        tools:layout=\"@layout/fragment_main\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/favouriteFragment\"\r\n        android:name=\"ru.practicum.android.diploma.ui.screens.favourites.FavouritesFragment\"\r\n        android:label=\"Избранное\"\r\n        tools:layout=\"@layout/fragment_favourites\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/detailsFragment\"\r\n        android:name=\"ru.practicum.android.diploma.ui.screens.vacancy.VacancyDetailsFragment\"\r\n        android:label=\"Команда\"\r\n        tools:layout=\"@layout/fragment_details\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/teamFragment\"\r\n        android:name=\"ru.practicum.android.diploma.ui.screens.team.TeamFragment\"\r\n        android:label=\"fragment_team\"\r\n        tools:layout=\"@layout/fragment_team\" />\r\n\r\n</navigation>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/navigation/nav_graph.xml b/app/src/main/res/navigation/nav_graph.xml
+--- a/app/src/main/res/navigation/nav_graph.xml	(revision 5727c238b3fcdca59496556dc362ae9c6fad44cc)
++++ b/app/src/main/res/navigation/nav_graph.xml	(date 1748549043836)
+@@ -9,7 +9,11 @@
+         android:id="@+id/homeFragment"
+         android:name="ru.practicum.android.diploma.ui.screens.main.MainFragment"
+         android:label="Главная"
+-        tools:layout="@layout/fragment_main" />
++        tools:layout="@layout/fragment_main" >
++        <action
++            android:id="@+id/action_homeFragment_to_detailsFragment"
++            app:destination="@id/detailsFragment" />
++    </fragment>
+ 
+     <fragment
+         android:id="@+id/favouriteFragment"
+@@ -21,7 +25,13 @@
+         android:id="@+id/detailsFragment"
+         android:name="ru.practicum.android.diploma.ui.screens.vacancy.VacancyDetailsFragment"
+         android:label="Команда"
+-        tools:layout="@layout/fragment_details" />
++        tools:layout="@layout/fragment_details" >
++        <argument
++            android:name="vacancyId"
++            app:argType="string" />
++
++    </fragment>
++
+ 
+     <fragment
+         android:id="@+id/teamFragment"

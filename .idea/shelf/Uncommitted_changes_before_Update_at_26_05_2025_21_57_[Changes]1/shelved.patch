@@ -1,0 +1,180 @@
+Index: app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <style name=\"Regular12\">\r\n        <item name=\"android:textSize\">12sp</item>\r\n        <item name=\"fontFamily\">@font/ys_display_regular</item>\r\n        <item name=\"android:textColor\">@color/black_white</item>\r\n    </style>\r\n    <style name=\"Regular16\">\r\n        <item name=\"android:textSize\">16sp</item>\r\n        <item name=\"fontFamily\">@font/ys_display_regular</item>\r\n        <item name=\"android:textColor\">@color/black_white</item>\r\n    </style>\r\n    <style name=\"Medium16\">\r\n        <item name=\"android:textSize\">16sp</item>\r\n        <item name=\"fontFamily\">@font/ys_display_medium</item>\r\n        <item name=\"android:textColor\">@color/black_white</item>\r\n    </style>\r\n    <style name=\"Medium22\">\r\n        <item name=\"android:textSize\">22sp</item>\r\n        <item name=\"fontFamily\">@font/ys_display_medium</item>\r\n        <item name=\"android:textColor\">@color/black_white</item>\r\n    </style>\r\n    <style name=\"Bold32\">\r\n        <item name=\"android:textSize\">32sp</item>\r\n        <item name=\"fontFamily\">@font/ys_display_bold</item>\r\n        <item name=\"android:textColor\">@color/black_white</item>\r\n    </style>\r\n\r\n    <style name=\"ButtonNavigation\" parent=\"TextAppearance.AppCompat.Caption\">\r\n        <item name=\"itemTextAppearanceActive\">@style/Regular12</item>\r\n        <item name=\"itemTextAppearanceInactive\">@style/Regular12</item>\r\n        <item name=\"itemActiveIndicatorStyle\">@null</item>\r\n        <item name=\"android:background\">@color/white_black</item>\r\n        <item name=\"itemTextColor\">@drawable/bottom_navigation_selector</item>\r\n        <item name=\"itemIconTint\">@drawable/bottom_navigation_selector</item>\r\n    </style>\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/styles.xml b/app/src/main/res/values/styles.xml
+--- a/app/src/main/res/values/styles.xml	(revision 21d42d17dbc578c258b567f794bd2b4e077955f6)
++++ b/app/src/main/res/values/styles.xml	(date 1748196900032)
+@@ -34,4 +34,19 @@
+         <item name="itemTextColor">@drawable/bottom_navigation_selector</item>
+         <item name="itemIconTint">@drawable/bottom_navigation_selector</item>
+     </style>
++
++    <style name="ToolbarStyle">
++        <item name="android:textSize">@dimen/text_size_22sp</item>
++        <item name="android:textColor">@color/black_white</item>
++        <item name="android:drawableTint">@color/black_white</item>
++        <item name="titleTextAppearance">@style/Regular12</item>
++    </style>
++
++    <style name="LayoutStyle">
++        <item name="android:layout_width">match_parent</item>
++        <item name="android:layout_height">match_parent</item>
++        <item name="android:orientation">vertical</item>
++        <item name="android:background">@color/white_black</item>
++    </style>
++
+ </resources>
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Поиск вакансий</string>\r\n    <string name=\"team\">Команда</string>\r\n    <string name=\"working_on_the_app\">Над приложением работали</string>\r\n    <string name=\"alexander_antipin\">Антипин Александр</string>\r\n    <string name=\"sergey_boikov\">Бойков Сергей</string>\r\n    <string name=\"sukhanov_temirlan\">Суханов Темирлан</string>\r\n    <string name=\"details_screen\">Vacancy Details Screen</string>\r\n    <string name=\"favourites_screen\">Favourites Screen</string>\r\n    <string name=\"main_screen\">Main Screen</string>\r\n    <string name=\"main\">Главная</string>\r\n    <string name=\"favourite\">Избранное</string>\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 21d42d17dbc578c258b567f794bd2b4e077955f6)
++++ b/app/src/main/res/values/strings.xml	(date 1748197591479)
+@@ -10,4 +10,5 @@
+     <string name="main_screen">Main Screen</string>
+     <string name="main">Главная</string>
+     <string name="favourite">Избранное</string>
++    <string name="enter_request">Введите запрос</string>
+ </resources>
+Index: app/src/main/res/drawable/cursor_color.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/cursor_color.xml b/app/src/main/res/drawable/cursor_color.xml
+new file mode 100644
+--- /dev/null	(date 1748197807743)
++++ b/app/src/main/res/drawable/cursor_color.xml	(date 1748197807743)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <size android:width="2dp" />
++    <solid android:color="@color/blue" />
++</shape>
+Index: app/src/main/res/drawable/edittext.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/edittext.xml b/app/src/main/res/drawable/edittext.xml
+new file mode 100644
+--- /dev/null	(date 1748198534528)
++++ b/app/src/main/res/drawable/edittext.xml	(date 1748198534528)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++
++    <solid android:color="@color/light_gray"/>
++    <corners android:radius="16dp"/>
++</shape>
+Index: app/src/main/res/values/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/dimens.xml b/app/src/main/res/values/dimens.xml
+new file mode 100644
+--- /dev/null	(date 1748198657472)
++++ b/app/src/main/res/values/dimens.xml	(date 1748198657472)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <dimen name="indent_8dp">8dp</dimen>
++    <dimen name="indent_16dp">16dp</dimen>
++</resources>
+Index: app/src/main/res/menu/toolbar_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/toolbar_menu.xml b/app/src/main/res/menu/toolbar_menu.xml
+new file mode 100644
+--- /dev/null	(date 1748196652378)
++++ b/app/src/main/res/menu/toolbar_menu.xml	(date 1748196652378)
+@@ -0,0 +1,8 @@
++<menu xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto">
++    <item
++        android:id="@+id/action_filter"
++        android:icon="@drawable/filter_off__24px"
++        android:title="Фильтр"
++        app:showAsAction="always" />
++</menu>
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetSelector\">\r\n    <selectionStates>\r\n      <SelectionState runConfigName=\"app\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n      </SelectionState>\r\n    </selectionStates>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+--- a/.idea/deploymentTargetSelector.xml	(revision 21d42d17dbc578c258b567f794bd2b4e077955f6)
++++ b/.idea/deploymentTargetSelector.xml	(date 1748195200918)
+@@ -7,4 +7,4 @@
+       </SelectionState>
+     </selectionStates>
+   </component>
+-</project>
+\ No newline at end of file
++</project>
+Index: app/src/main/res/drawable/filter_off__24px.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/filter_off__24px.xml b/app/src/main/res/drawable/filter_off__24px.xml
+new file mode 100644
+--- /dev/null	(date 1748196302179)
++++ b/app/src/main/res/drawable/filter_off__24px.xml	(date 1748196302179)
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M10,18H14V16H10V18ZM3,6V8H21V6H3ZM6,13H18V11H6V13Z"
++      android:fillColor="#1A1B22"/>
++</vector>
+Index: app/src/main/res/values/dimen.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/dimen.xml b/app/src/main/res/values/dimen.xml
+new file mode 100644
+--- /dev/null	(date 1748195788713)
++++ b/app/src/main/res/values/dimen.xml	(date 1748195788713)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <dimen name="text_size_22sp">22sp</dimen>
++</resources>
+Index: app/src/main/res/drawable/search_24px.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/search_24px.xml b/app/src/main/res/drawable/search_24px.xml
+new file mode 100644
+--- /dev/null	(date 1748197838450)
++++ b/app/src/main/res/drawable/search_24px.xml	(date 1748197838450)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:pathData="M15.5,14H14.71L14.43,13.73C15.41,12.59 16,11.11 16,9.5C16,5.91 13.09,3 9.5,3C5.91,3 3,5.91 3,9.5C3,13.09 5.91,16 9.5,16C11.11,16 12.59,15.41 13.73,14.43L14,14.71V15.5L19,20.49L20.49,19L15.5,14ZM9.5,14C7.01,14 5,11.99 5,9.5C5,7.01 7.01,5 9.5,5C11.99,5 14,7.01 14,9.5C14,11.99 11.99,14 9.5,14Z"
++      android:fillColor="@color/gray"
++      android:fillType="evenOdd"/>
++</vector>
