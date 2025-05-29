@@ -4,3 +4,13 @@ plugins {
     id("org.jetbrains.kotlin.android") version "2.1.0" apply false
     id("convention.detekt")
 }
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.9.0")
+    }
+}

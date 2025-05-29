@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="ru.practicum.android.diploma.ui.screens.main.MainFragment"
         android:label="Главная"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/favouriteFragment"
@@ -21,7 +25,13 @@
         android:id="@+id/detailsFragment"
         android:name="ru.practicum.android.diploma.ui.screens.vacancy.VacancyDetailsFragment"
         android:label="Команда"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="vacancyId"
+            app:argType="string" />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/teamFragment"

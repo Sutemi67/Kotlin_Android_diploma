@@ -12,19 +12,25 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
+import ru.practicum.android.diploma.domain.OnItemClickListener
+import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.debounce
 
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
-    private val adapter: VacancyAdapter = VacancyAdapter()
+    lateinit var adapter: VacancyAdapter
     private val viewModel by viewModel<MainViewModel>()
+    private var isClickAllowed = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +65,16 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+
+        val onItemClickListener = OnItemClickListener<VacancyDetails> { vacancy ->
+            if (clickDebounce()) {
+                val action = MainFragmentDirections.actionHomeFragmentToDetailsFragment(vacancy.id)
+                findNavController().navigate(action)
+            }
+        }
+
         binding.recyclerView.apply {
+            this@MainFragment.adapter = VacancyAdapter(onItemClickListener)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@MainFragment.adapter
 
@@ -86,7 +101,7 @@ class MainFragment : Fragment() {
     private fun setupSearchView() {
         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
         val debouncedSearch = debounce(
-            delayMillis = 1000L,
+            delayMillis = CLICK_DEBOUNCE_DELAY,
             coroutineScope = viewLifecycleOwner.lifecycleScope,
             useLastParam = true
         ) { query: String ->
@@ -145,6 +160,7 @@ class MainFragment : Fragment() {
                 }
 
                 is UiState.Error -> {
+                    showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
                     binding.recyclerView.isVisible = false
                     binding.errorMessage.isVisible = true
                     binding.imageStart.isVisible = false
@@ -183,5 +199,21 @@ class MainFragment : Fragment() {
                 errorMessage.isVisible = false
             }
         }
+
+
+    private fun clickDebounce(): Boolean {
+        if (isClickAllowed) {
+            isClickAllowed = false
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(CLICK_DEBOUNCE_DELAY)
+                isClickAllowed = true
+            }
+        }
+        return true
+    }
+
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
 
 }

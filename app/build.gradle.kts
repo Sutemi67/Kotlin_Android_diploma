@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
     id("com.google.devtools.ksp") version "2.1.21-2.0.1"
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {

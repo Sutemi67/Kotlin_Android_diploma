@@ -14,4 +14,5 @@
     <string name="empty_search">Не удалось получить список вакансий</string>
     <string name="no_such_vacancies">Таких вакансий нет</string>
     <string name="filtr">Фильтр</string>
+    <string name="no_internet">Нет интернета</string>
 </resources>

@@ -9,9 +9,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemVacancyBinding
+import ru.practicum.android.diploma.domain.OnItemClickListener
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 
-class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHolder>(VacancyDiffCallback()) {
+class VacancyAdapter(private val onItemClickListener: OnItemClickListener<VacancyDetails>) :
+    ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHolder>(VacancyDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val binding = ItemVacancyBinding.inflate(
@@ -19,7 +21,7 @@ class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHol
             parent,
             false
         )
-        return VacancyViewHolder(binding)
+        return VacancyViewHolder(binding, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
@@ -27,7 +29,8 @@ class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHol
     }
 
     class VacancyViewHolder(
-        private val binding: ItemVacancyBinding
+        private val binding: ItemVacancyBinding,
+        private val onItemClickListener: OnItemClickListener<VacancyDetails>
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(vacancyDetails: VacancyDetails) {
@@ -59,6 +62,10 @@ class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHol
                     .fitCenter()
                     .transform(RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.indent_12dp)))
                     .into(image)
+
+                root.setOnClickListener {
+                    onItemClickListener.onItemClick(vacancyDetails)
+                }
             }
         }
     }
