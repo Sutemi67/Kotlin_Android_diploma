@@ -25,8 +25,7 @@ class MainViewModel(
     private var isLoadingMore = false
 
     fun searchVacancies(query: String, isNewSearch: Boolean = true) {
-        if(query.isNotEmpty()) {
-
+        if (query.isNotEmpty()) {
             _searchState.postValue(UiState.Loading)
 
             viewModelScope.launch {
@@ -42,7 +41,7 @@ class MainViewModel(
 
     private fun processResult(vacancy: List<VacancyDetails>?, errorMessage: String?) {
         val vacancys = mutableListOf<VacancyDetails>()
-        if(vacancy != null) {
+        if (vacancy != null) {
             vacancys.addAll(vacancy)
         }
 

@@ -17,10 +17,10 @@ class VacancyRepository(
 
     override fun searchVacancies(query: String): Flow<Resource<List<VacancyDetails>>> = flow {
         val response = networkClient.doSearchRequest(AllVacancyRequest(query))
-        when(response.resultCode) {
-            -1 -> (emit(Resource.Error("Ошибка")))
-            200 -> {
-                with(response as AllVacancyResponse) {
+        when (response.resultCode) {
+            ERROR_NO_CONNECTION -> emit(Resource.Error("Ошибка"))
+            SUCCESS -> {
+                with (response as AllVacancyResponse) {
                     val data = items.mapNotNull {
                         VacancyDetails(
                             id = it.id,
@@ -42,6 +42,12 @@ class VacancyRepository(
 //        id: String
 //    ): VacancyDetails {
 //        return api.getVacancyDetails(token, id)
-//    }
+
+    companion object {
+        private const val ERROR_NO_CONNECTION = -1
+        private const val ERROR_INVALID_DTO = 400
+        private const val ERROR_IO_EXCEPTION = 500
+        private const val SUCCESS = 200
+    }
 
 }

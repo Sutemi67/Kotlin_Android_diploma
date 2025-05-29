@@ -11,7 +11,7 @@ class VacancyInteractorImpl(private val repository: VacancyRepositoryInterface) 
 
     override fun searchVacancy(query: String): Flow<Pair<List<VacancyDetails>?, String?>> {
         return repository.searchVacancies(query).map { result ->
-            when(result) {
+            when (result) {
                 is Resource.Success -> {
                     Pair(result.data, null)
                 }

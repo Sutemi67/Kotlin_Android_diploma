@@ -169,24 +169,6 @@ class MainFragment : Fragment() {
         }
     }
 
-//    private fun uiState(state: UiState) {
-//        when (state) {
-//            UiState.Idle -> TODO()
-//            UiState.NothingFound -> TODO()
-//            UiState.Success -> {
-//                binding.recyclerView.isVisible = true
-//                binding.errorMessage.isVisible = false
-//                binding.imageStart.isVisible = false
-//            }
-//
-//            UiState.Error -> {
-//                binding.recyclerView.isVisible = false
-//                binding.errorMessage.isVisible = true
-//                binding.imageStart.isVisible = true
-//            }
-//        }
-//    }
-
     private fun showMessage(text: String, additionalMessage: String, drawable: Int) =
         with(binding) {
             imageStart.isVisible = false
@@ -201,4 +183,5 @@ class MainFragment : Fragment() {
                 errorMessage.isVisible = false
             }
         }
+
 }
