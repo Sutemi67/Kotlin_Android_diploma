@@ -15,7 +15,7 @@ class RetrofitNetworkClient(
 ) : NetworkClient {
 
     private val token = "Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
-    private val token1 = "Bearer APPLIPKQ37D33OTAKDG005QH3FHC9UMI2MA1VMHIH8IHGL5THOG4P5AQJH8MCULD"
+
 
     override suspend fun doSearchRequest(dto: Any): Response {
         if(!isConnected(context)) {
@@ -28,7 +28,7 @@ class RetrofitNetworkClient(
         return withContext(Dispatchers.IO) {
             try {
                 val resp = api.searchVacancies(
-                    token = token1,
+                    token = token,
                     query = dto.expression,
                     page = 1
                 )
