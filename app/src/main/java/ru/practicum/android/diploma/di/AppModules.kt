@@ -5,5 +5,11 @@ import org.koin.dsl.module
 import ru.practicum.android.diploma.ui.screens.main.MainViewModel
 
 val AppModule = module {
-    viewModel<MainViewModel> { MainViewModel(get()) }
+
+    viewModel<MainViewModel> {
+        MainViewModel(
+            interactor = get()
+        )
+    }
+
 }

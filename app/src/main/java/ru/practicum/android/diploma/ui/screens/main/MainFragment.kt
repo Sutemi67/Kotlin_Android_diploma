@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
-import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.debounce
 
 class MainFragment : Fragment() {
@@ -45,6 +44,7 @@ class MainFragment : Fragment() {
 
         binding.buttonCleanSearch.setOnClickListener {
             binding.searchView.setText("")
+            adapter.submitList(emptyList())
             val inputMethodManager =
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
@@ -72,12 +72,12 @@ class MainFragment : Fragment() {
                     val totalItemCount = layoutManager.itemCount
                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-                    if (!viewModel.isLoading.value!! &&
-                        visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
-                        firstVisibleItemPosition >= 0
-                    ) {
-                        viewModel.loadMoreItems()
-                    }
+//                    if (!viewModel.isLoading.value!! &&
+//                        visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
+//                        firstVisibleItemPosition >= 0
+//                    ) {
+//                        viewModel.loadMoreItems()
+//                    }
                 }
             })
         }
@@ -121,16 +121,42 @@ class MainFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.searchState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is Resource.Success -> {
-                    uiState(UiState.Success)
-                    binding.infoSearch.text = "Найдено ${state.itemsCount} вакансий" // todo
-                    adapter.submitList(state.data)
+                is UiState.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.imageStart.isVisible = false
                 }
 
-                is Resource.Error -> {
-                    uiState(UiState.Error)
-                    binding.errorText.text = state.message
+                is UiState.Content -> {
+                    binding.recyclerView.isVisible = true
+                    binding.errorMessage.isVisible = false
+                    binding.imageStart.isVisible = false
+                    binding.progressBar.isVisible = false
+                    binding.infoSearch.text = "Найдено ${state.vacancies.size} вакансий"
+                    adapter.submitList(state.vacancies)
+                }
+
+                is UiState.NotFound -> {
+                    binding.recyclerView.isVisible = false
+                    binding.errorMessage.isVisible = true
+                    binding.imageStart.isVisible = false
+                    binding.progressBar.isVisible = false
+                    binding.errorText.text = "Ошибка"
                     adapter.submitList(emptyList())
+                }
+
+                is UiState.Error -> {
+                    binding.recyclerView.isVisible = false
+                    binding.errorMessage.isVisible = true
+                    binding.imageStart.isVisible = false
+                    binding.progressBar.isVisible = false
+                    binding.errorText.text = state.errorMessage
+                    adapter.submitList(emptyList())
+                }
+
+                is UiState.Idle -> {
+                    binding.recyclerView.isVisible = false
+                    binding.errorMessage.isVisible = false
+                    binding.imageStart.isVisible = true
                 }
             }
         }
@@ -139,24 +165,6 @@ class MainFragment : Fragment() {
             binding.progressBar.isVisible = isLoading
             if (isLoading) {
                 binding.imageStart.isVisible = false
-            }
-        }
-    }
-
-    private fun uiState(state: UiState) {
-        when (state) {
-            UiState.Idle -> TODO()
-            UiState.NothingFound -> TODO()
-            UiState.Success -> {
-                binding.recyclerView.isVisible = true
-                binding.errorMessage.isVisible = false
-                binding.imageStart.isVisible = false
-            }
-
-            UiState.Error -> {
-                binding.recyclerView.isVisible = false
-                binding.errorMessage.isVisible = true
-                binding.imageStart.isVisible = true
             }
         }
     }
@@ -175,4 +183,5 @@ class MainFragment : Fragment() {
                 errorMessage.isVisible = false
             }
         }
+
 }
