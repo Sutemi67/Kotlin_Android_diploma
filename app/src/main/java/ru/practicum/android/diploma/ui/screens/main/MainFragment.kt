@@ -13,6 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
@@ -47,11 +48,9 @@ class MainFragment : Fragment() {
             val inputMethodManager =
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
-            adapter.submitList(emptyList())
             binding.errorMessage.isVisible = false
             binding.imageStart.isVisible = true
         }
-
     }
 
     override fun onDestroyView() {
@@ -63,6 +62,24 @@ class MainFragment : Fragment() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@MainFragment.adapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                    if (!viewModel.isLoading.value!! &&
+                        visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
+                        firstVisibleItemPosition >= 0
+                    ) {
+                        viewModel.loadMoreItems()
+                    }
+                }
+            })
         }
     }
 
@@ -105,15 +122,15 @@ class MainFragment : Fragment() {
         viewModel.searchState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is Resource.Success -> {
-                    binding.recyclerView.isVisible = true
-                    binding.errorMessage.isVisible = false
-                    binding.imageStart.isVisible = false
+                    uiState(UiState.Success)
+                    binding.infoSearch.text = "Найдено ${state.itemsCount} вакансий" // todo
                     adapter.submitList(state.data)
                 }
 
                 is Resource.Error -> {
-                    showMessage(getString(R.string.empty_search), "", R.drawable.image_kat)
+                    uiState(UiState.Error)
                     binding.errorText.text = state.message
+                    adapter.submitList(emptyList())
                 }
             }
         }
@@ -122,6 +139,24 @@ class MainFragment : Fragment() {
             binding.progressBar.isVisible = isLoading
             if (isLoading) {
                 binding.imageStart.isVisible = false
+            }
+        }
+    }
+
+    private fun uiState(state: UiState) {
+        when (state) {
+            UiState.Idle -> TODO()
+            UiState.NothingFound -> TODO()
+            UiState.Success -> {
+                binding.recyclerView.isVisible = true
+                binding.errorMessage.isVisible = false
+                binding.imageStart.isVisible = false
+            }
+
+            UiState.Error -> {
+                binding.recyclerView.isVisible = false
+                binding.errorMessage.isVisible = true
+                binding.imageStart.isVisible = true
             }
         }
     }

@@ -22,14 +22,17 @@ class MainViewModel(
 
     private var currentPage = 0
     private var totalPages = 0
+    private var totalVacancies = 0
     private var currentQuery = ""
     private var isLoadingMore = false
+    private var currentItems = mutableListOf<VacancyDetails>()
 
     fun searchVacancies(query: String, isNewSearch: Boolean = true) {
         if (isNewSearch) {
             currentPage = 0
             currentQuery = query
-            _searchState.value = Resource.Success(emptyList())
+            currentItems.clear()
+            _searchState.value = Resource.Success(emptyList(), totalVacancies)
         }
 
         if (isLoadingMore || currentPage >= totalPages && currentPage > 0) return
@@ -42,10 +45,12 @@ class MainViewModel(
                 val response = repository.searchVacancies(currentQuery, currentPage)
                 totalPages = response.pages
 
-                if (response.items.isEmpty()) {
+                if (response.items.isEmpty() && currentPage == 0) {
                     _searchState.value = Resource.Error("По вашему запросу ничего не найдено")
                 } else {
-                    _searchState.value = Resource.Success(response.items)
+                    currentItems.addAll(response.items)
+                    totalVacancies = currentItems.size
+                    _searchState.value = Resource.Success(currentItems.toList(), totalVacancies)
                 }
 
                 currentPage++
@@ -59,13 +64,13 @@ class MainViewModel(
                     }
                 )
             } finally {
-                _isLoading.value = false
                 isLoadingMore = false
+                _isLoading.value = false
             }
         }
     }
 
-    fun loadMoreVacancies() {
+    fun loadMoreItems() {
         if (!isLoadingMore && currentPage < totalPages) {
             searchVacancies(currentQuery, false)
         }
