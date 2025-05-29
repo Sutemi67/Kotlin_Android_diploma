@@ -20,7 +20,7 @@ class VacancyRepository(
         when (response.resultCode) {
             ERROR_NO_CONNECTION -> emit(Resource.Error("Ошибка"))
             SUCCESS -> {
-                with (response as AllVacancyResponse) {
+                with(response as AllVacancyResponse) {
                     val data = items.mapNotNull {
                         VacancyDetails(
                             id = it.id,
