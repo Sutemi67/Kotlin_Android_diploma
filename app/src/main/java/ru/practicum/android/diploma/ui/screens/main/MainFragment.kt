@@ -28,7 +28,7 @@ class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
-    lateinit var adapter: VacancyAdapter
+    private var adapter: VacancyAdapter? = null
     private val viewModel by viewModel<MainViewModel>()
     private var isClickAllowed = true
 
@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
 
         binding.buttonCleanSearch.setOnClickListener {
             binding.searchView.setText("")
-            adapter.submitList(emptyList())
+            adapter?.submitList(emptyList())
             val inputMethodManager =
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
@@ -108,7 +108,7 @@ class MainFragment : Fragment() {
                 binding.recyclerView.isVisible = false
                 binding.errorMessage.isVisible = false
                 binding.imageStart.isVisible = true
-                adapter.submitList(emptyList())
+                adapter?.submitList(emptyList())
             } else {
                 viewModel.searchVacancies(query)
             }
@@ -146,26 +146,15 @@ class MainFragment : Fragment() {
                     binding.imageStart.isVisible = false
                     binding.progressBar.isVisible = false
                     binding.infoSearch.text = "Найдено ${state.vacancies.size} вакансий"
-                    adapter.submitList(state.vacancies)
+                    adapter?.submitList(state.vacancies)
                 }
 
                 is UiState.NotFound -> {
-                    binding.recyclerView.isVisible = false
-                    binding.errorMessage.isVisible = true
-                    binding.imageStart.isVisible = false
-                    binding.progressBar.isVisible = false
-                    binding.errorText.text = "Ошибка"
-                    adapter.submitList(emptyList())
+                    showMessage(getString(R.string.empty_search), "1", R.drawable.image_kat)
                 }
 
                 is UiState.Error -> {
                     showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
-                    binding.recyclerView.isVisible = false
-                    binding.errorMessage.isVisible = true
-                    binding.imageStart.isVisible = false
-                    binding.progressBar.isVisible = false
-                    binding.errorText.text = state.errorMessage
-                    adapter.submitList(emptyList())
                 }
 
                 is UiState.Idle -> {
@@ -192,7 +181,7 @@ class MainFragment : Fragment() {
             imageView.setImageResource(drawable)
             if (text.isNotEmpty()) {
                 errorMessage.isVisible = true
-                adapter.submitList(emptyList())
+                adapter?.submitList(emptyList())
                 errorText.text = text
             } else {
                 errorMessage.isVisible = false
