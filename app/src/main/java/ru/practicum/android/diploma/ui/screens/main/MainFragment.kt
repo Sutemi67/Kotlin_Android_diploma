@@ -28,8 +28,7 @@ class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
-    private var onItemClickListener = OnItemClickListener<VacancyDetails>({})
-    private val adapter: VacancyAdapter = VacancyAdapter(onItemClickListener)
+    lateinit var adapter: VacancyAdapter
     private val viewModel by viewModel<MainViewModel>()
     private var isClickAllowed = true
 
@@ -66,7 +65,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        onItemClickListener = OnItemClickListener<VacancyDetails> { vacancy ->
+        val onItemClickListener = OnItemClickListener<VacancyDetails> { vacancy ->
             if (clickDebounce()) {
                 val action = MainFragmentDirections.actionHomeFragmentToDetailsFragment(vacancy.id)
                 findNavController().navigate(action)
@@ -74,7 +73,7 @@ class MainFragment : Fragment() {
         }
 
         binding.recyclerView.apply {
-            adapter = VacancyAdapter(onItemClickListener)
+            this@MainFragment.adapter = VacancyAdapter(onItemClickListener)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@MainFragment.adapter
 
