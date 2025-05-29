@@ -97,8 +97,8 @@
 
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="@dimen/indent_44dp"
-            android:layout_height="@dimen/indent_44dp"
+            android:layout_width="@dimen/indent_48dp"
+            android:layout_height="@dimen/indent_48dp"
             android:layout_gravity="center"
             android:indeterminateTint="@color/blue"
             android:visibility="invisible"
@@ -143,6 +143,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView" />
+
+        <ProgressBar
+            android:id="@+id/bottom_progress_bar"
+            android:layout_width="@dimen/indent_48dp"
+            android:layout_height="@dimen/indent_48dp"
+            android:indeterminateTint="@color/blue"
+            android:indeterminateTintMode="src_in"
+            android:paddingBottom="64dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

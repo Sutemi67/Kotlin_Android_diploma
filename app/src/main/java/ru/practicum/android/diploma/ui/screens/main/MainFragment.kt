@@ -169,7 +169,7 @@ class MainFragment : Fragment() {
             imageView.setImageResource(drawable)
             if (text.isNotEmpty()) {
                 errorMessage.isVisible = true
-                adapter.notifyDataSetChanged()
+                adapter.submitList(emptyList())
                 errorText.text = text
             } else {
                 errorMessage.isVisible = false

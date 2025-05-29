@@ -9,5 +9,5 @@ data class VacancyDetails(
     @SerializedName("salary") val salary: Salary?,
     @SerializedName("employer") val employer: Employer,
     @SerializedName("snippet") val snippet: Snippet,
-    @SerializedName("alternate_url") val alternateUrl: String
+    @SerializedName("alternate_url") val alternateUrl: String,
 )
