@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/LayoutStyle">
@@ -9,6 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/toolbar_menu"
         app:title="@string/app_name"
         app:titleMargin="@dimen/indent_8dp"
@@ -17,9 +20,13 @@
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
+        android:id="@+id/frameSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <EditText
             android:id="@+id/searchView"
@@ -69,19 +76,11 @@
         android:text="@string/no_such_vacancies"
         android:textAppearance="@style/Regular16"
         android:textColor="@color/white_universal"
-        android:visibility="visible"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/frameSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/errorMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:constraint_referenced_ids="imageView,errorText" />
 
         <ImageView
             android:id="@+id/imageStart"
@@ -93,7 +92,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/frameSearch" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -115,11 +114,18 @@
             app:layout_constraintBottom_toTopOf="@id/bottom_progress_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/infoSearch"
             tools:listitem="@layout/item_vacancy"
             tools:visibility="invisible">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="imageView,errorText" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -130,7 +136,7 @@
             app:layout_constraintBottom_toTopOf="@+id/errorText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/infoSearch"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
@@ -156,6 +162,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
