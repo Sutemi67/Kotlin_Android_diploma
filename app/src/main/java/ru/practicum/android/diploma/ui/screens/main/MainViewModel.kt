@@ -47,7 +47,9 @@ class MainViewModel(
         }
     }
 
-    private fun processResult(vacancies: List<VacancyDetails>?, errorMessage: String?, page: Int) {
+    private fun processResult(
+        vacancies: List<VacancyDetails>?, errorMessage: String?, page: Int
+    ) {
         _isLoading.postValue(false)
 
         if (errorMessage != null) {
@@ -68,6 +70,7 @@ class MainViewModel(
         _searchState.postValue(UiState.Content(allVacancies))
         currentPage++ // увеличиваем страницу
     }
+
 
     fun loadMoreItems() {
         if (_isLoading.value == true || isLoadingMore) return
