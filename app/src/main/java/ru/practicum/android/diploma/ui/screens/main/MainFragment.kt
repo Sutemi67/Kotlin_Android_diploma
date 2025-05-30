@@ -166,7 +166,7 @@ class MainFragment : Fragment() {
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            val hasContent = (adapter?.currentList?.isNotEmpty() == true)
+            val hasContent = adapter?.currentList?.isNotEmpty() == true
             binding.bottomProgressBar.visibility =
                 if (isLoading && hasContent) View.VISIBLE else View.GONE
         }
