@@ -48,7 +48,9 @@ class MainViewModel(
     }
 
     private fun processResult(
-        vacancies: List<VacancyDetails>?, errorMessage: String?, page: Int
+        vacancies: List<VacancyDetails>?,
+        errorMessage: String?,
+        page: Int
     ) {
         _isLoading.postValue(false)
 
