@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.util.Resource
 
 class VacancyInteractorImpl(private val repository: VacancyRepositoryInterface) : VacancyInteractorInterface {
 
-    override fun searchVacancy(query: String): Flow<Pair<List<VacancyDetails>?, String?>> {
+    override fun searchVacancy(query: String, page: Int): Flow<Pair<List<VacancyDetails>?, String?>> {
         return repository.searchVacancies(query).map { result ->
             when (result) {
                 is Resource.Success -> {
