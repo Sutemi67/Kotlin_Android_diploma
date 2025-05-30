@@ -12,19 +12,25 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
+import ru.practicum.android.diploma.domain.OnItemClickListener
+import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.debounce
 
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
-    private val adapter: VacancyAdapter = VacancyAdapter()
+    private var adapter: VacancyAdapter? = null
     private val viewModel by viewModel<MainViewModel>()
+    private var isClickAllowed = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +50,7 @@ class MainFragment : Fragment() {
 
         binding.buttonCleanSearch.setOnClickListener {
             binding.searchView.setText("")
-            adapter.submitList(emptyList())
+            adapter?.submitList(emptyList())
             val inputMethodManager =
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
@@ -59,7 +65,15 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        val onItemClickListener = OnItemClickListener<VacancyDetails> { vacancy ->
+            if (clickDebounce()) {
+                val action = MainFragmentDirections.actionHomeFragmentToDetailsFragment(vacancy.id)
+                findNavController().navigate(action)
+            }
+        }
+
         binding.recyclerView.apply {
+            this@MainFragment.adapter = VacancyAdapter(onItemClickListener)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@MainFragment.adapter
 
@@ -86,7 +100,7 @@ class MainFragment : Fragment() {
     private fun setupSearchView() {
         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
         val debouncedSearch = debounce(
-            delayMillis = 1000L,
+            delayMillis = CLICK_DEBOUNCE_DELAY,
             coroutineScope = viewLifecycleOwner.lifecycleScope,
             useLastParam = true
         ) { query: String ->
@@ -94,7 +108,7 @@ class MainFragment : Fragment() {
                 binding.recyclerView.isVisible = false
                 binding.errorMessage.isVisible = false
                 binding.imageStart.isVisible = true
-                adapter.submitList(emptyList())
+                adapter?.submitList(emptyList())
             } else {
                 viewModel.searchVacancies(query)
             }
@@ -132,25 +146,15 @@ class MainFragment : Fragment() {
                     binding.imageStart.isVisible = false
                     binding.progressBar.isVisible = false
                     binding.infoSearch.text = "Найдено ${state.vacancies.size} вакансий"
-                    adapter.submitList(state.vacancies)
+                    adapter?.submitList(state.vacancies)
                 }
 
                 is UiState.NotFound -> {
-                    binding.recyclerView.isVisible = false
-                    binding.errorMessage.isVisible = true
-                    binding.imageStart.isVisible = false
-                    binding.progressBar.isVisible = false
-                    binding.errorText.text = "Ошибка"
-                    adapter.submitList(emptyList())
+                    showMessage(getString(R.string.empty_search), "1", R.drawable.image_kat)
                 }
 
                 is UiState.Error -> {
-                    binding.recyclerView.isVisible = false
-                    binding.errorMessage.isVisible = true
-                    binding.imageStart.isVisible = false
-                    binding.progressBar.isVisible = false
-                    binding.errorText.text = state.errorMessage
-                    adapter.submitList(emptyList())
+                    showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
                 }
 
                 is UiState.Idle -> {
@@ -177,11 +181,26 @@ class MainFragment : Fragment() {
             imageView.setImageResource(drawable)
             if (text.isNotEmpty()) {
                 errorMessage.isVisible = true
-                adapter.submitList(emptyList())
+                adapter?.submitList(emptyList())
                 errorText.text = text
             } else {
                 errorMessage.isVisible = false
             }
         }
+
+    private fun clickDebounce(): Boolean {
+        if (isClickAllowed) {
+            isClickAllowed = false
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(CLICK_DEBOUNCE_DELAY)
+                isClickAllowed = true
+            }
+        }
+        return true
+    }
+
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
 
 }

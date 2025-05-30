@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentDetailsBinding
 
 class VacancyDetailsFragment : Fragment() {
@@ -19,6 +21,34 @@ class VacancyDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentDetailsBinding.bind(view)
+
+        val args = arguments?.let { VacancyDetailsFragmentArgs.fromBundle(it) }
+        val vacancyId = args?.vacancyId
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_share -> {
+                    // код для "Поделиться"
+                    true
+                }
+
+                R.id.action_favorite -> {
+                    //  код для "Избранное"
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     override fun onDestroyView() {

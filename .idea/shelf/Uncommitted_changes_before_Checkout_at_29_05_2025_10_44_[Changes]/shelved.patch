@@ -1,0 +1,416 @@
+Index: app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma.ui.screens.main\r\n\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport android.text.Editable\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.view.inputmethod.InputMethodManager\r\nimport androidx.appcompat.content.res.AppCompatResources\r\nimport androidx.core.view.isVisible\r\nimport androidx.core.widget.addTextChangedListener\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.lifecycle.lifecycleScope\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport org.koin.androidx.viewmodel.ext.android.viewModel\r\nimport ru.practicum.android.diploma.R\r\nimport ru.practicum.android.diploma.databinding.FragmentMainBinding\r\nimport ru.practicum.android.diploma.util.Resource\r\nimport ru.practicum.android.diploma.util.debounce\r\n\r\nclass MainFragment : Fragment() {\r\n\r\n    private var _binding: FragmentMainBinding? = null\r\n    private val binding: FragmentMainBinding get() = requireNotNull(_binding)\r\n    private val adapter: VacancyAdapter = VacancyAdapter()\r\n    private val viewModel by viewModel<MainViewModel>()\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater,\r\n        container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        _binding = FragmentMainBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        setupRecyclerView()\r\n        setupSearchView()\r\n        observeViewModel()\r\n\r\n        binding.buttonCleanSearch.setOnClickListener {\r\n            binding.searchView.setText(\"\")\r\n            val inputMethodManager =\r\n                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager\r\n            inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)\r\n            adapter.submitList(emptyList())\r\n            binding.errorMessage.isVisible = false\r\n            binding.imageStart.isVisible = true\r\n        }\r\n\r\n    }\r\n\r\n    override fun onDestroyView() {\r\n        super.onDestroyView()\r\n        _binding = null\r\n    }\r\n\r\n    private fun setupRecyclerView() {\r\n        binding.recyclerView.apply {\r\n            layoutManager = LinearLayoutManager(requireContext())\r\n            adapter = this@MainFragment.adapter\r\n        }\r\n    }\r\n\r\n    private fun setupSearchView() {\r\n        val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)\r\n        val debouncedSearch = debounce(\r\n            delayMillis = 1000L,\r\n            coroutineScope = viewLifecycleOwner.lifecycleScope,\r\n            useLastParam = true\r\n        ) { query: String ->\r\n            if (query.isBlank()) {\r\n                binding.recyclerView.isVisible = false\r\n                binding.errorMessage.isVisible = false\r\n                binding.imageStart.isVisible = true\r\n                adapter.submitList(emptyList())\r\n            } else {\r\n                viewModel.searchVacancies(query)\r\n            }\r\n        }\r\n\r\n        binding.searchView.addTextChangedListener(\r\n            onTextChanged = { p0: CharSequence?, _, _, _ ->\r\n                debouncedSearch(p0?.toString() ?: \"\")\r\n                if (binding.searchView.hasFocus() && binding.searchView.text.isEmpty()) {\r\n                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)\r\n                    binding.buttonCleanSearch.isVisible = false\r\n                    binding.imageStart.isVisible = true\r\n                } else {\r\n                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)\r\n                    binding.buttonCleanSearch.isVisible = true\r\n                }\r\n            },\r\n            afterTextChanged = { _: Editable? ->\r\n                binding.errorMessage.isVisible = false\r\n            }\r\n        )\r\n    }\r\n\r\n    private fun observeViewModel() {\r\n        viewModel.searchState.observe(viewLifecycleOwner) { state ->\r\n            when (state) {\r\n                is Resource.Success -> {\r\n                    binding.recyclerView.isVisible = true\r\n                    binding.errorMessage.isVisible = false\r\n                    binding.imageStart.isVisible = false\r\n                    adapter.submitList(state.data)\r\n                }\r\n\r\n                is Resource.Error -> {\r\n                    showMessage(getString(R.string.empty_search), \"\", R.drawable.image_kat)\r\n                    binding.errorText.text = state.message\r\n                }\r\n            }\r\n        }\r\n\r\n        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->\r\n            binding.progressBar.isVisible = isLoading\r\n            if (isLoading) {\r\n                binding.imageStart.isVisible = false\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun showMessage(text: String, additionalMessage: String, drawable: Int) =\r\n        with(binding) {\r\n            imageStart.isVisible = false\r\n            progressBar.isVisible = false\r\n            recyclerView.isVisible = false\r\n            imageView.setImageResource(drawable)\r\n            if (text.isNotEmpty()) {\r\n                errorMessage.isVisible = true\r\n                adapter.submitList(emptyList())\r\n                errorText.text = text\r\n            } else {\r\n                errorMessage.isVisible = false\r\n            }\r\n        }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt	(revision 3260d5da7aa4e610b7275bdf6b463c1c38f34df5)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt	(date 1748483026840)
+@@ -3,6 +3,7 @@
+ import android.content.Context
+ import android.os.Bundle
+ import android.text.Editable
++import android.util.Log
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+@@ -11,13 +12,13 @@
+ import androidx.core.view.isVisible
+ import androidx.core.widget.addTextChangedListener
+ import androidx.fragment.app.Fragment
+-import androidx.lifecycle.lifecycleScope
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import org.koin.androidx.viewmodel.ext.android.viewModel
+ import ru.practicum.android.diploma.R
+ import ru.practicum.android.diploma.databinding.FragmentMainBinding
++import ru.practicum.android.diploma.domain.network.models.VacancyDetails
++import ru.practicum.android.diploma.ui.screens.state.VacantState
+ import ru.practicum.android.diploma.util.Resource
+-import ru.practicum.android.diploma.util.debounce
+ 
+ class MainFragment : Fragment() {
+ 
+@@ -38,11 +39,17 @@
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
+ 
++        viewModel.state.observe(viewLifecycleOwner) {
++            render(it)
++        }
++        viewModel.observeMediaState().observe(viewLifecycleOwner) {}
++
+         setupRecyclerView()
+         setupSearchView()
+         observeViewModel()
+ 
+         binding.buttonCleanSearch.setOnClickListener {
++            Log.i("Log5", "searchView")
+             binding.searchView.setText("")
+             val inputMethodManager =
+                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+@@ -59,6 +66,24 @@
+         _binding = null
+     }
+ 
++    private fun render(state: VacantState) {
++        when (state) {
++            is VacantState.Loading -> showLoading()
++            is VacantState.Content -> showContent(state.vacant)
++            is VacantState.Empty -> showMessage(
++                getString(R.string.empty_search), "", R.drawable.image_kat
++            )
++
++            is VacantState.Error -> showMessage(
++                getString(R.string.no_internet),
++                "1",
++                R.drawable.image_skull
++            )
++
++            is VacantState.Info -> binding.infoSearch.text =(state.info)
++        }
++    }
++
+     private fun setupRecyclerView() {
+         binding.recyclerView.apply {
+             layoutManager = LinearLayoutManager(requireContext())
+@@ -68,31 +93,20 @@
+ 
+     private fun setupSearchView() {
+         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
+-        val debouncedSearch = debounce(
+-            delayMillis = 1000L,
+-            coroutineScope = viewLifecycleOwner.lifecycleScope,
+-            useLastParam = true
+-        ) { query: String ->
+-            if (query.isBlank()) {
+-                binding.recyclerView.isVisible = false
+-                binding.errorMessage.isVisible = false
+-                binding.imageStart.isVisible = true
+-                adapter.submitList(emptyList())
+-            } else {
+-                viewModel.searchVacancies(query)
+-            }
+-        }
+-
+         binding.searchView.addTextChangedListener(
+             onTextChanged = { p0: CharSequence?, _, _, _ ->
+-                debouncedSearch(p0?.toString() ?: "")
++             viewModel.searchDebounce(p0?.toString() ?: "")
+                 if (binding.searchView.hasFocus() && binding.searchView.text.isEmpty()) {
+                     binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)
+                     binding.buttonCleanSearch.isVisible = false
+-                    binding.imageStart.isVisible = true
++//                    binding.imageStart.isVisible = true
++//                    binding.recyclerView.isVisible = false
++//                    adapter.submitList(emptyList())
++                    Log.i("Log1.1", "searchView")
+                 } else {
+                     binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                     binding.buttonCleanSearch.isVisible = true
++                    Log.i("Log2.2", "searchView")
+                 }
+             },
+             afterTextChanged = { _: Editable? ->
+@@ -105,6 +119,7 @@
+         viewModel.searchState.observe(viewLifecycleOwner) { state ->
+             when (state) {
+                 is Resource.Success -> {
++                    Log.i("Log3", "searchView")
+                     binding.recyclerView.isVisible = true
+                     binding.errorMessage.isVisible = false
+                     binding.imageStart.isVisible = false
+@@ -112,6 +127,7 @@
+                 }
+ 
+                 is Resource.Error -> {
++                    Log.i("Log4", "searchView")
+                     showMessage(getString(R.string.empty_search), "", R.drawable.image_kat)
+                     binding.errorText.text = state.message
+                 }
+@@ -126,12 +142,33 @@
+         }
+     }
+ 
++    private fun showLoading() = with(binding) {
++        Log.i("Log1", "searchView")
++        binding.imageStart.isVisible = false
++        recyclerView.isVisible = false
++        errorMessage.isVisible = false
++        progressBar.isVisible = true
++        buttonCleanSearch.isVisible = true
++    }
++
++    private fun showContent(vacant: List<VacancyDetails>) = with(binding) {
++        Log.i("Log2", "searchView")
++        recyclerView.isVisible = true
++        buttonCleanSearch.isVisible = true
++        errorMessage.isVisible = false
++        progressBar.isVisible = false
++        adapter.submitList(emptyList())
++        adapter.submitList(vacant)
++        adapter.notifyDataSetChanged()
++    }
++
+     private fun showMessage(text: String, additionalMessage: String, drawable: Int) =
+         with(binding) {
+             imageStart.isVisible = false
+             progressBar.isVisible = false
+             recyclerView.isVisible = false
+             imageView.setImageResource(drawable)
++            Log.i("Log3", "searchView")
+             if (text.isNotEmpty()) {
+                 errorMessage.isVisible = true
+                 adapter.submitList(emptyList())
+@@ -140,4 +177,5 @@
+                 errorMessage.isVisible = false
+             }
+         }
++
+ }
+Index: app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma.ui.screens.main\r\n\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.lifecycle.viewModelScope\r\nimport kotlinx.coroutines.launch\r\nimport retrofit2.HttpException\r\nimport ru.practicum.android.diploma.domain.VacancyRepositoryInterface\r\nimport ru.practicum.android.diploma.domain.network.models.VacancyDetails\r\nimport ru.practicum.android.diploma.util.Resource\r\n\r\nclass MainViewModel(\r\n    private val repository: VacancyRepositoryInterface\r\n) : ViewModel() {\r\n\r\n    private val _searchState = MutableLiveData<Resource<List<VacancyDetails>>>()\r\n    val searchState: LiveData<Resource<List<VacancyDetails>>> = _searchState\r\n\r\n    private val _isLoading = MutableLiveData<Boolean>()\r\n    val isLoading: LiveData<Boolean> = _isLoading\r\n\r\n    private var currentPage = 0\r\n    private var totalPages = 0\r\n    private var currentQuery = \"\"\r\n    private var isLoadingMore = false\r\n\r\n    fun searchVacancies(query: String, isNewSearch: Boolean = true) {\r\n        if (isNewSearch) {\r\n            currentPage = 0\r\n            currentQuery = query\r\n            _searchState.value = Resource.Success(emptyList())\r\n        }\r\n\r\n        if (isLoadingMore || currentPage >= totalPages && currentPage > 0) return\r\n\r\n        viewModelScope.launch {\r\n            try {\r\n                isLoadingMore = true\r\n                _isLoading.value = true\r\n\r\n                val response = repository.searchVacancies(currentQuery, currentPage)\r\n                totalPages = response.pages\r\n\r\n                if (response.items.isEmpty()) {\r\n                    _searchState.value = Resource.Error(\"По вашему запросу ничего не найдено\")\r\n                } else {\r\n                    _searchState.value = Resource.Success(response.items)\r\n                }\r\n\r\n                currentPage++\r\n            } catch (e: HttpException) {\r\n                _searchState.value = Resource.Error(\r\n                    when (e.code()) {\r\n                        HTTP_FORBIDDEN -> \"Ошибка авторизации. Проверьте токен доступа\"\r\n                        HTTP_NOT_FOUND -> \"Вакансии не найдены\"\r\n                        HTTP_SERVER_ERROR -> \"Ошибка сервера\"\r\n                        else -> \"Ошибка сервера: ${e.code()}\"\r\n                    }\r\n                )\r\n            } finally {\r\n                _isLoading.value = false\r\n                isLoadingMore = false\r\n            }\r\n        }\r\n    }\r\n\r\n    fun loadMoreVacancies() {\r\n        if (!isLoadingMore && currentPage < totalPages) {\r\n            searchVacancies(currentQuery, false)\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        private const val HTTP_FORBIDDEN = 403\r\n        private const val HTTP_NOT_FOUND = 404\r\n        private const val HTTP_SERVER_ERROR = 500\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt	(revision 3260d5da7aa4e610b7275bdf6b463c1c38f34df5)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainViewModel.kt	(date 1748482957306)
+@@ -1,22 +1,32 @@
+ package ru.practicum.android.diploma.ui.screens.main
+ 
+ import androidx.lifecycle.LiveData
++import androidx.lifecycle.MediatorLiveData
+ import androidx.lifecycle.MutableLiveData
+ import androidx.lifecycle.ViewModel
+ import androidx.lifecycle.viewModelScope
++import kotlinx.coroutines.Job
++import kotlinx.coroutines.delay
++import kotlinx.coroutines.flow.Flow
++import kotlinx.coroutines.flow.first
++import kotlinx.coroutines.flow.flow
+ import kotlinx.coroutines.launch
+ import retrofit2.HttpException
+ import ru.practicum.android.diploma.domain.VacancyRepositoryInterface
+ import ru.practicum.android.diploma.domain.network.models.VacancyDetails
++import ru.practicum.android.diploma.ui.screens.state.VacantState
+ import ru.practicum.android.diploma.util.Resource
+ 
+ class MainViewModel(
+-    private val repository: VacancyRepositoryInterface
++    private val repository: VacancyRepositoryInterface,
+ ) : ViewModel() {
+ 
+     private val _searchState = MutableLiveData<Resource<List<VacancyDetails>>>()
+     val searchState: LiveData<Resource<List<VacancyDetails>>> = _searchState
+ 
++    private val stateMutable = MutableLiveData<VacantState>()
++    val state: LiveData<VacantState> = stateMutable
++
+     private val _isLoading = MutableLiveData<Boolean>()
+     val isLoading: LiveData<Boolean> = _isLoading
+ 
+@@ -24,9 +34,54 @@
+     private var totalPages = 0
+     private var currentQuery = ""
+     private var isLoadingMore = false
++    private var searchJob: Job? = null
++    private lateinit var  networkClient: NetworkClient
++
++    open class Response(var resultCode: Int = 0)
++    data class TrackSearchRequest(val expression: String)
++    interface NetworkClient {
++        suspend fun doRequest(dto: Any): Response
++    }
++    data class TrackResponse(val results: List<VacancyDetails>) : Response()
++
++  fun  searchTracks(expression: String): Flow<Resource<List<VacancyDetails>>> = flow {
++        val response = networkClient.doRequest(TrackSearchRequest(expression))
++        when (response.resultCode) {
++            HTTP_FORBIDDEN  -> {
++                emit(Resource.Error("$HTTP_FORBIDDEN "))
++            }
++
++            CONNECT_OK -> {
++                with(response as TrackResponse) {
++                  //  val stored = roomInteract.getTracksRoom().first()
++                    //val favoriteIds = stored.map { it.trackId }.toSet()
++                    val result = Resource.Success(results.map {
++                        it
++                    })
++                    emit(result)
++                }
++            }
++
++            else -> {
++                emit(Resource.Error("$HTTP_NOT_FOUND "))
++            }
++        }
++    }
+ 
+     fun searchVacancies(query: String, isNewSearch: Boolean = true) {
+-        if (isNewSearch) {
++
++        if (query.isNotEmpty()) {
++            renderState(VacantState.Loading)
++            viewModelScope.launch {
++                searchTracks(query)
++                    .collect { pair ->
++                        processResult(pair.data, errorMessage = pair.message)
++                    }
++            }
++        }
++    }
++/*        if (isNewSearch) {
++            renderState(VacantState.Loading)
+             currentPage = 0
+             currentQuery = query
+             _searchState.value = Resource.Success(emptyList())
+@@ -43,25 +98,60 @@
+                 totalPages = response.pages
+ 
+                 if (response.items.isEmpty()) {
+-                    _searchState.value = Resource.Error("По вашему запросу ничего не найдено")
++                    renderState(VacantState.Empty)
++                    renderState(VacantState.Info("Таких вакансий нет"))
++                 //   _searchState.value = Resource.Error("По вашему запросу ничего не найдено")
+                 } else {
+-                    _searchState.value = Resource.Success(response.items)
++                    renderState(VacantState.Content(response.items))
++                    renderState(VacantState.Info("Найдено ${response.items.size} вакансий"))
++                 //   _searchState.value = Resource.Success(response.items)
+                 }
+-
+                 currentPage++
+             } catch (e: HttpException) {
+-                _searchState.value = Resource.Error(
++                renderState(VacantState.Error(
++                when (e.code()) {
++                    HTTP_FORBIDDEN -> "Ошибка авторизации. Проверьте токен доступа"
++                    HTTP_NOT_FOUND -> "Вакансии не найдены"
++                    HTTP_SERVER_ERROR -> "Ошибка сервера"
++                    else -> "Ошибка сервера: ${e.code()}"
++                }))
++
++              *//*  _searchState.value = Resource.Error(
+                     when (e.code()) {
+                         HTTP_FORBIDDEN -> "Ошибка авторизации. Проверьте токен доступа"
+                         HTTP_NOT_FOUND -> "Вакансии не найдены"
+                         HTTP_SERVER_ERROR -> "Ошибка сервера"
+                         else -> "Ошибка сервера: ${e.code()}"
+                     }
+-                )
++                )*//*
+             } finally {
+                 _isLoading.value = false
+                 isLoadingMore = false
+             }
++        }*/
++  //  }
++
++    private fun processResult(foundTreks: List<VacancyDetails>?, errorMessage: String?) {
++        val trackSearch = mutableListOf<VacancyDetails>()
++        if (foundTreks != null) {
++            trackSearch.addAll(foundTreks)
++        }
++        when {
++            errorMessage != null -> {
++                if (errorMessage == "$HTTP_FORBIDDEN") {
++                    renderState(VacantState.Error(errorMessage))
++                } else {
++                    renderState(VacantState.Empty)
++                }
++            }
++
++            trackSearch.isEmpty() -> {
++                renderState(VacantState.Empty)
++            }
++
++            else -> {
++                renderState(VacantState.Content(trackSearch))
++            }
+         }
+     }
+ 
+@@ -70,10 +160,40 @@
+             searchVacancies(currentQuery, false)
+         }
+     }
++    private val mediatorStateLiveData = MediatorLiveData<VacantState>().also { liveData ->
++        liveData.addSource(state) { vacantState ->
++            liveData.value = when (vacantState) {
++                is VacantState.Loading -> vacantState
++                is VacantState.Content -> vacantState
++                is VacantState.Error -> vacantState
++                is VacantState.Empty -> vacantState
++                is VacantState.Info -> vacantState
++            }
++        }
++    }
++    fun observeMediaState(): LiveData<VacantState> = mediatorStateLiveData
++
++    private fun renderState(state: VacantState) {
++        stateMutable.postValue(state)
++    }
++
++    fun searchDebounce(changedText: String) {
++        if (currentQuery == changedText) {
++            return
++        }
++        currentQuery = changedText
++        searchJob?.cancel()
++        searchJob = viewModelScope.launch {
++            delay(SEARCH_DEBOUNCE_DELAY)
++         //   searchVacancies(changedText)
++        }
++    }
+ 
+     companion object {
++        const val CONNECT_OK = 200
+         private const val HTTP_FORBIDDEN = 403
+         private const val HTTP_NOT_FOUND = 404
+         private const val HTTP_SERVER_ERROR = 500
++        private const val SEARCH_DEBOUNCE_DELAY = 1000L
+     }
+ }
+Index: app/src/main/java/ru/practicum/android/diploma/ui/screens/state/VacantState.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/screens/state/VacantState.kt b/app/src/main/java/ru/practicum/android/diploma/ui/screens/state/VacantState.kt
+new file mode 100644
+--- /dev/null	(date 1748480987422)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/screens/state/VacantState.kt	(date 1748480987422)
+@@ -0,0 +1,12 @@
++package ru.practicum.android.diploma.ui.screens.state
++
++import ru.practicum.android.diploma.domain.network.models.VacancyDetails
++
++
++sealed interface VacantState {
++    data object Loading : VacantState
++    data class Content(val vacant: List<VacancyDetails>) : VacantState
++    data class Error(val errorMessage: String) : VacantState
++    data object Empty : VacantState
++    data class Info(val info: String) : VacantState
++}
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Поиск вакансий</string>\r\n    <string name=\"team\">Команда</string>\r\n    <string name=\"working_on_the_app\">Над приложением работали</string>\r\n    <string name=\"alexander_antipin\">Антипин Александр</string>\r\n    <string name=\"sergey_boikov\">Бойков Сергей</string>\r\n    <string name=\"sukhanov_temirlan\">Суханов Темирлан</string>\r\n    <string name=\"details_screen\">Vacancy Details Screen</string>\r\n    <string name=\"favourites_screen\">Favourites Screen</string>\r\n    <string name=\"main_screen\">Main Screen</string>\r\n    <string name=\"main\">Главная</string>\r\n    <string name=\"favourite\">Избранное</string>\r\n    <string name=\"enter_request\">Введите запрос</string>\r\n    <string name=\"empty_search\">Не удалось получить список вакансий</string>\r\n    <string name=\"no_such_vacancies\">Таких вакансий нет</string>\r\n    <string name=\"filtr\">Фильтр</string>\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 3260d5da7aa4e610b7275bdf6b463c1c38f34df5)
++++ b/app/src/main/res/values/strings.xml	(date 1748479105131)
+@@ -14,4 +14,5 @@
+     <string name="empty_search">Не удалось получить список вакансий</string>
+     <string name="no_such_vacancies">Таких вакансий нет</string>
+     <string name="filtr">Фильтр</string>
++    <string name="no_internet">Нет интернета</string>
+ </resources>
