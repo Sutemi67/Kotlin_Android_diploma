@@ -81,17 +81,17 @@ class MainFragment : Fragment() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
                     val visibleItemCount = layoutManager.childCount
                     val totalItemCount = layoutManager.itemCount
                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-//                    if (!viewModel.isLoading.value!! &&
-//                        visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
-//                        firstVisibleItemPosition >= 0
-//                    ) {
-//                        viewModel.loadMoreItems()
-//                    }
+                    if ((viewModel.isLoading.value == true).not() &&
+                        visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
+                        firstVisibleItemPosition >= 0
+                    ) {
+                        viewModel.loadMoreItems()
+                    }
                 }
             })
         }
@@ -166,10 +166,9 @@ class MainFragment : Fragment() {
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.isVisible = isLoading
-            if (isLoading) {
-                binding.imageStart.isVisible = false
-            }
+            val hasContent = (adapter?.currentList?.isNotEmpty() == true)
+            binding.bottomProgressBar.visibility =
+                if (isLoading && hasContent) View.VISIBLE else View.GONE
         }
     }
 

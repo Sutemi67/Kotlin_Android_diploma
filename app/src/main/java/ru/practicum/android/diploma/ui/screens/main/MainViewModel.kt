@@ -19,46 +19,63 @@ class MainViewModel(
     val isLoading: LiveData<Boolean> = _isLoading
 
     private var currentPage = 0
-    private var totalPages = 0
-    private var totalVacancies = 0
     private var currentQuery = ""
     private var isLoadingMore = false
+    private val allVacancies = mutableListOf<VacancyDetails>()
 
     fun searchVacancies(query: String, isNewSearch: Boolean = true) {
         if (query.isNotEmpty()) {
-            _searchState.postValue(UiState.Loading)
-
-            viewModelScope.launch {
-                interactor
-                    .searchVacancy(query)
-                    .collect { pair ->
-                        processResult(pair.first, pair.second)
-                    }
+            if (isNewSearch) {
+                currentPage = 0
+                isLoadingMore = false
+                allVacancies.clear()
+                currentQuery = query
             }
-
+            loadPage(query, currentPage)
         }
     }
 
-    private fun processResult(vacancy: List<VacancyDetails>?, errorMessage: String?) {
-        val vacancys = mutableListOf<VacancyDetails>()
-        if (vacancy != null) {
-            vacancys.addAll(vacancy)
+    private fun loadPage(query: String, page: Int) {
+        _isLoading.postValue(true)
+        _searchState.postValue(UiState.Loading)
+        viewModelScope.launch {
+            interactor
+                .searchVacancy(query, page) // Важно: нужен метод с поддержкой страниц!
+                .collect { pair ->
+                    processResult(pair.first, pair.second, page)
+                }
         }
-
-        when {
-            errorMessage != null -> _searchState.postValue(UiState.Error(errorMessage))
-
-            vacancys.isEmpty() -> _searchState.postValue(UiState.NotFound)
-
-            else -> _searchState.postValue(UiState.Content(vacancys))
-        }
-
     }
+
+    private fun processResult(
+        vacancies: List<VacancyDetails>?, errorMessage: String?, page: Int
+    ) {
+        _isLoading.postValue(false)
+
+        if (errorMessage != null) {
+            _searchState.postValue(UiState.Error(errorMessage))
+            return
+        }
+
+        if (vacancies.isNullOrEmpty()) {
+            if (page == 0) {
+                _searchState.postValue(UiState.NotFound)
+            } else {
+                _searchState.postValue(UiState.Content(allVacancies))
+            }
+            isLoadingMore = true
+            return
+        }
+        allVacancies.addAll(vacancies)
+        _searchState.postValue(UiState.Content(allVacancies))
+        currentPage++ // увеличиваем страницу
+    }
+
 
     fun loadMoreItems() {
-        if (!isLoadingMore && currentPage < totalPages) {
-            searchVacancies(currentQuery, false)
-        }
+        if (_isLoading.value == true || isLoadingMore) return
+        currentPage++
+        loadPage(currentQuery, currentPage)
     }
 
 }

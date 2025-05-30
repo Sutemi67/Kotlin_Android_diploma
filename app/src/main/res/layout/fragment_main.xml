@@ -150,7 +150,7 @@
             android:layout_height="@dimen/indent_48dp"
             android:layout_gravity="center"
             android:indeterminateTint="@color/blue"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/recyclerView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
