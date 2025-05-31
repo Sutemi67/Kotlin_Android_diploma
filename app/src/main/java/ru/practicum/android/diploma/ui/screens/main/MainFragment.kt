@@ -22,6 +22,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.domain.OnItemClickListener
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+import ru.practicum.android.diploma.util.AppFormatters
 import ru.practicum.android.diploma.util.debounce
 
 class MainFragment : Fragment() {
@@ -148,7 +149,7 @@ class MainFragment : Fragment() {
                     binding.imageStart.isVisible = false
                     binding.progressBar.isVisible = false
                     binding.infoSearch.isVisible = true
-                    binding.infoSearch.text = "Найдено ${state.allCount} вакансий"
+                    binding.infoSearch.text = AppFormatters.vacanciesCountTextFormatter(state.allCount)
                     adapter?.submitList(state.vacancies)
                 }
 
