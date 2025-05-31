@@ -15,4 +15,6 @@
     <string name="no_such_vacancies">Таких вакансий нет</string>
     <string name="filtr">Фильтр</string>
     <string name="no_internet">Нет интернета</string>
+    <string name="search_screen_image">search_screen_image</string>
+    <string name="company_logo">company logo</string>
 </resources>

@@ -49,10 +49,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
+            android:contentDescription="@string/search_screen_image"
             android:padding="@dimen/indent_16dp"
             android:paddingEnd="@dimen/indent_32dp"
             android:visibility="invisible"
-            app:srcCompat="@drawable/close_24px" />
+            app:srcCompat="@drawable/close_24px"
+            tools:ignore="RtlSymmetry" />
     </FrameLayout>
 
     <TextView
@@ -125,6 +127,7 @@
             android:id="@+id/imageView"
             android:layout_width="@dimen/indent_328dp"
             android:layout_height="@dimen/indent_223dp"
+            android:contentDescription="@string/search_screen_image"
             android:scaleType="centerCrop"
             android:src="@drawable/image_kat"
             app:layout_constraintBottom_toTopOf="@+id/errorText"
@@ -151,10 +154,10 @@
             android:layout_gravity="center"
             android:indeterminateTint="@color/blue"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/recyclerView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
