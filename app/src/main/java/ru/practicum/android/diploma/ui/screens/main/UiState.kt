@@ -10,6 +10,7 @@ sealed class UiState {
 
     data class Content(
         val vacancies: List<VacancyDetails>,
+        val allCount: String
     ) : UiState()
 
     object NotFound : UiState()

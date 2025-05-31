@@ -145,7 +145,7 @@ class MainFragment : Fragment() {
                     binding.errorMessage.isVisible = false
                     binding.imageStart.isVisible = false
                     binding.progressBar.isVisible = false
-                    binding.infoSearch.text = "Найдено ${state.vacancies.size} вакансий"
+                    binding.infoSearch.text = "Найдено ${state.allCount} вакансий"
                     adapter?.submitList(state.vacancies)
                 }
 

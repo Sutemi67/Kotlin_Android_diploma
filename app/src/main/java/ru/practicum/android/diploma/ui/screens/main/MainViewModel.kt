@@ -39,16 +39,20 @@ class MainViewModel(
         _isLoading.postValue(true)
         _searchState.postValue(UiState.Loading)
         viewModelScope.launch {
-            interactor
-                .searchVacancy(query, page) // Важно: нужен метод с поддержкой страниц!
-                .collect { pair ->
-                    processResult(pair.first, pair.second, page)
+            interactor.searchVacancy(query, page) // Важно: нужен метод с поддержкой страниц!
+                .collect { triple ->
+                    processResult(
+                        vacancies = triple.first,
+                        errorMessage = triple.second,
+                        vacanciesCount = triple.third,
+                        page = page
+                    )
                 }
         }
     }
 
     private fun processResult(
-        vacancies: List<VacancyDetails>?, errorMessage: String?, page: Int
+        vacancies: List<VacancyDetails>?, errorMessage: String?, vacanciesCount: String?, page: Int
     ) {
         _isLoading.postValue(false)
 
@@ -61,16 +65,15 @@ class MainViewModel(
             if (page == 0) {
                 _searchState.postValue(UiState.NotFound)
             } else {
-                _searchState.postValue(UiState.Content(allVacancies))
+                _searchState.postValue(UiState.Content(allVacancies, vacanciesCount!!))
             }
             isLoadingMore = true
             return
         }
         allVacancies.addAll(vacancies)
-        _searchState.postValue(UiState.Content(allVacancies))
-        currentPage++ // увеличиваем страницу
+        _searchState.postValue(UiState.Content(allVacancies, vacanciesCount!!))
+        currentPage++
     }
-
 
     fun loadMoreItems() {
         if (_isLoading.value == true || isLoadingMore) return
