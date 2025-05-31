@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_black">
@@ -26,172 +27,176 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/indent_16dp"
-        android:paddingEnd="@dimen/indent_16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-        <TextView
-            android:id="@+id/jobTitle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Android-разработчик"
-            android:textAppearance="@style/Bold32" />
-        <TextView
-            android:id="@+id/jobsalary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="от 100 000 ₽"
-            android:textAppearance="@style/Medium22" />
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/indent_16dp"
+            android:paddingEnd="@dimen/indent_16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_16dp"
-            android:paddingTop="@dimen/indent_16dp"
-            app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="@color/lightGray">
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/jobTitle"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="12dp">
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Bold32"
+                tools:text="Android-разработчик" />
 
-                <ImageView
-                    android:id="@+id/icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/empty_image"/>
+            <TextView
+                android:id="@+id/jobsalary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Medium22"
+                tools:text="от 100 000 ₽" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_16dp"
+                android:paddingTop="@dimen/indent_16dp"
+                app:cardBackgroundColor="@color/lightGray"
+                app:cardCornerRadius="16dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="@dimen/indent_8dp"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        android:id="@+id/titleCadr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Еда"
-                        android:textAppearance="@style/Medium22" />
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/company_logo"
+                        android:src="@drawable/empty_image" />
 
-                    <TextView
-                        android:id="@+id/subtitleCard"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Москва"
-                        android:textAppearance="@style/Regular16" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/indent_8dp"
+                        tools:ignore="RtlSymmetry">
+
+                        <TextView
+                            android:id="@+id/titleCadr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/Medium22"
+                            tools:text="Еда" />
+
+                        <TextView
+                            android:id="@+id/subtitleCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/Regular16"
+                            tools:text="Москва" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Требуемый опыт"
-            android:textAppearance="@style/Regular16" />
+            </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/companyName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="От 1 года до 3 лет"
-            android:textAppearance="@style/Regular16" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textAppearance="@style/Regular16"
+                tools:text="Требуемый опыт" />
 
-        <TextView
-            android:id="@+id/salary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_8dp"
-            android:text="Полная занятость, Удаленная работа"
-            android:textAppearance="@style/Regular16" />
+            <TextView
+                android:id="@+id/companyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Regular16"
+                tools:text="От 1 года до 3 лет" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_32dp"
-            android:text="Описание вакансии"
-            android:textAppearance="@style/Medium22" />
+            <TextView
+                android:id="@+id/salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_8dp"
+                android:textAppearance="@style/Regular16"
+                tools:text="Полная занятость, Удаленная работа" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_16dp"
-            android:text="Обязанности"
-            android:textAppearance="@style/Medium16" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_32dp"
+                android:textAppearance="@style/Medium22"
+                tools:text="Описание вакансии" />
 
-        <TextView
-            android:id="@+id/Text1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_4dp"
-            android:text="Разрабатывать новую функциональность приложения\n
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_16dp"
+                android:textAppearance="@style/Medium16"
+                tools:text="Обязанности" />
+
+            <TextView
+                android:id="@+id/Text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_4dp"
+                android:textAppearance="@style/Regular16"
+                tools:text="Разрабатывать новую функциональность приложения\n
 Помогать с интеграцией нашего SDK в другие приложения\n
 Проектировать большие новые модули\n
 Писать UI- и unit-тесты\n
-Следить за работоспособностью сервиса и устранять технический долг"
-            android:textAppearance="@style/Regular16" />
+Следить за работоспособностью сервиса и устранять технический долг" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_16dp"
-            android:text="Требования"
-            android:textAppearance="@style/Medium16" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_16dp"
+                android:textAppearance="@style/Medium16"
+                tools:text="Требования" />
 
-        <TextView
-            android:id="@+id/Text2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_4dp"
-            android:text="100% Kotlin \nWebRTCCI по модели Trunk \nBased Development"
-            android:textAppearance="@style/Regular16" />
+            <TextView
+                android:id="@+id/Text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_4dp"
+                android:textAppearance="@style/Regular16"
+                tools:text="100% Kotlin \nWebRTCCI по модели Trunk \nBased Development" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_16dp"
-            android:text="Условия"
-            android:textAppearance="@style/Medium16" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_16dp"
+                android:textAppearance="@style/Medium16"
+                tools:text="Условия" />
 
-        <TextView
-            android:id="@+id/Text3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_4dp"
-            android:text="сильная команда, с которой можно расти\n
+            <TextView
+                android:id="@+id/Text3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_4dp"
+                android:textAppearance="@style/Regular16"
+                tools:text="сильная команда, с которой можно расти\n
 возможность влиять на процесс и результат\n
-расширенная программа ДМС: стоматология, обследования, вызов врача на дом и многое другое"
-            android:textAppearance="@style/Regular16" />
+расширенная программа ДМС: стоматология, обследования, вызов врача на дом и многое другое" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Ключевые навыки"
-            android:textAppearance="@style/Medium22" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textAppearance="@style/Medium22"
+                tools:text="Ключевые навыки" />
 
-        <TextView
-            android:id="@+id/Text4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_16dp"
-            android:text="Знание классических алгоритмов и структуры данных\n
+            <TextView
+                android:id="@+id/Text4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/indent_16dp"
+                android:textAppearance="@style/Regular16"
+                tools:text="Знание классических алгоритмов и структуры данных\n
 Программирование для Android больше одного года\n
-Знание WebRTC"
-            android:textAppearance="@style/Regular16" />
+Знание WebRTC" />
 
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout> 
