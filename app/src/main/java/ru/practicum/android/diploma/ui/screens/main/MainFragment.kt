@@ -47,16 +47,6 @@ class MainFragment : Fragment() {
         setupRecyclerView()
         setupSearchView()
         observeViewModel()
-
-        binding.buttonCleanSearch.setOnClickListener {
-            binding.searchView.setText("")
-            adapter?.submitList(emptyList())
-            val inputMethodManager =
-                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
-            binding.errorMessage.isVisible = false
-            binding.imageStart.isVisible = true
-        }
     }
 
     override fun onDestroyView() {
@@ -98,6 +88,17 @@ class MainFragment : Fragment() {
     }
 
     private fun setupSearchView() {
+        binding.buttonCleanSearch.setOnClickListener {
+            binding.searchView.setText("")
+            adapter?.submitList(emptyList())
+            val inputMethodManager =
+                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
+            binding.errorMessage.isVisible = false
+            binding.imageStart.isVisible = true
+            binding.infoSearch.isVisible = false
+        }
+
         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
         val debouncedSearch = debounce(
             delayMillis = CLICK_DEBOUNCE_DELAY,
@@ -138,6 +139,7 @@ class MainFragment : Fragment() {
                 is UiState.Loading -> {
                     binding.progressBar.isVisible = true
                     binding.imageStart.isVisible = false
+                    binding.infoSearch.isVisible = false
                 }
 
                 is UiState.Content -> {
@@ -145,28 +147,33 @@ class MainFragment : Fragment() {
                     binding.errorMessage.isVisible = false
                     binding.imageStart.isVisible = false
                     binding.progressBar.isVisible = false
+                    binding.infoSearch.isVisible = true
                     binding.infoSearch.text = "Найдено ${state.allCount} вакансий"
                     adapter?.submitList(state.vacancies)
                 }
 
                 is UiState.NotFound -> {
                     showMessage(getString(R.string.empty_search), "1", R.drawable.image_kat)
+                    binding.infoSearch.text = getString(R.string.no_such_vacancies)
+                    binding.infoSearch.isVisible = true
                 }
 
                 is UiState.Error -> {
                     showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
+                    binding.infoSearch.isVisible = false
                 }
 
                 is UiState.Idle -> {
                     binding.recyclerView.isVisible = false
                     binding.errorMessage.isVisible = false
                     binding.imageStart.isVisible = true
+                    binding.infoSearch.isVisible = false
                 }
             }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            val hasContent = (adapter?.currentList?.isNotEmpty() == true)
+            val hasContent = adapter?.currentList?.isNotEmpty() == true
             binding.bottomProgressBar.visibility =
                 if (isLoading && hasContent) View.VISIBLE else View.GONE
         }

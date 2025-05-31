@@ -52,7 +52,10 @@ class MainViewModel(
     }
 
     private fun processResult(
-        vacancies: List<VacancyDetails>?, errorMessage: String?, vacanciesCount: String?, page: Int
+        vacancies: List<VacancyDetails>?,
+        errorMessage: String?,
+        vacanciesCount: String?,
+        page: Int
     ) {
         _isLoading.postValue(false)
 
