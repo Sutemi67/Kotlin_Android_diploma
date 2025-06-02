@@ -91,7 +91,8 @@ class MainFragment : Fragment() {
     private fun setupSearchView() {
         binding.buttonCleanSearch.setOnClickListener {
             binding.searchView.setText("")
-            adapter?.submitList(emptyList())
+            viewModel.lastSearchQuery = ""
+            viewModel.clearSearchResults()
             val inputMethodManager =
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)
@@ -100,6 +101,7 @@ class MainFragment : Fragment() {
             binding.infoSearch.isVisible = false
         }
 
+        binding.searchView.setText(viewModel.lastSearchQuery ?: "")
         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
         val debouncedSearch = debounce(
             delayMillis = CLICK_DEBOUNCE_DELAY,
@@ -111,7 +113,8 @@ class MainFragment : Fragment() {
                 binding.errorMessage.isVisible = false
                 binding.imageStart.isVisible = true
                 adapter?.submitList(emptyList())
-            } else {
+            } else if (query != viewModel.lastSearchQuery) {
+                viewModel.lastSearchQuery = query
                 viewModel.searchVacancies(query)
             }
         }
@@ -169,6 +172,7 @@ class MainFragment : Fragment() {
                     binding.errorMessage.isVisible = false
                     binding.imageStart.isVisible = true
                     binding.infoSearch.isVisible = false
+                    adapter?.submitList(emptyList())
                 }
             }
         }

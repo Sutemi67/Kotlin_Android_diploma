@@ -45,15 +45,28 @@ class VacancyAdapter(private val onItemClickListener: OnItemClickListener<Vacanc
 
                 salary.text = when {
                     value?.from != null && value.to != null ->
-                        "от ${value.from} до ${value.to} ${value.currency}"
+                        itemView.context.getString(
+                            R.string.salary_range,
+                            value.from.toString(),
+                            value.to.toString(),
+                            value.currency
+                        )
 
                     value?.from != null ->
-                        "от ${value.from} ${value.currency}"
+                        itemView.context.getString(
+                            R.string.salary_from,
+                            value.from.toString(),
+                            value.currency
+                        )
 
                     value?.to != null ->
-                        "до ${value.to} ${value.currency}"
+                        itemView.context.getString(
+                            R.string.salary_to,
+                            value.to.toString(),
+                            value.currency
+                        )
 
-                    else -> "Зарплата не указана"
+                    else -> itemView.context.getString(R.string.salary_not_specified)
                 }
 
                 Glide.with(itemView)

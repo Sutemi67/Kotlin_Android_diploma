@@ -17,4 +17,8 @@
     <string name="no_internet">Нет интернета</string>
     <string name="search_screen_image">search_screen_image</string>
     <string name="company_logo">company logo</string>
+    <string name="salary_range">от %1$s до %2$s %3$s</string>
+    <string name="salary_from">от %1$s %2$s</string>
+    <string name="salary_to">до %1$s %2$s</string>
+    <string name="salary_not_specified">Зарплата не указана</string>
 </resources>
