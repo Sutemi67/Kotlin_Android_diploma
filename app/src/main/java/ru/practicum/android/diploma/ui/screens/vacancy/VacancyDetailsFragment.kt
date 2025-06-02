@@ -56,7 +56,7 @@ class VacancyDetailsFragment : Fragment() {
                 }
 
                 R.id.action_favorite -> {
-                    viewModel.onFavoriteClicked()
+                 //   viewModel.onFavoriteClicked()
                     true
                 }
 
