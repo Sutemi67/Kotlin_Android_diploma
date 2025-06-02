@@ -30,7 +30,6 @@ class VacancyDetailsViewModel(
     }
 
     private fun processResult(vacancy: VacancyDetails?, errorMessage: String?) {
-
         when {
             errorMessage != null -> {
 
@@ -40,7 +39,6 @@ class VacancyDetailsViewModel(
                     renderState(UiStateVacancy.ErrorService)
                 }
             }
-
             /*    vacancy. .isEmpty() -> {
                     renderState(UiStateVacancy.Empty)
                 }*/
