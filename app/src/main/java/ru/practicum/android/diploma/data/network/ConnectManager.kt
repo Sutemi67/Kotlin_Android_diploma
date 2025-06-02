@@ -12,9 +12,9 @@ class ConnectManager(private val context: Context) {
         val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         var result = false
         if (capabilities != null) {
-            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || capabilities.hasTransport(
+                    NetworkCapabilities.TRANSPORT_WIFI
+                ) || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
             ) {
                 result = true
             }

@@ -62,8 +62,7 @@ class VacancyRepository(
                                 schedule = schedule,
                                 employment = employment,
                                 description = description,
-                            ),
-                            itemsCount = response.resultCode  // тут не уверен, что правильно
+                            ), itemsCount = response.resultCode  // тут не уверен, что правильно
                         )
                     )
                 }
