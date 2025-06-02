@@ -44,10 +44,6 @@ class VacancyDetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-//        viewModel.state.observe(viewLifecycleOwner) {
-//            render(it)
-//        }
-
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_share -> {
@@ -56,13 +52,14 @@ class VacancyDetailsFragment : Fragment() {
                 }
 
                 R.id.action_favorite -> {
-                 //   viewModel.onFavoriteClicked()
+                    //   viewModel.onFavoriteClicked()
                     true
                 }
 
                 else -> false
             }
         }
+
         viewModel.vacancyDetails.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiStateVacancy.Loading -> {
