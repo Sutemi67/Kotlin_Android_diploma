@@ -1,46 +1,43 @@
 package ru.practicum.android.diploma.data.network
 
-import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dto.Response
-import ru.practicum.android.diploma.domain.network.api.HhApi
-import ru.practicum.android.diploma.domain.network.models.AllVacancyRequest
-import ru.practicum.android.diploma.util.isConnected
+import ru.practicum.android.diploma.data.dto.AllVacancyRequest
+import ru.practicum.android.diploma.data.dto.VacancyRequest
 import java.io.IOException
 
 class RetrofitNetworkClient(
-    private val context: Context,
-    private val api: HhApi
+    private val api: HhApi,
+    private val connectManager: ConnectManager
 ) : NetworkClient {
 
     private val token = "Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
 
     override suspend fun doSearchRequest(dto: Any): Response {
-        val result = when {
-            !isConnected(context) -> {
-                Response().apply { resultCode = ERROR_NO_CONNECTION }
-            }
-            dto !is AllVacancyRequest -> {
-                Response().apply { resultCode = ERROR_INVALID_DTO }
-            }
-            else -> withContext(Dispatchers.IO) {
-                try {
-                    val resp = api.searchVacancies(
-                        token = token,
-                        query = dto.expression,
-                        page = 1
-                    )
-                    resp.apply { resultCode = SUCCESS }
-                } catch (e: IOException) {
-                    Log.e("TAG", "Network error", e)
-                    Response().apply { resultCode = ERROR_IO_EXCEPTION }
+        if (!connectManager.isConnected()){
+            return Response().apply { resultCode = ERROR_NO_CONNECTION  }
+        }
+        if ((dto !is AllVacancyRequest) && (dto !is VacancyRequest)){
+            return Response().apply { resultCode = ERROR_INVALID_DTO }
+        }
+
+        return withContext(Dispatchers.IO){
+            try {
+                val resp = when (dto) {
+                    is AllVacancyRequest -> api.searchVacancies(token = token, query = dto.expression, page = 1)
+                    is VacancyRequest -> api.getVacancyDetails(token = token, dto.id)
+                    else -> return@withContext Response().apply { resultCode = ERROR_INVALID_DTO }
                 }
+                resp.apply { resultCode = SUCCESS }
+            } catch (e: IOException) {
+                Log.e("TAG", "Network error", e)
+                Response().apply { resultCode = ERROR_IO_EXCEPTION }
             }
         }
-        return result
+
     }
 
     companion object {

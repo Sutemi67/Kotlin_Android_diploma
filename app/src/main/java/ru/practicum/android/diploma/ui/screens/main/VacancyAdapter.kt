@@ -53,7 +53,7 @@ class VacancyAdapter(private val onItemClickListener: OnItemClickListener<Vacanc
                     value?.to != null ->
                         "до ${value.to} ${value.currency}"
 
-                    else -> "Зарплата не указана"
+                    else -> itemView.context.getString(R.string.salary_is_not_specified)
                 }
 
                 Glide.with(itemView)

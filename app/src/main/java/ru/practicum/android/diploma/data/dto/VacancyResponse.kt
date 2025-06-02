@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.domain.network.models.Salary
 import ru.practicum.android.diploma.domain.network.models.Schedule
 import ru.practicum.android.diploma.domain.network.models.Snippet
 
-data class VacancyDetailsDto(
+data class VacancyResponse(
     @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
     @SerializedName("area") val area: Area,
@@ -21,4 +21,4 @@ data class VacancyDetailsDto(
     @SerializedName("schedule") val schedule: Schedule,
     @SerializedName("employment") val employment: Employment,
     @SerializedName("description") val description: String?,
-)
+): Response()

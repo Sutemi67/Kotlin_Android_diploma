@@ -24,4 +24,21 @@ class VacancyInteractorImpl(private val repository: VacancyRepositoryInterface) 
         }
     }
 
+    override suspend fun getVacancyDetails(id: String): Flow<Pair<VacancyDetails?, String?>> {
+        return repository.getVacancyDetails(id).map { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Pair(result.data, null)
+                }
+
+                is Resource.Error -> {
+                    Pair(result.data, result.message)
+                }
+
+              /*  is Resource.ErrorWifi -> {
+                    Pair(result.data, result.message)
+                }*/
+            }
+        }
+    }
 }

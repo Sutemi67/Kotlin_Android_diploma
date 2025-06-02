@@ -17,4 +17,9 @@
     <string name="no_internet">Нет интернета</string>
     <string name="search_screen_image">search_screen_image</string>
     <string name="company_logo">company logo</string>
+    <string name="salary_is_not_specified">Зарплата не указана</string>
+    <string name="job_description">Описание вакансии</string>
+    <string name="required_experience">Требуемый опыт</string>
+    <string name="vacancy">Ваканcсия</string>
+    <string name="vacancy_not_found_deleted">Вакансия не найдена или удалена</string>
 </resources>

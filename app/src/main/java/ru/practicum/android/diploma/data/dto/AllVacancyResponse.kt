@@ -1,8 +1,6 @@
-package ru.practicum.android.diploma.domain.network.models
+package ru.practicum.android.diploma.data.dto
 
 import com.google.gson.annotations.SerializedName
-import ru.practicum.android.diploma.data.dto.Response
-import ru.practicum.android.diploma.data.dto.VacancyDetailsDto
 
 data class AllVacancyResponse(
     @SerializedName("items") val items: List<VacancyDetailsDto>,

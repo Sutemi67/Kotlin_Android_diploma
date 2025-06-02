@@ -11,9 +11,10 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.data.db.AppDatabase
+import ru.practicum.android.diploma.data.network.ConnectManager
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
-import ru.practicum.android.diploma.domain.network.api.HhApi
+import ru.practicum.android.diploma.data.network.HhApi
 import java.util.concurrent.TimeUnit
 
 private const val TIMEOUT = 30L
@@ -52,5 +53,7 @@ val DataModule = module {
     singleOf(::RetrofitNetworkClient) {
         bind<NetworkClient>()
     }
+
+    single { ConnectManager(androidContext()) }
 
 }
