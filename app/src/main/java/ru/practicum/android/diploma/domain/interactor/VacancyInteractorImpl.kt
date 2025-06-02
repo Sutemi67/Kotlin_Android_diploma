@@ -35,9 +35,9 @@ class VacancyInteractorImpl(private val repository: VacancyRepositoryInterface) 
                     Pair(result.data, result.message)
                 }
 
-              /*  is Resource.ErrorWifi -> {
-                    Pair(result.data, result.message)
-                }*/
+                /*  is Resource.ErrorWifi -> {
+                      Pair(result.data, result.message)
+                  }*/
             }
         }
     }

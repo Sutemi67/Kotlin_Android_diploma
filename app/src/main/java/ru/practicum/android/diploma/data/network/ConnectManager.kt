@@ -5,19 +5,20 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 
 class ConnectManager(private val context: Context) {
-     fun isConnected(): Boolean {
+    fun isConnected(): Boolean {
         val connectivityManager = context.getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
-        val capabilities =
-            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        var result = false
         if (capabilities != null) {
-            when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> return true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> return true
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+            ) {
+                result = true
             }
         }
-        return false
+        return result
     }
 }

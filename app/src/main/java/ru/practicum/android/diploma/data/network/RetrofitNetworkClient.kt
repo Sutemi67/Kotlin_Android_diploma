@@ -17,19 +17,19 @@ class RetrofitNetworkClient(
     private val token = "Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
 
     override suspend fun doSearchRequest(dto: Any): Response {
-        if (!connectManager.isConnected()){
-            return Response().apply { resultCode = ERROR_NO_CONNECTION  }
+        if (!connectManager.isConnected()) {
+            return Response().apply { resultCode = ERROR_NO_CONNECTION }
         }
-        if ((dto !is AllVacancyRequest) && (dto !is VacancyRequest)){
+        if ((dto !is AllVacancyRequest) && (dto !is VacancyRequest)) {
             return Response().apply { resultCode = ERROR_INVALID_DTO }
         }
 
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             try {
                 val resp = when (dto) {
                     is AllVacancyRequest -> api.searchVacancies(token = token, query = dto.expression, page = 1)
                     is VacancyRequest -> api.getVacancyDetails(token = token, dto.id)
-                    else -> return@withContext Response().apply { resultCode = ERROR_INVALID_DTO }
+                    else -> throw IllegalStateException("Unexpected dto type")
                 }
                 resp.apply { resultCode = SUCCESS }
             } catch (e: IOException) {

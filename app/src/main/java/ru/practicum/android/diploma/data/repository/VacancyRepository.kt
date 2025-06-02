@@ -50,7 +50,7 @@ class VacancyRepository(
                 with(response as VacancyResponse) {
                     emit(
                         Resource.Success(
-                           data = VacancyDetails(
+                            data = VacancyDetails(
                                 id = id,
                                 name = name,
                                 salary = salary,
@@ -62,7 +62,8 @@ class VacancyRepository(
                                 schedule = schedule,
                                 employment = employment,
                                 description = description,
-                            ), itemsCount = response.resultCode
+                            ),
+                            itemsCount = response.resultCode  // тут не уверен, что правильно
                         )
                     )
                 }

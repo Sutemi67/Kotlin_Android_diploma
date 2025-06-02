@@ -21,4 +21,4 @@ data class VacancyResponse(
     @SerializedName("schedule") val schedule: Schedule,
     @SerializedName("employment") val employment: Employment,
     @SerializedName("description") val description: String?,
-): Response()
+) : Response()
