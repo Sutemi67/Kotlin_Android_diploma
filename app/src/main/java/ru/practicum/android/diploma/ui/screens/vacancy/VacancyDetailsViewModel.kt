@@ -32,16 +32,12 @@ class VacancyDetailsViewModel(
     private fun processResult(vacancy: VacancyDetails?, errorMessage: String?) {
         when {
             errorMessage != null -> {
-
                 if (errorMessage == "$ERROR_CONNECT") {
                     renderState(UiStateVacancy.Error(errorMessage))
                 } else {
                     renderState(UiStateVacancy.ErrorService)
                 }
             }
-            /*    vacancy. .isEmpty() -> {
-                    renderState(UiStateVacancy.Empty)
-                }*/
 
             else -> {
                 vacancy?.let { renderState(UiStateVacancy.Content(it)) }

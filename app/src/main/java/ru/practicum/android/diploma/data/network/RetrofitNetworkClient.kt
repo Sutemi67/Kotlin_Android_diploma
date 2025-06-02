@@ -20,7 +20,7 @@ class RetrofitNetworkClient(
         if (!connectManager.isConnected()) {
             return Response().apply { resultCode = ERROR_NO_CONNECTION }
         }
-        if ((dto !is AllVacancyRequest) && (dto !is VacancyRequest)) {
+        if (dto !is AllVacancyRequest && dto !is VacancyRequest) {
             return Response().apply { resultCode = ERROR_INVALID_DTO }
         }
 
@@ -29,7 +29,7 @@ class RetrofitNetworkClient(
                 val resp = when (dto) {
                     is AllVacancyRequest -> api.searchVacancies(token = token, query = dto.expression, page = 1)
                     is VacancyRequest -> api.getVacancyDetails(token = token, dto.id)
-                    else -> throw IllegalStateException("Unexpected dto type")
+                    else -> error("Unexpected dto type: ${dto::class}")
                 }
                 resp.apply { resultCode = SUCCESS }
             } catch (e: IOException) {

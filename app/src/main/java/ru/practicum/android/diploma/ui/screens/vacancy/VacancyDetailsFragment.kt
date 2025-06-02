@@ -63,31 +63,30 @@ class VacancyDetailsFragment : Fragment() {
         viewModel.vacancyDetails.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiStateVacancy.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.isVisible = true
                     binding.content.isVisible = false
                     binding.errorMessage.isVisible = false
                 }
 
                 is UiStateVacancy.Content -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.content.isVisible = true
-                    binding.errorMessage.isVisible = false
                     showVacancy(state.vacancy)
                 }
 
                 is UiStateVacancy.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.content.visibility = View.GONE
-                    binding.errorMessage.visibility = View.VISIBLE
-                    binding.errorText.text = state.message
+                    showMessage(getString(R.string.vacancy_not_found_deleted), "", R.drawable.sponge_bob)
                 }
 
-                is UiStateVacancy.ErrorService -> TODO()
+                is UiStateVacancy.ErrorService -> {
+                    showMessage(getString(R.string.error_service), "", R.drawable.kat_error_service)
+                }
             }
         }
     }
 
     private fun showVacancy(vacancy: VacancyDetails) {
+        binding.progressBar.isVisible = false
+        binding.content.isVisible = true
+        binding.errorMessage.isVisible = false
         binding.jobTitle.text = vacancy.name
         binding.salary.text = vacancy.salary?.let {
             when {
@@ -122,6 +121,15 @@ class VacancyDetailsFragment : Fragment() {
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
     }
+
+    private fun showMessage(text: String, additionalMessage: String, drawable: Int) =
+        with(binding) {
+            progressBar.isVisible = false
+            content.isVisible = false
+            errorMessage.isVisible = true
+            imageView.setImageResource(drawable)
+            errorText.text = text
+        }
 
     override fun onDestroyView() {
         super.onDestroyView()

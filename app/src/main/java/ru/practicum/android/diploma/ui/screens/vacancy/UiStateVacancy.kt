@@ -8,6 +8,3 @@ sealed class UiStateVacancy {
     data class Error(val message: String) : UiStateVacancy()
     object ErrorService : UiStateVacancy()
 }
-
-
-
