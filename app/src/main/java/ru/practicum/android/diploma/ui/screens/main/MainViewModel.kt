@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.VacancyInteractorInterface
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
@@ -17,6 +18,9 @@ class MainViewModel(
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    var lastSearchQuery: String? = null
+    private var searchJob: Job? = null
 
     private var currentPage = 0
     private var currentQuery = ""
@@ -36,6 +40,7 @@ class MainViewModel(
     }
 
     private fun loadPage(query: String, page: Int) {
+        searchJob?.cancel()
         _isLoading.postValue(true)
         _searchState.postValue(UiState.Loading)
         viewModelScope.launch {
@@ -82,6 +87,10 @@ class MainViewModel(
         if (_isLoading.value == true || isLoadingMore) return
         currentPage++
         loadPage(currentQuery, currentPage)
+    }
+
+    fun clearSearchResults() {
+        _searchState.postValue(UiState.Idle)
     }
 
 }
