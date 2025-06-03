@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.di
 
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -12,9 +13,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.data.db.AppDatabase
 import ru.practicum.android.diploma.data.network.ConnectManager
+import ru.practicum.android.diploma.data.network.HhApi
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
-import ru.practicum.android.diploma.data.network.HhApi
 import java.util.concurrent.TimeUnit
 
 private const val TIMEOUT = 30L
@@ -29,8 +30,8 @@ val DataModule = module {
             AppDatabase::class.java,
             "database.db"
         )
-        .fallbackToDestructiveMigration()
-        .build()
+            .fallbackToDestructiveMigration(false)
+            .build()
     }
     single<OkHttpClient> {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
