@@ -6,12 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
+import ru.practicum.android.diploma.data.network.ConnectManager
 import ru.practicum.android.diploma.domain.VacancyInteractorInterface
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
-import ru.practicum.android.diploma.data.db.entity.VacancyEntity
 import ru.practicum.android.diploma.util.Resource
-import ru.practicum.android.diploma.data.network.ConnectManager
-import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
 
 class VacancyDetailsViewModel(
     private val interactor: VacancyInteractorInterface,
@@ -35,6 +34,7 @@ class VacancyDetailsViewModel(
                             is Resource.Success -> {
                                 result.data?.let { renderState(UiStateVacancy.Content(it)) }
                             }
+
                             is Resource.Error -> {
                                 if (result.message == "$ERROR_CONNECT") {
                                     renderState(UiStateVacancy.Error(result.message))
@@ -51,7 +51,11 @@ class VacancyDetailsViewModel(
                         val vacancyDetails = converter.mapToDomain(vacancyEntity)
                         renderState(UiStateVacancy.Content(vacancyDetails))
                     } else {
-                        renderState(UiStateVacancy.Error("Нет подключения к интернету и вакансия не найдена в избранном"))
+                        renderState(
+                            UiStateVacancy.Error(
+                                "Нет подключения к интернету и вакансия не найдена в избранном"
+                            )
+                        )
                     }
                 }
             }
@@ -70,7 +74,6 @@ class VacancyDetailsViewModel(
         viewModelScope.launch {
             val vacancyId = vacancy.id.toInt()
             val isCurrentlyFavorite = _isFavorite.value == true
-            
             if (isCurrentlyFavorite) {
                 interactor.removeFromFavorites(vacancyId)
                 _isFavorite.postValue(false)

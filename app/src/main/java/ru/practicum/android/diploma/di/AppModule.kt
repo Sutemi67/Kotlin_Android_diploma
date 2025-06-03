@@ -24,4 +24,4 @@ val AppModule = module {
     }
 
     singleOf(::VacancyDbConvertor)
-} 
+}
