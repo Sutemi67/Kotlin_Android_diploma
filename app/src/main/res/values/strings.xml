@@ -21,11 +21,5 @@
     <string name="salary_from">от %1$s %2$s</string>
     <string name="salary_to">до %1$s %2$s</string>
     <string name="salary_not_specified">Зарплата не указана</string>
-    <string name="job_description">Описание вакансии</string>
-    <string name="required_experience">Требуемый опыт</string>
-    <string name="vacancy">Ваканcсия</string>
-    <string name="vacancy_not_found_deleted">Вакансия не найдена или удалена</string>
-    <string name="error_service">Ошибка сервера</string>
-
 </resources>
 

@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/toolbar_menu_detalies"
         app:navigationIcon="@drawable/arrow_back_24px"
-        app:title="@string/vacancy"
+        app:title="Ваканcсия"
         app:titleTextAppearance="@style/Medium22" />
 
     <ProgressBar
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textAppearance="@style/Medium22"
-        android:text="@string/vacancy_not_found_deleted"
+        android:text="Вакансия не найдена или удалена"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/indent_24dp"
-                android:text="@string/required_experience"
+                android:text="Требуемый опыт"
                 android:textAppearance="@style/Medium16" />
 
             <TextView
@@ -163,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/indent_32dp"
-                android:text="@string/job_description"
+                android:text="Описание вакансии"
                 android:textAppearance="@style/Medium22" />
 
             <TextView

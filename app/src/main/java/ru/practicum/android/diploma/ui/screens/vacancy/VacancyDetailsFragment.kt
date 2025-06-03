@@ -73,11 +73,11 @@ class VacancyDetailsFragment : Fragment() {
                 }
 
                 is UiStateVacancy.Error -> {
-                    showMessage(getString(R.string.vacancy_not_found_deleted), "", R.drawable.sponge_bob)
+                    showMessage("Вакансия не найдена или удалена", "", R.drawable.sponge_bob)
                 }
 
                 is UiStateVacancy.ErrorService -> {
-                    showMessage(getString(R.string.error_service), "", R.drawable.kat_error_service)
+                    showMessage("Ошибка сервера", "", R.drawable.kat_error_service)
                 }
             }
         }
