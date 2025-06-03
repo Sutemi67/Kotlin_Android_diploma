@@ -86,7 +86,7 @@ class VacancyDetailsViewModel(
     }
 
     fun shareVacancy(id: String) {
-        interactor.shareVacancy(BASE_URL + id.toString())
+        interactor.shareVacancy(BASE_URL + id)
     }
 
     private fun renderState(state: UiStateVacancy) {
