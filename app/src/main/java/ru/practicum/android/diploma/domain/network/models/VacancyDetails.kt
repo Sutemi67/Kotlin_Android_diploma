@@ -8,6 +8,11 @@ data class VacancyDetails(
     @SerializedName("area") val area: Area,
     @SerializedName("salary") val salary: Salary?,
     @SerializedName("employer") val employer: Employer,
-    @SerializedName("snippet") val snippet: Snippet,
+    @SerializedName("experience") val experience: Experience,
+    @SerializedName("snippet") val snippet: Snippet?,
     @SerializedName("alternate_url") val alternateUrl: String,
+    @SerializedName("schedule") val schedule: Schedule,
+    @SerializedName("employment") val employment: Employment,
+    @SerializedName("description") val description: String?,
 )
+

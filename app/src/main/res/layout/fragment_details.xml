@@ -15,8 +15,52 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/toolbar_menu_detalies"
         app:navigationIcon="@drawable/arrow_back_24px"
-        app:title="Вакансия"
+        app:title="Ваканcсия"
         app:titleTextAppearance="@style/Medium22" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/indent_48dp"
+        android:layout_height="@dimen/indent_48dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="imageView,errorText" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/indent_328dp"
+        android:layout_height="@dimen/indent_223dp"
+        android:contentDescription="@string/search_screen_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sponge_bob"
+        app:layout_constraintBottom_toTopOf="@+id/errorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/errorText"
+        style="@style/placeholderMessageStyle"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/Medium22"
+        android:text="Вакансия не найдена или удалена"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,8 +70,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-
         <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -42,15 +86,13 @@
                 android:id="@+id/jobTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Bold32"
-                tools:text="Android-разработчик" />
+                android:textAppearance="@style/Bold32" />
 
             <TextView
-                android:id="@+id/jobsalary"
+                android:id="@+id/salary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Medium22"
-                tools:text="от 100 000 ₽" />
+                android:textAppearance="@style/Medium22" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -58,21 +100,20 @@
                 android:layout_marginTop="@dimen/indent_16dp"
                 android:paddingTop="@dimen/indent_16dp"
                 app:cardBackgroundColor="@color/lightGray"
-                app:cardCornerRadius="16dp">
+                app:cardCornerRadius="@dimen/indent_16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="@dimen/indent_80dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="12dp">
 
                     <ImageView
-                        android:id="@+id/icon"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/company_logo"
-                        android:src="@drawable/empty_image" />
+                        android:id="@+id/companyLogo"
+                        android:layout_width="@dimen/indent_48dp"
+                        android:layout_height="@dimen/indent_48dp"
+                        android:contentDescription="@string/company_logo" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -83,18 +124,16 @@
                         tools:ignore="RtlSymmetry">
 
                         <TextView
-                            android:id="@+id/titleCadr"
+                            android:id="@+id/companyName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/Medium22"
-                            tools:text="Еда" />
+                            android:textAppearance="@style/Medium22" />
 
                         <TextView
-                            android:id="@+id/subtitleCard"
+                            android:id="@+id/area"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/Regular16"
-                            tools:text="Москва" />
+                            android:textAppearance="@style/Regular16" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -102,99 +141,37 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:textAppearance="@style/Regular16"
-                tools:text="Требуемый опыт" />
+                android:layout_marginTop="@dimen/indent_24dp"
+                android:text="Требуемый опыт"
+                android:textAppearance="@style/Medium16" />
 
             <TextView
-                android:id="@+id/companyName"
+                android:id="@+id/experience"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Regular16"
-                tools:text="От 1 года до 3 лет" />
+                android:layout_marginTop="@dimen/indent_4dp"
+                android:textAppearance="@style/Regular16" />
 
             <TextView
-                android:id="@+id/salary"
+                android:id="@+id/schedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/indent_8dp"
-                android:textAppearance="@style/Regular16"
-                tools:text="Полная занятость, Удаленная работа" />
+                android:textAppearance="@style/Regular16" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/indent_32dp"
-                android:textAppearance="@style/Medium22"
-                tools:text="Описание вакансии" />
+                android:text="Описание вакансии"
+                android:textAppearance="@style/Medium22" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/indent_16dp"
-                android:textAppearance="@style/Medium16"
-                tools:text="Обязанности" />
-
-            <TextView
-                android:id="@+id/Text1"
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/indent_4dp"
-                android:textAppearance="@style/Regular16"
-                tools:text="Разрабатывать новую функциональность приложения\n
-Помогать с интеграцией нашего SDK в другие приложения\n
-Проектировать большие новые модули\n
-Писать UI- и unit-тесты\n
-Следить за работоспособностью сервиса и устранять технический долг" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/indent_16dp"
-                android:textAppearance="@style/Medium16"
-                tools:text="Требования" />
-
-            <TextView
-                android:id="@+id/Text2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/indent_4dp"
-                android:textAppearance="@style/Regular16"
-                tools:text="100% Kotlin \nWebRTCCI по модели Trunk \nBased Development" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/indent_16dp"
-                android:textAppearance="@style/Medium16"
-                tools:text="Условия" />
-
-            <TextView
-                android:id="@+id/Text3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/indent_4dp"
-                android:textAppearance="@style/Regular16"
-                tools:text="сильная команда, с которой можно расти\n
-возможность влиять на процесс и результат\n
-расширенная программа ДМС: стоматология, обследования, вызов врача на дом и многое другое" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:textAppearance="@style/Medium22"
-                tools:text="Ключевые навыки" />
-
-            <TextView
-                android:id="@+id/Text4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/indent_16dp"
-                android:textAppearance="@style/Regular16"
-                tools:text="Знание классических алгоритмов и структуры данных\n
-Программирование для Android больше одного года\n
-Знание WebRTC" />
+                android:textAppearance="@style/Regular16" />
 
         </LinearLayout>
     </ScrollView>

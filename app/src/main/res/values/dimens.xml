@@ -8,4 +8,6 @@
     <dimen name="indent_48dp">48dp</dimen>
     <dimen name="indent_328dp">328dp</dimen>
     <dimen name="indent_223dp">223dp</dimen>
+    <dimen name="indent_80dp">80dp</dimen>
+    <dimen name="indent_24dp">24dp</dimen>
 </resources>
