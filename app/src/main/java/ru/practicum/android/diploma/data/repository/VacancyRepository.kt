@@ -10,15 +10,18 @@ import ru.practicum.android.diploma.data.dto.AllVacancyRequest
 import ru.practicum.android.diploma.data.dto.AllVacancyResponse
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.data.db.AppDatabase
+import ru.practicum.android.diploma.data.db.entity.VacancyEntity
 
 class VacancyRepository(
-    private val networkClient: NetworkClient
+    private val networkClient: NetworkClient,
+    private val db: AppDatabase
 ) : VacancyRepositoryInterface {
 
-    override fun searchVacancies(query: String): Flow<Resource<List<VacancyDetails>>> = flow {
-        val response = networkClient.doSearchRequest(AllVacancyRequest(query))
+    override fun searchVacancy(query: String, page: Int): Flow<Triple<List<VacancyDetails>?, String?, String?>> = flow {
+        val response = networkClient.doSearchRequest(AllVacancyRequest(query, page))
         when (response.resultCode) {
-            ERROR_NO_CONNECTION -> emit(Resource.Error("Ошибка"))
+            ERROR_NO_CONNECTION -> emit(Triple(null, "Ошибка", null))
             SUCCESS -> {
                 with(response as AllVacancyResponse) {
                     val data = items.map {
@@ -36,7 +39,7 @@ class VacancyRepository(
                             description = it.description,
                         )
                     }
-                    emit(Resource.Success(data = data, itemsCount = response.found))
+                    emit(Triple(data, null, response.found.toString()))
                 }
             }
         }
@@ -63,17 +66,27 @@ class VacancyRepository(
                                 employment = employment,
                                 description = description,
                             ),
-                            itemsCount = response.resultCode // тут не уверен, что правильно
+                            itemsCount = response.resultCode
                         )
                     )
                 }
             }
-
             else -> {
                 emit(Resource.Error("Ошибка сервера"))
-
             }
         }
+    }
+
+    override suspend fun addToFavorites(vacancy: VacancyEntity) {
+        db.vacancyDao().addVacancy(vacancy)
+    }
+
+    override suspend fun removeFromFavorites(vacancyId: Int) {
+        db.vacancyDao().deleteVacancy(vacancyId)
+    }
+
+    override suspend fun getFavoriteVacancy(vacancyId: Int): VacancyEntity? {
+        return db.vacancyDao().getVacancyById(vacancyId)
     }
 
     companion object {
@@ -82,5 +95,4 @@ class VacancyRepository(
         private const val ERROR_IO_EXCEPTION = 500
         private const val SUCCESS = 200
     }
-
 }

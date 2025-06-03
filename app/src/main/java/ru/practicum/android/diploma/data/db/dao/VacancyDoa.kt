@@ -15,4 +15,9 @@ interface VacancyDoa {
     @Query("SELECT * FROM vacancy_table")
     suspend fun getAllVacancy(): List<VacancyEntity>
 
+    @Query("SELECT * FROM vacancy_table WHERE id = :vacancyId")
+    suspend fun getVacancyById(vacancyId: Int): VacancyEntity?
+
+    @Query("DELETE FROM vacancy_table WHERE id = :vacancyId")
+    suspend fun deleteVacancy(vacancyId: Int)
 }

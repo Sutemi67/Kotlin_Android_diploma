@@ -21,6 +21,7 @@ class VacancyDetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding: FragmentDetailsBinding get() = requireNotNull(_binding)
     private val viewModel by viewModel<VacancyDetailsViewModel>()
+    private var vacancyOnScreen: VacancyDetails? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +53,7 @@ class VacancyDetailsFragment : Fragment() {
                 }
 
                 R.id.action_favorite -> {
-                    //   viewModel.onFavoriteClicked()
+                    vacancyOnScreen?.let { viewModel.toggleFavorite(it) }
                     true
                 }
 
@@ -70,6 +71,7 @@ class VacancyDetailsFragment : Fragment() {
 
                 is UiStateVacancy.Content -> {
                     showVacancy(state.vacancy)
+                    vacancyOnScreen = state.vacancy
                 }
 
                 is UiStateVacancy.Error -> {
@@ -80,6 +82,12 @@ class VacancyDetailsFragment : Fragment() {
                     showMessage(getString(R.string.error_service), "", R.drawable.kat_error_service)
                 }
             }
+        }
+
+        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+            binding.toolbar.menu.findItem(R.id.action_favorite)?.setIcon(
+                if (isFavorite) R.drawable.favorites_on__24px else R.drawable.favorites_off__24px
+            )
         }
     }
 
