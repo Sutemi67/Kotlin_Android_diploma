@@ -11,4 +11,5 @@ interface VacancyInteractorInterface {
     suspend fun addToFavorites(vacancy: VacancyEntity)
     suspend fun removeFromFavorites(vacancyId: Int)
     suspend fun getFavoriteVacancy(vacancyId: Int): VacancyEntity?
+    fun shareVacancy(url: String)
 }

@@ -15,6 +15,8 @@ import ru.practicum.android.diploma.data.network.ConnectManager
 import ru.practicum.android.diploma.data.network.HhApi
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
+import ru.practicum.android.diploma.sharing.data.ExternalNavigatorImpl
+import ru.practicum.android.diploma.sharing.domain.ExternalNavigator
 import java.util.concurrent.TimeUnit
 
 private const val TIMEOUT = 30L
@@ -58,4 +60,5 @@ val DataModule = module {
 
     single { ConnectManager(androidContext()) }
 
+    single<ExternalNavigator> { ExternalNavigatorImpl(androidContext()) }
 }

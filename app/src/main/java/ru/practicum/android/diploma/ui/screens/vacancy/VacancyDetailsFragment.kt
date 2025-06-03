@@ -48,7 +48,7 @@ class VacancyDetailsFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_share -> {
-                    // код для "Поделиться"
+                    viewModel.shareVacancy(vacancyId.toString())
                     true
                 }
 
