@@ -10,9 +10,13 @@ import ru.practicum.android.diploma.domain.VacancyInteractorInterface
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.data.db.entity.VacancyEntity
 import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.data.network.ConnectManager
+import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
 
 class VacancyDetailsViewModel(
-    private val interactor: VacancyInteractorInterface
+    private val interactor: VacancyInteractorInterface,
+    private val connectManager: ConnectManager,
+    private val converter: VacancyDbConvertor
 ) : ViewModel() {
 
     private val _vacancyDetails = MutableLiveData<UiStateVacancy>()
@@ -25,18 +29,29 @@ class VacancyDetailsViewModel(
         if (id.isNotEmpty()) {
             renderState(UiStateVacancy.Loading)
             viewModelScope.launch {
-                interactor.getVacancyDetails(id).collect { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            result.data?.let { renderState(UiStateVacancy.Content(it)) }
-                        }
-                        is Resource.Error -> {
-                            if (result.message == "$ERROR_CONNECT") {
-                                renderState(UiStateVacancy.Error(result.message))
-                            } else {
-                                renderState(UiStateVacancy.ErrorService)
+                if (connectManager.isConnected()) {
+                    interactor.getVacancyDetails(id).collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                result.data?.let { renderState(UiStateVacancy.Content(it)) }
+                            }
+                            is Resource.Error -> {
+                                if (result.message == "$ERROR_CONNECT") {
+                                    renderState(UiStateVacancy.Error(result.message))
+                                } else {
+                                    renderState(UiStateVacancy.ErrorService)
+                                }
                             }
                         }
+                    }
+                } else {
+                    // Если нет интернета, пробуем загрузить из базы данных
+                    val vacancyEntity = interactor.getFavoriteVacancy(id.toInt())
+                    if (vacancyEntity != null) {
+                        val vacancyDetails = converter.mapToDomain(vacancyEntity)
+                        renderState(UiStateVacancy.Content(vacancyDetails))
+                    } else {
+                        renderState(UiStateVacancy.Error("Нет подключения к интернету и вакансия не найдена в избранном"))
                     }
                 }
             }
@@ -60,22 +75,7 @@ class VacancyDetailsViewModel(
                 interactor.removeFromFavorites(vacancyId)
                 _isFavorite.postValue(false)
             } else {
-                val vacancyEntity = VacancyEntity(
-                    id = vacancyId,
-                    name = vacancy.name,
-                    area = vacancy.area.name,
-                    salary = vacancy.salary?.let {
-                        when {
-                            it.from != null && it.to != null -> "${it.from} - ${it.to} ${it.currency}"
-                            it.from != null -> "от ${it.from} ${it.currency}"
-                            it.to != null -> "до ${it.to} ${it.currency}"
-                            else -> "Не указана"
-                        }
-                    },
-                    employer = vacancy.employer.name,
-                    snippet = vacancy.snippet?.responsibility ?: "",
-                    alternateUrl = vacancy.alternateUrl
-                )
+                val vacancyEntity = converter.mapToEntity(vacancy)
                 interactor.addToFavorites(vacancyEntity)
                 _isFavorite.postValue(true)
             }

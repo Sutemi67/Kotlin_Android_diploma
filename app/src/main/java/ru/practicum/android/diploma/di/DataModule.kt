@@ -28,7 +28,9 @@ val DataModule = module {
             androidContext(),
             AppDatabase::class.java,
             "database.db"
-        ).build()
+        )
+        .fallbackToDestructiveMigration()
+        .build()
     }
     single<OkHttpClient> {
         val loggingInterceptor = HttpLoggingInterceptor().apply {

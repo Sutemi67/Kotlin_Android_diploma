@@ -1,9 +1,11 @@
 package ru.practicum.android.diploma.di
 
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import ru.practicum.android.diploma.ui.screens.main.MainViewModel
 import ru.practicum.android.diploma.ui.screens.vacancy.VacancyDetailsViewModel
+import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
 
 val AppModule = module {
 
@@ -13,6 +15,13 @@ val AppModule = module {
         )
     }
 
-    viewModel<VacancyDetailsViewModel> { VacancyDetailsViewModel(get()) }
+    viewModel<VacancyDetailsViewModel> { 
+        VacancyDetailsViewModel(
+            interactor = get(),
+            connectManager = get(),
+            converter = get()
+        ) 
+    }
 
-}
+    singleOf(::VacancyDbConvertor)
+} 
