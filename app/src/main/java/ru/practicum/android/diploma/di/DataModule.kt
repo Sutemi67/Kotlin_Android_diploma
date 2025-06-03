@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.di
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

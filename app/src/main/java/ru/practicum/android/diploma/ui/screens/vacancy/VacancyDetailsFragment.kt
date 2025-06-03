@@ -86,8 +86,7 @@ class VacancyDetailsFragment : Fragment() {
 
         viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
             binding.toolbar.menu.findItem(R.id.action_favorite)?.setIcon(
-                if (isFavorite) R.drawable.favorites_on__24px
-                else R.drawable.favorites_off__24px
+                if (isFavorite) R.drawable.favorites_on__24px else R.drawable.favorites_off__24px
             )
         }
     }
