@@ -90,16 +90,9 @@ class VacancyDetailsFragment : Fragment() {
         binding.jobTitle.text = vacancy.name
         binding.salary.text = vacancy.salary?.let {
             when {
-                it.from != null && it.to != null ->
-                    getString(
-                    R.string.salary_range,
-                    it.from.toString(),
-                    it.to.toString(),
-                    it.currency
-                )
-
-                it.from != null -> getString(R.string.salary_from, it.from.toString(), it.currency)
-                it.to != null -> getString(R.string.salary_to, it.to.toString(), it.currency)
+                it.from != null && it.to != null -> "от ${it.from} до ${it.to} ${it.currency}"
+                it.from != null -> "от ${it.from} ${it.currency}"
+                it.to != null -> "до ${it.to} ${it.currency}"
                 else -> getString(R.string.salary_not_specified)
             }
         } ?: getString(R.string.salary_not_specified)
