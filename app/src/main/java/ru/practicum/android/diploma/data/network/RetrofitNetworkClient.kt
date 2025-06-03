@@ -27,7 +27,7 @@ class RetrofitNetworkClient(
         return withContext(Dispatchers.IO) {
             try {
                 val resp = when (dto) {
-                    is AllVacancyRequest -> api.searchVacancies(token = token, query = dto.expression, page = 1)
+                    is AllVacancyRequest -> api.searchVacancies(token = token, query = dto.expression, page = dto.page)
                     is VacancyRequest -> api.getVacancyDetails(token = token, dto.id)
                     else -> error("Unexpected dto type: ${dto::class}")
                 }
@@ -37,7 +37,6 @@ class RetrofitNetworkClient(
                 Response().apply { resultCode = ERROR_IO_EXCEPTION }
             }
         }
-
     }
 
     companion object {
