@@ -1,0 +1,181 @@
+Index: app/src/main/res/layout/fragment_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/white_black\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/main_screen\"\r\n        android:textSize=\"24sp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout> \r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_main.xml b/app/src/main/res/layout/fragment_main.xml
+--- a/app/src/main/res/layout/fragment_main.xml	(revision 21d42d17dbc578c258b567f794bd2b4e077955f6)
++++ b/app/src/main/res/layout/fragment_main.xml	(date 1748199303401)
+@@ -1,18 +1,157 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:background="@color/white_black">
++    xmlns:tools="http://schemas.android.com/tools"
++    style="@style/LayoutStyle">
++
++    <androidx.appcompat.widget.Toolbar
++        android:id="@+id/toolbar"
++        app:titleTextAppearance="@style/Medium22"
++        android:layout_width="match_parent"
++        android:layout_height="?attr/actionBarSize"
++        app:contentInsetStartWithNavigation="0dp"
++        app:title="@string/app_name"
++        app:menu="@menu/toolbar_menu"
++        app:titleMargin="8dp">
+ 
+-    <TextView
+-        android:layout_width="wrap_content"
++    </androidx.appcompat.widget.Toolbar>
++
++    <EditText
++        android:id="@+id/editText"
++        style="@style/Medium16"
++        android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:text="@string/main_screen"
+-        android:textSize="24sp"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
++        android:layout_marginStart="16dp"
++        android:layout_marginTop="@dimen/indent_8dp"
++        android:layout_marginEnd="@dimen/indent_16dp"
++        android:layout_marginBottom="@dimen/indent_8dp"
++        android:background="@drawable/edittext"
++        android:drawableEnd="@drawable/search_24px"
++        android:hint="@string/enter_request"
++        android:imeOptions="actionDone"
++        android:importantForAutofill="no"
++        android:maxLines="1"
++        android:padding="@dimen/indent_16dp"
++        android:singleLine="true"
++        android:textColor="@color/black_white"
++        android:textColorHint="@color/gray"
++        android:textCursorDrawable="@drawable/cursor_color" />
++
++    <androidx.constraintlayout.widget.ConstraintLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent">
++
++        <ProgressBar
++            android:id="@+id/progressBar"
++            android:layout_width="44dp"
++            android:layout_height="44dp"
++            android:layout_gravity="center"
++            android:indeterminateTint="@color/blue"
++            android:visibility="gone"
++            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout> 
++        <androidx.recyclerview.widget.RecyclerView
++            android:id="@+id/trackList"
++            android:layout_width="match_parent"
++            android:layout_height="0dp"
++            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
++            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent"
++            tools:listitem=""
++            tools:visibility="invisible">
++
++        </androidx.recyclerview.widget.RecyclerView>
++
++        <TextView
++            android:id="@+id/placeholderMessage"
++            style="@style/placeholderMessageStyle"
++            android:layout_marginTop="@dimen/indent_102dp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <Button
++            android:id="@+id/buttonUpDate"
++            style="@style/ButtonStyle2"
++            android:layout_marginTop="@dimen/indent_24dp"
++            android:text="@string/Update"
++            android:visibility="gone"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/placeholderMessage" />
++
++        <androidx.constraintlayout.widget.Barrier
++            android:id="@+id/barrier4"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            app:barrierDirection="bottom"
++            app:constraint_referenced_ids="textLookingForYou"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent" />
++
++        <TextView
++            android:id="@+id/textLookingForYou"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="@dimen/indent_24dp"
++            android:gravity="center"
++            android:padding="@dimen/indent_16dp"
++            android:text="@string/find_you"
++            android:textColor="@color/blackNight"
++            android:textSize="@dimen/text_size_19sp"
++            android:visibility="gone"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent"
++            tools:visibility="visible" />
++
++        <androidx.recyclerview.widget.RecyclerView
++            android:id="@+id/trackList2"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:visibility="gone"
++            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
++            app:layout_constrainedHeight="true"
++            app:layout_constraintBottom_toTopOf="@+id/guideline"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@id/barrier4"
++            app:layout_constraintVertical_bias="0"
++            tools:listitem="@layout/activity_music_adapter"
++            tools:visibility="visible">
++
++        </androidx.recyclerview.widget.RecyclerView>
++
++        <Button
++            android:id="@+id/buttonClearHistory"
++            style="@style/ButtonStyle2"
++            android:text="@string/clear_hictory_text_button"
++            android:visibility="gone"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/trackList2"
++            tools:visibility="visible" />
++
++        <androidx.constraintlayout.widget.Group
++            android:id="@+id/groupTrackList2"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:visibility="invisible"
++            app:constraint_referenced_ids="textLookingForYou,trackList2,buttonClearHistory" />
++
++        <androidx.constraintlayout.widget.Guideline
++            android:id="@+id/guideline"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:orientation="horizontal"
++            app:layout_constraintGuide_end="135dp" />
++
++
++    </androidx.constraintlayout.widget.ConstraintLayout>
++
++</LinearLayout>

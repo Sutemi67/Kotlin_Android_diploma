@@ -10,4 +10,24 @@
     <string name="main_screen">Main Screen</string>
     <string name="main">Главная</string>
     <string name="favourite">Избранное</string>
+    <string name="enter_request">Введите запрос</string>
+    <string name="empty_search">Не удалось получить список вакансий</string>
+    <string name="no_such_vacancies">Таких вакансий нет</string>
+    <string name="filtr">Фильтр</string>
+    <string name="no_internet">Нет интернета</string>
+    <string name="search_screen_image">search_screen_image</string>
+    <string name="company_logo">company logo</string>
+    <string name="salary_range">от %1$s до %2$s %3$s</string>
+    <string name="salary_from">от %1$s %2$s</string>
+    <string name="salary_to">до %1$s %2$s</string>
+    <string name="salary_not_specified">Зарплата не указана</string>
+    <string name="job_description">Описание вакансии</string>
+    <string name="required_experience">Требуемый опыт</string>
+    <string name="vacancy">Ваканcия</string>
+    <string name="vacancy_not_found_deleted">Вакансия не найдена или удалена</string>
+    <string name="error_service">Ошибка сервера</string>
+    <string name="empty_favourite_list">Список пуст</string>
+    <string name="error_favourite_list">Не удалось получить список вакансий</string>
+    <string name="error_not_found">Нет подключения к интернету и вакансия не найдена в избранном</string>
 </resources>
+

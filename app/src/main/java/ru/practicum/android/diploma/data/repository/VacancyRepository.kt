@@ -1,27 +1,107 @@
 package ru.practicum.android.diploma.data.repository
 
-import ru.practicum.android.diploma.BuildConfig
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
+import ru.practicum.android.diploma.data.db.AppDatabase
+import ru.practicum.android.diploma.data.db.entity.VacancyEntity
+import ru.practicum.android.diploma.data.dto.AllVacancyRequest
+import ru.practicum.android.diploma.data.dto.AllVacancyResponse
+import ru.practicum.android.diploma.data.dto.VacancyRequest
+import ru.practicum.android.diploma.data.dto.VacancyResponse
+import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.VacancyRepositoryInterface
-import ru.practicum.android.diploma.domain.network.api.HhApi
-import ru.practicum.android.diploma.domain.network.models.AllVacancyResponse
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+import ru.practicum.android.diploma.util.Resource
 
 class VacancyRepository(
-    private val api: HhApi
+    private val networkClient: NetworkClient,
+    private val db: AppDatabase,
+    private val convertor: VacancyDbConvertor,
 ) : VacancyRepositoryInterface {
-    private val token = "Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
 
-    override suspend fun searchVacancies(
-        query: String,
-        page: Int,
-        perPage: Int
-    ): AllVacancyResponse {
-        return api.searchVacancies(token, query, page, perPage)
+    override fun searchVacancy(query: String, page: Int): Flow<Triple<List<VacancyDetails>?, String?, String?>> = flow {
+        val response = networkClient.doSearchRequest(AllVacancyRequest(query, page))
+        when (response.resultCode) {
+            ERROR_NO_CONNECTION -> emit(Triple(null, "Ошибка", null))
+            SUCCESS -> {
+                with(response as AllVacancyResponse) {
+                    val data = items.map {
+                        VacancyDetails(
+                            id = it.id,
+                            name = it.name,
+                            salary = it.salary,
+                            area = it.area,
+                            employer = it.employer,
+                            experience = it.experience,
+                            alternateUrl = it.alternateUrl,
+                            schedule = it.schedule,
+                            employment = it.employment,
+                            description = it.description,
+                        )
+                    }
+                    emit(Triple(data, null, response.found.toString()))
+                }
+            }
+        }
     }
 
-    override suspend fun getVacancyDetails(
-        id: String
-    ): VacancyDetails {
-        return api.getVacancyDetails(token, id)
+    override suspend fun getVacancyDetails(id: String): Flow<Resource<VacancyDetails>> = flow {
+        val response = networkClient.doSearchRequest(VacancyRequest(id))
+        when (response.resultCode) {
+            ERROR_NO_CONNECTION -> emit(Resource.Error("Проверьте подключение к интернету"))
+            SUCCESS -> {
+                with(response as VacancyResponse) {
+                    emit(
+                        Resource.Success(
+                            data = VacancyDetails(
+                                id = id,
+                                name = name,
+                                salary = salary,
+                                area = area,
+                                employer = employer,
+                                experience = experience,
+                                alternateUrl = alternateUrl,
+                                schedule = schedule,
+                                employment = employment,
+                                description = description,
+                            ),
+                            itemsCount = response.resultCode
+                        )
+                    )
+                }
+            }
+
+            else -> {
+                emit(Resource.Error("Ошибка сервера"))
+            }
+        }
     }
+
+    override suspend fun addToFavorites(vacancy: VacancyEntity) {
+        db.vacancyDao().addVacancy(vacancy)
+    }
+
+    override suspend fun removeFromFavorites(vacancyId: Int) {
+        db.vacancyDao().deleteVacancy(vacancyId)
+    }
+
+    override suspend fun getFavoriteVacancy(vacancyId: Int): VacancyEntity? {
+        return db.vacancyDao().getVacancyById(vacancyId)
+    }
+
+    override fun getAllFavoriteVacancy(): Flow<List<VacancyDetails>> = flow {
+        val vacancyEntity = db.vacancyDao().getAllVacancy()
+        emit(convertFromVacancyEntity(vacancyEntity))
+    }
+
+    private fun convertFromVacancyEntity(vacancy: List<VacancyEntity>): List<VacancyDetails> {
+        return vacancy.map { vacancy -> convertor.mapToDomain(vacancy) }
+    }
+
+    companion object {
+        private const val ERROR_NO_CONNECTION = -1
+        private const val SUCCESS = 200
+    }
+
 }

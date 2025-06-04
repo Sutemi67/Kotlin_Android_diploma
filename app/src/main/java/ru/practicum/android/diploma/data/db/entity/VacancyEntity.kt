@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "vacancy_table")
 data class VacancyEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
-    val name: String,
-    // Добавить нужные поля
+    val vacancyJson: String
 )

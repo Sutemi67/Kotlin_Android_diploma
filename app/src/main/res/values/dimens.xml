@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="indent_8dp">8dp</dimen>
+    <dimen name="indent_16dp">16dp</dimen>
+    <dimen name="indent_32dp">32dp</dimen>
+    <dimen name="indent_12dp">12dp</dimen>
+    <dimen name="indent_4dp">4dp</dimen>
+    <dimen name="indent_48dp">48dp</dimen>
+    <dimen name="indent_328dp">328dp</dimen>
+    <dimen name="indent_223dp">223dp</dimen>
+    <dimen name="indent_80dp">80dp</dimen>
+    <dimen name="indent_24dp">24dp</dimen>
+</resources>

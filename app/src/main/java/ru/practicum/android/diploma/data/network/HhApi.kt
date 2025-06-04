@@ -1,11 +1,11 @@
-package ru.practicum.android.diploma.domain.network.api
+package ru.practicum.android.diploma.data.network
 
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.practicum.android.diploma.domain.network.models.AllVacancyResponse
-import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+import ru.practicum.android.diploma.data.dto.VacancyResponse
+import ru.practicum.android.diploma.data.dto.AllVacancyResponse
 
 interface HhApi {
     @GET("vacancies")
@@ -20,5 +20,5 @@ interface HhApi {
     suspend fun getVacancyDetails(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ): VacancyDetails
+    ): VacancyResponse
 }

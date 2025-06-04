@@ -5,10 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemVacancyBinding
+import ru.practicum.android.diploma.domain.OnItemClickListener
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 
-class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHolder>(VacancyDiffCallback()) {
+class VacancyAdapter(private val onItemClickListener: OnItemClickListener<VacancyDetails>) :
+    ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHolder>(VacancyDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val binding = ItemVacancyBinding.inflate(
@@ -16,7 +21,7 @@ class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHol
             parent,
             false
         )
-        return VacancyViewHolder(binding)
+        return VacancyViewHolder(binding, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
@@ -24,27 +29,55 @@ class VacancyAdapter : ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHol
     }
 
     class VacancyViewHolder(
-        private val binding: ItemVacancyBinding
+        private val binding: ItemVacancyBinding,
+        private val onItemClickListener: OnItemClickListener<VacancyDetails>
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(vacancyDetails: VacancyDetails) {
             val value = vacancyDetails.salary
             binding.apply {
-                jobTitle.text = vacancyDetails.name
+                jobTitle.text = buildString {
+                    append(vacancyDetails.name)
+                    append(",")
+                    append(vacancyDetails.area.name)
+                }
                 companyName.text = vacancyDetails.employer.name
-                location.text = vacancyDetails.area.name
 
                 salary.text = when {
                     value?.from != null && value.to != null ->
-                        "от ${value.from} до ${value.to} ${value.currency}"
+                        itemView.context.getString(
+                            R.string.salary_range,
+                            value.from.toString(),
+                            value.to.toString(),
+                            value.currency
+                        )
 
                     value?.from != null ->
-                        "от ${value.from} ${value.currency}"
+                        itemView.context.getString(
+                            R.string.salary_from,
+                            value.from.toString(),
+                            value.currency
+                        )
 
                     value?.to != null ->
-                        "до ${value.to} ${value.currency}"
+                        itemView.context.getString(
+                            R.string.salary_to,
+                            value.to.toString(),
+                            value.currency
+                        )
 
-                    else -> "Зарплата не указана"
+                    else -> itemView.context.getString(R.string.salary_not_specified)
+                }
+
+                Glide.with(itemView)
+                    .load(vacancyDetails.employer.logoUrls?.original)
+                    .placeholder(R.drawable.empty_image)
+                    .centerCrop()
+                    .transform(RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.indent_12dp)))
+                    .into(image)
+
+                root.setOnClickListener {
+                    onItemClickListener.onItemClick(vacancyDetails)
                 }
             }
         }

@@ -1,0 +1,101 @@
+Index: app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.practicum.android.diploma.ui.screens.main\r\n\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport android.text.Editable\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.view.inputmethod.InputMethodManager\r\nimport androidx.appcompat.content.res.AppCompatResources\r\nimport androidx.core.view.isVisible\r\nimport androidx.core.widget.addTextChangedListener\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.lifecycle.lifecycleScope\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport org.koin.androidx.viewmodel.ext.android.viewModel\r\nimport ru.practicum.android.diploma.R\r\nimport ru.practicum.android.diploma.databinding.FragmentMainBinding\r\nimport ru.practicum.android.diploma.util.debounce\r\n\r\nclass MainFragment : Fragment() {\r\n\r\n    private var _binding: FragmentMainBinding? = null\r\n    private val binding: FragmentMainBinding get() = requireNotNull(_binding)\r\n    private val adapter: VacancyAdapter = VacancyAdapter()\r\n    private val viewModel by viewModel<MainViewModel>()\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater,\r\n        container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        _binding = FragmentMainBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        setupRecyclerView()\r\n        setupSearchView()\r\n        observeViewModel()\r\n\r\n        binding.buttonCleanSearch.setOnClickListener {\r\n            binding.searchView.setText(\"\")\r\n            adapter.submitList(emptyList())\r\n            val inputMethodManager =\r\n                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager\r\n            inputMethodManager?.hideSoftInputFromWindow(binding.buttonCleanSearch.windowToken, 0)\r\n            binding.errorMessage.isVisible = false\r\n            binding.imageStart.isVisible = true\r\n        }\r\n    }\r\n\r\n    override fun onDestroyView() {\r\n        super.onDestroyView()\r\n        _binding = null\r\n    }\r\n\r\n    private fun setupRecyclerView() {\r\n        binding.recyclerView.apply {\r\n            layoutManager = LinearLayoutManager(requireContext())\r\n            adapter = this@MainFragment.adapter\r\n\r\n            addOnScrollListener(object : RecyclerView.OnScrollListener() {\r\n                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {\r\n                    super.onScrolled(recyclerView, dx, dy)\r\n\r\n                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager\r\n                    val visibleItemCount = layoutManager.childCount\r\n                    val totalItemCount = layoutManager.itemCount\r\n                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()\r\n\r\n//                    if (!viewModel.isLoading.value!! &&\r\n//                        visibleItemCount + firstVisibleItemPosition >= totalItemCount &&\r\n//                        firstVisibleItemPosition >= 0\r\n//                    ) {\r\n//                        viewModel.loadMoreItems()\r\n//                    }\r\n                }\r\n            })\r\n        }\r\n    }\r\n\r\n    private fun setupSearchView() {\r\n        val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)\r\n        val debouncedSearch = debounce(\r\n            delayMillis = 1000L,\r\n            coroutineScope = viewLifecycleOwner.lifecycleScope,\r\n            useLastParam = true\r\n        ) { query: String ->\r\n            if (query.isBlank()) {\r\n                binding.recyclerView.isVisible = false\r\n                binding.errorMessage.isVisible = false\r\n                binding.imageStart.isVisible = true\r\n                adapter.submitList(emptyList())\r\n            } else {\r\n                viewModel.searchVacancies(query)\r\n            }\r\n        }\r\n\r\n        binding.searchView.addTextChangedListener(\r\n            onTextChanged = { p0: CharSequence?, _, _, _ ->\r\n                debouncedSearch(p0?.toString() ?: \"\")\r\n                if (binding.searchView.hasFocus() && binding.searchView.text.isEmpty()) {\r\n                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)\r\n                    binding.buttonCleanSearch.isVisible = false\r\n                    binding.imageStart.isVisible = true\r\n                } else {\r\n                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)\r\n                    binding.buttonCleanSearch.isVisible = true\r\n                }\r\n            },\r\n            afterTextChanged = { _: Editable? ->\r\n                binding.errorMessage.isVisible = false\r\n            }\r\n        )\r\n    }\r\n\r\n    private fun observeViewModel() {\r\n        viewModel.searchState.observe(viewLifecycleOwner) { state ->\r\n            when (state) {\r\n                is UiState.Loading -> {\r\n                    binding.progressBar.isVisible = true\r\n                    binding.imageStart.isVisible = false\r\n                }\r\n\r\n                is UiState.Content -> {\r\n                    binding.recyclerView.isVisible = true\r\n                    binding.errorMessage.isVisible = false\r\n                    binding.imageStart.isVisible = false\r\n                    binding.progressBar.isVisible = false\r\n                    binding.infoSearch.text = \"Найдено ${state.vacancies.size} вакансий\"\r\n                    adapter.submitList(state.vacancies)\r\n                }\r\n\r\n                is UiState.NotFound -> {\r\n                    binding.recyclerView.isVisible = false\r\n                    binding.errorMessage.isVisible = true\r\n                    binding.imageStart.isVisible = false\r\n                    binding.progressBar.isVisible = false\r\n                    binding.errorText.text = \"Ошибка\"\r\n                    adapter.submitList(emptyList())\r\n                }\r\n\r\n                is UiState.Error -> {\r\n                    binding.recyclerView.isVisible = false\r\n                    binding.errorMessage.isVisible = true\r\n                    binding.imageStart.isVisible = false\r\n                    binding.progressBar.isVisible = false\r\n                    binding.errorText.text = state.errorMessage\r\n                    adapter.submitList(emptyList())\r\n                }\r\n\r\n                is UiState.Idle -> {\r\n                    binding.recyclerView.isVisible = false\r\n                    binding.errorMessage.isVisible = false\r\n                    binding.imageStart.isVisible = true\r\n                }\r\n            }\r\n        }\r\n\r\n        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->\r\n            binding.progressBar.isVisible = isLoading\r\n            if (isLoading) {\r\n                binding.imageStart.isVisible = false\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun showMessage(text: String, additionalMessage: String, drawable: Int) =\r\n        with(binding) {\r\n            imageStart.isVisible = false\r\n            progressBar.isVisible = false\r\n            recyclerView.isVisible = false\r\n            imageView.setImageResource(drawable)\r\n            if (text.isNotEmpty()) {\r\n                errorMessage.isVisible = true\r\n                adapter.submitList(emptyList())\r\n                errorText.text = text\r\n            } else {\r\n                errorMessage.isVisible = false\r\n            }\r\n        }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt
+--- a/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt	(revision 3dc68637f452b4d4ba32723f556a503bab8fa2c0)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/screens/main/MainFragment.kt	(date 1748548512125)
+@@ -12,19 +12,25 @@
+ import androidx.core.widget.addTextChangedListener
+ import androidx.fragment.app.Fragment
+ import androidx.lifecycle.lifecycleScope
++import androidx.navigation.fragment.findNavController
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
++import kotlinx.coroutines.delay
++import kotlinx.coroutines.launch
+ import org.koin.androidx.viewmodel.ext.android.viewModel
+ import ru.practicum.android.diploma.R
+ import ru.practicum.android.diploma.databinding.FragmentMainBinding
++import ru.practicum.android.diploma.domain.OnItemClickListener
++import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+ import ru.practicum.android.diploma.util.debounce
+ 
+ class MainFragment : Fragment() {
+ 
+     private var _binding: FragmentMainBinding? = null
+     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
+-    private val adapter: VacancyAdapter = VacancyAdapter()
++    lateinit var adapter: VacancyAdapter
+     private val viewModel by viewModel<MainViewModel>()
++    private var isClickAllowed = true
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater,
+@@ -59,7 +65,16 @@
+     }
+ 
+     private fun setupRecyclerView() {
++
++        val onItemClickListener = OnItemClickListener<VacancyDetails> { vacancy ->
++            if (clickDebounce()) {
++                val action = MainFragmentDirections.actionHomeFragmentToDetailsFragment(vacancy.id)
++                findNavController().navigate(action)
++            }
++        }
++
+         binding.recyclerView.apply {
++            this@MainFragment.adapter = VacancyAdapter(onItemClickListener)
+             layoutManager = LinearLayoutManager(requireContext())
+             adapter = this@MainFragment.adapter
+ 
+@@ -67,7 +82,7 @@
+                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                     super.onScrolled(recyclerView, dx, dy)
+ 
+-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
++                    val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+                     val visibleItemCount = layoutManager.childCount
+                     val totalItemCount = layoutManager.itemCount
+                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+@@ -86,7 +101,7 @@
+     private fun setupSearchView() {
+         val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
+         val debouncedSearch = debounce(
+-            delayMillis = 1000L,
++            delayMillis = CLICK_DEBOUNCE_DELAY,
+             coroutineScope = viewLifecycleOwner.lifecycleScope,
+             useLastParam = true
+         ) { query: String ->
+@@ -145,6 +160,7 @@
+                 }
+ 
+                 is UiState.Error -> {
++                    showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
+                     binding.recyclerView.isVisible = false
+                     binding.errorMessage.isVisible = true
+                     binding.imageStart.isVisible = false
+@@ -184,4 +200,20 @@
+             }
+         }
+ 
++
++    private fun clickDebounce(): Boolean {
++        if (isClickAllowed) {
++            isClickAllowed = false
++            viewLifecycleOwner.lifecycleScope.launch {
++                delay(CLICK_DEBOUNCE_DELAY)
++                isClickAllowed = true
++            }
++        }
++        return true
++    }
++
++    companion object {
++        private const val CLICK_DEBOUNCE_DELAY = 1000L
++    }
++
+ }

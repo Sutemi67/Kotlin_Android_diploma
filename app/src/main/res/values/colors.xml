@@ -5,8 +5,10 @@
     <color name="blue">#3772E7</color>
     <color name="red">#F56B6C</color>
     <color name="gray">#AEAFB4</color>
-    <color name="light_gray">#E6E8EB</color>
+    <color name="lightGray">#E6E8EB</color>
     <color name="background">#7F1A1B22</color>
     <color name="black_universal">#1A1B22</color>
     <color name="white_universal">#FDFDFD</color>
+    <color name="gray_white">#AEAFB4</color>
+    <color name="lightGray_gray">#E6E8EB</color>
 </resources>
