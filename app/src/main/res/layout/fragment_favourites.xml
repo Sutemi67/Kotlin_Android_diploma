@@ -1,18 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_black">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white_black"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/favourites_screen"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        style="@style/Medium22"
+        android:text="@string/favourite"
+        android:layout_marginTop="19dp"
+        android:layout_marginStart="16dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout> 
+    <LinearLayout
+        android:id="@+id/emptyList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/indent_328dp"
+            android:layout_height="@dimen/indent_223dp"
+            android:src="@drawable/image_empty_favorites"/>
+
+        <TextView
+            android:id="@+id/emptyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Medium22"
+            android:layout_marginTop="16dp"
+            android:text="@string/empty_favourite_list"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/errorList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageViewError"
+            android:layout_width="@dimen/indent_328dp"
+            android:layout_height="@dimen/indent_223dp"
+            android:src="@drawable/image_kat"/>
+
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Medium22"
+            android:layout_marginTop="16dp"
+            android:text="@string/error_favourite_list"
+            android:gravity="center"
+            android:layout_marginHorizontal="66dp"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_vacancy"
+        android:visibility="gone"/>
+
+</LinearLayout>

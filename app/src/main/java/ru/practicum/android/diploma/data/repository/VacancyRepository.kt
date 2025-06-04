@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
 import ru.practicum.android.diploma.data.dto.VacancyRequest
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.NetworkClient
@@ -15,7 +16,8 @@ import ru.practicum.android.diploma.data.db.entity.VacancyEntity
 
 class VacancyRepository(
     private val networkClient: NetworkClient,
-    private val db: AppDatabase
+    private val db: AppDatabase,
+    private val convertor: VacancyDbConvertor,
 ) : VacancyRepositoryInterface {
 
     override fun searchVacancy(query: String, page: Int): Flow<Triple<List<VacancyDetails>?, String?, String?>> = flow {
@@ -32,7 +34,6 @@ class VacancyRepository(
                             area = it.area,
                             employer = it.employer,
                             experience = it.experience,
-                            snippet = it.snippet,
                             alternateUrl = it.alternateUrl,
                             schedule = it.schedule,
                             employment = it.employment,
@@ -60,7 +61,6 @@ class VacancyRepository(
                                 area = area,
                                 employer = employer,
                                 experience = experience,
-                                snippet = snippet,
                                 alternateUrl = alternateUrl,
                                 schedule = schedule,
                                 employment = employment,
@@ -87,6 +87,15 @@ class VacancyRepository(
 
     override suspend fun getFavoriteVacancy(vacancyId: Int): VacancyEntity? {
         return db.vacancyDao().getVacancyById(vacancyId)
+    }
+
+    override fun getAllFavoriteVacancy(): Flow<List<VacancyDetails>> = flow {
+        val vacancyEntity = db.vacancyDao().getAllVacancy()
+        emit(convertFromVacancyEntity(vacancyEntity))
+    }
+
+    private fun convertFromVacancyEntity(vacancy: List<VacancyEntity>) : List<VacancyDetails> {
+        return vacancy.map { vacancy -> convertor.mapToDomain(vacancy) }
     }
 
     companion object {

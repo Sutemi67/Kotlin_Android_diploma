@@ -10,6 +10,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
 import ru.practicum.android.diploma.data.db.AppDatabase
 import ru.practicum.android.diploma.data.network.ConnectManager
 import ru.practicum.android.diploma.data.network.HhApi
@@ -61,4 +62,6 @@ val DataModule = module {
     single { ConnectManager(androidContext()) }
 
     single<ExternalNavigator> { ExternalNavigatorImpl(androidContext()) }
+
+    factory{ VacancyDbConvertor() }
 }

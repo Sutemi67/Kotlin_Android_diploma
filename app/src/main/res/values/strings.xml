@@ -23,8 +23,10 @@
     <string name="salary_not_specified">Зарплата не указана</string>
     <string name="job_description">Описание вакансии</string>
     <string name="required_experience">Требуемый опыт</string>
-    <string name="vacancy">Ваканcсия</string>
+    <string name="vacancy">Ваканcия</string>
     <string name="vacancy_not_found_deleted">Вакансия не найдена или удалена</string>
     <string name="error_service">Ошибка сервера</string>
+    <string name="empty_favourite_list">Список пуст</string>
+    <string name="error_favourite_list">Не удалось получить список вакансий</string>
 </resources>
 
