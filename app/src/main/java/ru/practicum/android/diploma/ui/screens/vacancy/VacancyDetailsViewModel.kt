@@ -85,7 +85,15 @@ class VacancyDetailsViewModel(
         }
     }
 
+    fun shareVacancy(id: String) {
+        interactor.shareVacancy(BASE_URL + id)
+    }
+
     private fun renderState(state: UiStateVacancy) {
         _vacancyDetails.postValue(state)
+    }
+
+    companion object {
+        const val BASE_URL = "https://hh.ru/vacancy/"
     }
 }
