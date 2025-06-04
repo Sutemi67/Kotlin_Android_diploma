@@ -4,8 +4,8 @@ import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.BuildConfig
-import ru.practicum.android.diploma.data.dto.Response
 import ru.practicum.android.diploma.data.dto.AllVacancyRequest
+import ru.practicum.android.diploma.data.dto.Response
 import ru.practicum.android.diploma.data.dto.VacancyRequest
 import java.io.IOException
 
@@ -23,11 +23,15 @@ class RetrofitNetworkClient(
         if (dto !is AllVacancyRequest && dto !is VacancyRequest) {
             return Response().apply { resultCode = ERROR_INVALID_DTO }
         }
-
         return withContext(Dispatchers.IO) {
             try {
                 val resp = when (dto) {
-                    is AllVacancyRequest -> api.searchVacancies(token = token, query = dto.expression, page = dto.page)
+                    is AllVacancyRequest -> api.searchVacancies(
+                        token = token,
+                        query = dto.expression,
+                        page = dto.page
+                    )
+
                     is VacancyRequest -> api.getVacancyDetails(token = token, dto.id)
                     else -> error("Unexpected dto type: ${dto::class}")
                 }

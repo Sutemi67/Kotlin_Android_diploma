@@ -3,16 +3,16 @@ package ru.practicum.android.diploma.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
+import ru.practicum.android.diploma.data.db.AppDatabase
+import ru.practicum.android.diploma.data.db.entity.VacancyEntity
+import ru.practicum.android.diploma.data.dto.AllVacancyRequest
+import ru.practicum.android.diploma.data.dto.AllVacancyResponse
 import ru.practicum.android.diploma.data.dto.VacancyRequest
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.VacancyRepositoryInterface
-import ru.practicum.android.diploma.data.dto.AllVacancyRequest
-import ru.practicum.android.diploma.data.dto.AllVacancyResponse
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
-import ru.practicum.android.diploma.data.db.AppDatabase
-import ru.practicum.android.diploma.data.db.entity.VacancyEntity
 
 class VacancyRepository(
     private val networkClient: NetworkClient,
@@ -71,6 +71,7 @@ class VacancyRepository(
                     )
                 }
             }
+
             else -> {
                 emit(Resource.Error("Ошибка сервера"))
             }
