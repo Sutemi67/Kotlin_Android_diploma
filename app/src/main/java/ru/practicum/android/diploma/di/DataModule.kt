@@ -63,5 +63,5 @@ val DataModule = module {
 
     single<ExternalNavigator> { ExternalNavigatorImpl(androidContext()) }
 
-    factory{ VacancyDbConvertor() }
+    factory { VacancyDbConvertor() }
 }

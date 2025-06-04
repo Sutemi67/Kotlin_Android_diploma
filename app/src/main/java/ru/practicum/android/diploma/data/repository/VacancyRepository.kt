@@ -94,7 +94,7 @@ class VacancyRepository(
         emit(convertFromVacancyEntity(vacancyEntity))
     }
 
-    private fun convertFromVacancyEntity(vacancy: List<VacancyEntity>) : List<VacancyDetails> {
+    private fun convertFromVacancyEntity(vacancy: List<VacancyEntity>): List<VacancyDetails> {
         return vacancy.map { vacancy -> convertor.mapToDomain(vacancy) }
     }
 
