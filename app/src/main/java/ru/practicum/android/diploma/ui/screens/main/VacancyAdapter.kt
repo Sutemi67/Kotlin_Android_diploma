@@ -72,7 +72,7 @@ class VacancyAdapter(private val onItemClickListener: OnItemClickListener<Vacanc
                 Glide.with(itemView)
                     .load(vacancyDetails.employer.logoUrls?.original)
                     .placeholder(R.drawable.empty_image)
-                    .fitCenter()
+                    .centerCrop()
                     .transform(RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.indent_12dp)))
                     .into(image)
 

@@ -35,4 +35,8 @@ class VacancyInteractorImpl(
     override fun shareVacancy(url: String) {
         externalNavigator.shareVacancy(url)
     }
+
+    override fun getAllFavoriteVacancy(): Flow<List<VacancyDetails>> {
+        return repository.getAllFavoriteVacancy()
+    }
 }

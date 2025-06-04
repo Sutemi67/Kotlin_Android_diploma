@@ -7,7 +7,6 @@ import ru.practicum.android.diploma.domain.network.models.Employment
 import ru.practicum.android.diploma.domain.network.models.Experience
 import ru.practicum.android.diploma.domain.network.models.Salary
 import ru.practicum.android.diploma.domain.network.models.Schedule
-import ru.practicum.android.diploma.domain.network.models.Snippet
 
 data class VacancyDetailsDto(
     @SerializedName("id") val id: String,
@@ -16,7 +15,6 @@ data class VacancyDetailsDto(
     @SerializedName("salary") val salary: Salary?,
     @SerializedName("employer") val employer: Employer,
     @SerializedName("experience") val experience: Experience,
-    @SerializedName("snippet") val snippet: Snippet,
     @SerializedName("alternate_url") val alternateUrl: String,
     @SerializedName("schedule") val schedule: Schedule,
     @SerializedName("employment") val employment: Employment,

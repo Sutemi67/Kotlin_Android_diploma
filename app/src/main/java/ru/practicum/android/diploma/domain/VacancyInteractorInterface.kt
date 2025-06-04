@@ -12,4 +12,5 @@ interface VacancyInteractorInterface {
     suspend fun removeFromFavorites(vacancyId: Int)
     suspend fun getFavoriteVacancy(vacancyId: Int): VacancyEntity?
     fun shareVacancy(url: String)
+    fun getAllFavoriteVacancy(): Flow<List<VacancyDetails>>
 }
