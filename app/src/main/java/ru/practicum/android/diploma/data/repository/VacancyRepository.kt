@@ -100,8 +100,7 @@ class VacancyRepository(
 
     companion object {
         private const val ERROR_NO_CONNECTION = -1
-        private const val ERROR_INVALID_DTO = 400
-        private const val ERROR_IO_EXCEPTION = 500
         private const val SUCCESS = 200
     }
+
 }
