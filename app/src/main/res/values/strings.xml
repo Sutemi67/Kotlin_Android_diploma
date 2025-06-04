@@ -28,5 +28,6 @@
     <string name="error_service">Ошибка сервера</string>
     <string name="empty_favourite_list">Список пуст</string>
     <string name="error_favourite_list">Не удалось получить список вакансий</string>
+    <string name="error_not_found">Нет подключения к интернету и вакансия не найдена в избранном</string>
 </resources>
 

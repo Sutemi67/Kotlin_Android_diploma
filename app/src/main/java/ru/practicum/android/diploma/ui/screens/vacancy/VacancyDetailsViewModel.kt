@@ -25,42 +25,50 @@ class VacancyDetailsViewModel(
     val isFavorite: LiveData<Boolean> = _isFavorite
 
     fun getVacancyDetails(id: String) {
-        if (id.isNotEmpty()) {
-            renderState(UiStateVacancy.Loading)
-            viewModelScope.launch {
-                if (connectManager.isConnected()) {
-                    interactor.getVacancyDetails(id).collect { result ->
-                        when (result) {
-                            is Resource.Success -> {
-                                result.data?.let { renderState(UiStateVacancy.Content(it)) }
-                            }
+        if (id.isEmpty()) return
 
-                            is Resource.Error -> {
-                                if (result.message == "$ERROR_CONNECT") {
-                                    renderState(UiStateVacancy.Error(result.message))
-                                } else {
-                                    renderState(UiStateVacancy.ErrorService)
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    // Если нет интернета, пробуем загрузить из базы данных
-                    val vacancyEntity = interactor.getFavoriteVacancy(id.toInt())
-                    if (vacancyEntity != null) {
-                        val vacancyDetails = converter.mapToDomain(vacancyEntity)
-                        renderState(UiStateVacancy.Content(vacancyDetails))
-                    } else {
-                        renderState(
-                            UiStateVacancy.Error(
-                                "Нет подключения к интернету и вакансия не найдена в избранном"
-                            )
-                        )
-                    }
-                }
+        renderState(UiStateVacancy.Loading)
+        viewModelScope.launch {
+            if (connectManager.isConnected()) {
+                loadFromNetwork(id)
+            } else {
+                loadFromDatabase(id)
             }
             checkFavoriteStatus(id.toInt())
         }
+    }
+
+    private suspend fun loadFromNetwork(id: String) {
+        interactor.getVacancyDetails(id).collect { result ->
+            when (result) {
+                is Resource.Success -> handleSuccess(result)
+                is Resource.Error -> handleError(result)
+            }
+        }
+    }
+
+    private fun handleSuccess(result: Resource.Success<VacancyDetails>) {
+        result.data?.let { renderState(UiStateVacancy.Content(it)) }
+    }
+
+    private fun handleError(result: Resource.Error<VacancyDetails>) {
+        val state = if (result.message == "$ERROR_CONNECT") {
+            UiStateVacancy.Error(result.message)
+        } else {
+            UiStateVacancy.ErrorService
+        }
+        renderState(state)
+    }
+
+    private suspend fun loadFromDatabase(id: String) {
+        val vacancyEntity = interactor.getFavoriteVacancy(id.toInt())
+        val state = if (vacancyEntity != null) {
+            val vacancyDetails = converter.mapToDomain(vacancyEntity)
+            UiStateVacancy.Content(vacancyDetails)
+        } else {
+            UiStateVacancy.Error("Нет подключения к интернету и вакансия не найдена в избранном")
+        }
+        renderState(state)
     }
 
     private fun checkFavoriteStatus(vacancyId: Int) {
