@@ -1,17 +1,31 @@
 package ru.practicum.android.diploma.util
 
-object AppFormatters {
-    const val ONE = 1
-    const val TWO = 2
-    const val FOUR = 4
-    const val TEN = 10
+import android.content.Context
+import ru.practicum.android.diploma.R
 
-    fun vacanciesCountTextFormatter(count: String): String {
-        val count = count.toInt()
-        return when (count % TEN) {
-            ONE -> "Найдена $count вакансия"
-            in TWO..FOUR -> "Найдено $count вакансии"
-            else -> "Найдено $count вакансий"
+object AppFormatters {
+
+    fun vacanciesCountTextFormatter(context: Context, count: Int): String {
+        return context.resources.getQuantityString(
+            R.plurals.vacancies_count,
+            count,
+            count
+        )
+    }
+
+    fun getCurrencyIcon(currencyCode: String): String {
+        return when (currencyCode.uppercase()) {
+            "USD" -> "$"
+            "EUR" -> "€"
+            "RUR" -> "₽"
+            "GBP" -> "£"
+            "JPY" -> "¥"
+            "BYR" -> "Br"
+            "KZT" -> "₸"
+            "UZS" -> "сум"
+            "KGS" -> "сом"
+            else -> currencyCode
         }
     }
+
 }

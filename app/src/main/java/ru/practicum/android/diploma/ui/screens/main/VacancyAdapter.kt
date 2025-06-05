@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemVacancyBinding
 import ru.practicum.android.diploma.domain.OnItemClickListener
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+import ru.practicum.android.diploma.util.AppFormatters.getCurrencyIcon
 
 class VacancyAdapter(private val onItemClickListener: OnItemClickListener<VacancyDetails>) :
     ListAdapter<VacancyDetails, VacancyAdapter.VacancyViewHolder>(VacancyDiffCallback()) {
@@ -38,7 +39,7 @@ class VacancyAdapter(private val onItemClickListener: OnItemClickListener<Vacanc
             binding.apply {
                 jobTitle.text = buildString {
                     append(vacancyDetails.name)
-                    append(",")
+                    append(", ")
                     append(vacancyDetails.area.name)
                 }
                 companyName.text = vacancyDetails.employer.name
@@ -49,21 +50,21 @@ class VacancyAdapter(private val onItemClickListener: OnItemClickListener<Vacanc
                             R.string.salary_range,
                             value.from.toString(),
                             value.to.toString(),
-                            value.currency
+                            getCurrencyIcon(value.currency.toString())
                         )
 
                     value?.from != null ->
                         itemView.context.getString(
                             R.string.salary_from,
                             value.from.toString(),
-                            value.currency
+                            getCurrencyIcon(value.currency.toString())
                         )
 
                     value?.to != null ->
                         itemView.context.getString(
                             R.string.salary_to,
                             value.to.toString(),
-                            value.currency
+                            getCurrencyIcon(value.currency.toString())
                         )
 
                     else -> itemView.context.getString(R.string.salary_not_specified)
