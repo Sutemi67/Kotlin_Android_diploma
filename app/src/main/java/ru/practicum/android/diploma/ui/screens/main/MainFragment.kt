@@ -146,7 +146,10 @@ class MainFragment : Fragment() {
                     binding.imageStart.isVisible = false
                     binding.progressBar.isVisible = false
                     binding.infoSearch.isVisible = true
-                    binding.infoSearch.text = AppFormatters.vacanciesCountTextFormatter(context = requireContext(), count = state.allCount.toInt())
+                    binding.infoSearch.text = AppFormatters.vacanciesCountTextFormatter(
+                        context = requireContext(),
+                        count = state.allCount.toInt()
+                    )
                     adapter?.submitList(state.vacancies)
                 }
 
