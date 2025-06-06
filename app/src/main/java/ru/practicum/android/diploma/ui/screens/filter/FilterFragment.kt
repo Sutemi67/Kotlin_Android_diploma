@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
@@ -34,5 +35,7 @@ class FilterFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
         binding.area.setOnClickListener { }
         binding.workingArea.setOnClickListener { }
+        binding.clearButton.isVisible = true
+        binding.applyButton.isVisible = true
     }
 }
