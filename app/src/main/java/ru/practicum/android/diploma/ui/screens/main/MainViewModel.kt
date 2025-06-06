@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.domain.VacancyInteractorInterface
+import ru.practicum.android.diploma.domain.VacancyInteractor
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 
 class MainViewModel(
-    private val interactor: VacancyInteractorInterface
+    private val interactor: VacancyInteractor
 ) : ViewModel() {
 
     private val _searchState = MutableLiveData<UiState>()

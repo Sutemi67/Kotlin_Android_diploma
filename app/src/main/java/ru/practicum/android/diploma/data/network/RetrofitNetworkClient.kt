@@ -16,13 +16,16 @@ class RetrofitNetworkClient(
 
     private val token = "Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
 
-    override suspend fun doSearchRequest(dto: Any): Response {
+    override suspend fun doSearchRequest(dto: AllVacancyRequest): Response {
         return when {
             !connectManager.isConnected() -> createErrorResponse(ERROR_NO_CONNECTION)
-            dto !is AllVacancyRequest && dto !is VacancyRequest -> createErrorResponse(ERROR_INVALID_DTO)
             else -> withContext(Dispatchers.IO) {
                 try {
-                    val response = executeApiRequest(dto)
+                    val response = api.searchVacancies(
+                        token = token,
+                        query = dto.expression,
+                        page = dto.page
+                    )
                     response.apply { resultCode = SUCCESS }
                 } catch (e: IOException) {
                     Log.e("TAG", "Network error", e)
@@ -32,15 +35,21 @@ class RetrofitNetworkClient(
         }
     }
 
-    private suspend fun executeApiRequest(dto: Any): Response {
-        return when (dto) {
-            is AllVacancyRequest -> api.searchVacancies(
-                token = token,
-                query = dto.expression,
-                page = dto.page
-            )
-            is VacancyRequest -> api.getVacancyDetails(token = token, dto.id)
-            else -> error("Unexpected dto type: ${dto::class}")
+    override suspend fun getVacancyDetails(dto: VacancyRequest): Response {
+        return when {
+            !connectManager.isConnected() -> createErrorResponse(ERROR_NO_CONNECTION)
+            else -> withContext(Dispatchers.IO) {
+                try {
+                    val response = api.getVacancyDetails(
+                        token = token,
+                        id = dto.id
+                    )
+                    response.apply { resultCode = SUCCESS }
+                } catch (e: IOException) {
+                    Log.e("TAG", "Network error", e)
+                    createErrorResponse(ERROR_IO_EXCEPTION)
+                }
+            }
         }
     }
 
