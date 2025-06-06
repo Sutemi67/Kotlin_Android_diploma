@@ -44,10 +44,18 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupToolbar()
         setupRecyclerView()
         setupSearchView()
         observeViewModel()
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.setOnMenuItemClickListener {
+            val action = MainFragmentDirections.actionHomeFragmentToFilterFragment()
+            findNavController().navigate(action)
+            true
+        }
     }
 
     override fun onDestroyView() {

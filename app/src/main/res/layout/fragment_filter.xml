@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.screens.filter.FilterFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/arrow_back_24px"
+        app:title="Настройки фильтрации"
+        app:titleMargin="@dimen/indent_8dp"
+        app:titleTextAppearance="@style/Medium22" />
+
+    <LinearLayout
+        android:id="@+id/area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/Medium19"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/indent_16dp"
+            android:layout_weight="1"
+            android:text="@string/area" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/indent_16dp"
+            android:src="@drawable/outline_arrow_forward_ios_24"
+            app:tint="@color/black_universal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/working_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/Medium19"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/indent_16dp"
+            android:layout_weight="1"
+            android:text="@string/work_area" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/outline_arrow_forward_ios_24"
+            app:tint="@color/black_universal" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/salaryInputLayout"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/indent_16dp"
+        android:layout_marginTop="@dimen/indent_24dp"
+        android:layout_marginEnd="@dimen/indent_16dp"
+        android:layout_marginBottom="@dimen/indent_24dp"
+        android:hint="@string/expect_salary"
+        app:expandedHintEnabled="false"
+        app:hintTextAppearance="@style/hintMedium16">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/salaryInput"
+            style="@style/Medium19"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edittext"
+            android:hint="@string/enter_value"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:paddingStart="@dimen/indent_16dp"
+            android:paddingEnd="@dimen/indent_16dp"
+            android:singleLine="true"
+            android:textColor="@color/black_universal"
+            android:textColorHint="@color/gray_white"
+            android:textCursorDrawable="@drawable/cursor_color" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/salaryCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/Medium19"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/indent_16dp"
+            android:layout_weight="1"
+            android:text="@string/not_show_without_salary"
+            android:textColor="@color/black_universal" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/indent_16dp" />
+
+    </LinearLayout>
+</LinearLayout>
