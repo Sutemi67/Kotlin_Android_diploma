@@ -9,7 +9,8 @@ import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 
 class FilterFragment : Fragment() {
-    private lateinit var binding: FragmentFilterBinding
+    private var _binding: FragmentFilterBinding? = null
+    private val binding: FragmentFilterBinding get() = requireNotNull(_binding)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,7 @@ class FilterFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFilterBinding.inflate(inflater, container, false)
+        _binding = FragmentFilterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
