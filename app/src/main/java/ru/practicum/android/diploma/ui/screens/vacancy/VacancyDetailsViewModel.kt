@@ -8,12 +8,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
 import ru.practicum.android.diploma.data.network.ConnectManager
-import ru.practicum.android.diploma.domain.VacancyInteractorInterface
+import ru.practicum.android.diploma.domain.VacancyInteractor
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
 
 class VacancyDetailsViewModel(
-    private val interactor: VacancyInteractorInterface,
+    private val interactor: VacancyInteractor,
     private val connectManager: ConnectManager,
     private val converter: VacancyDbConvertor
 ) : ViewModel() {
