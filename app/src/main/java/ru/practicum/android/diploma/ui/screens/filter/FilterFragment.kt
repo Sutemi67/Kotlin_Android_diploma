@@ -50,13 +50,19 @@ class FilterFragment : Fragment() {
                 val drawableEnd = binding.salaryInput.compoundDrawablesRelative[2]
                 if (drawableEnd != null) {
                     val touchableWidth = drawableEnd.intrinsicWidth + binding.salaryInput.paddingEnd
-                    if (event.rawX >= (binding.salaryInput.right - touchableWidth)) {
+                    val isClickOnDrawable = event.rawX >= binding.salaryInput.right - touchableWidth
+                    if (isClickOnDrawable) {
                         binding.salaryInput.text?.clear()
-                        return@setOnTouchListener true
+                        true
+                    } else {
+                        false
                     }
+                } else {
+                    false
                 }
+            } else {
+                false
             }
-            false
         }
 
         binding.salaryInput.addTextChangedListener(
