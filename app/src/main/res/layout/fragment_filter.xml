@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/arrow_back_24px"
-        app:title="Настройки фильтрации"
+        app:title="@string/filtering_settings"
         app:titleMargin="@dimen/indent_8dp"
         app:titleTextAppearance="@style/Medium22" />
 
@@ -31,7 +31,7 @@
         <TextView
             style="@style/Medium19"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/indent_60dp"
             android:layout_marginStart="@dimen/indent_16dp"
             android:layout_weight="1"
             android:text="@string/area" />
@@ -55,7 +55,7 @@
         <TextView
             style="@style/Medium19"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/indent_60dp"
             android:layout_marginStart="@dimen/indent_16dp"
             android:layout_weight="1"
             android:text="@string/work_area" />
@@ -63,7 +63,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="@dimen/indent_16dp"
             android:src="@drawable/outline_arrow_forward_ios_24"
             app:tint="@color/black_white" />
 
@@ -87,7 +87,7 @@
             android:id="@+id/salaryInput"
             style="@style/Medium19"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/indent_56dp"
             android:background="@drawable/edittext"
             android:hint="@string/enter_value"
             android:imeOptions="actionDone"
@@ -112,7 +112,7 @@
         <TextView
             style="@style/Medium19"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/indent_60dp"
             android:layout_marginStart="@dimen/indent_16dp"
             android:layout_weight="1"
             android:text="@string/not_show_without_salary"
@@ -135,9 +135,9 @@
         android:id="@+id/applyButton"
         style="@style/Medium16"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="17dp"
+        android:layout_height="@dimen/indent_60dp"
+        android:layout_marginStart="@dimen/indent_16dp"
+        android:layout_marginEnd="@dimen/indent_16dp"
         android:backgroundTint="@color/blue"
         android:text="@string/apply"
         android:textColor="@color/white_universal"
@@ -148,7 +148,7 @@
         android:id="@+id/clearButton"
         style="@style/Medium16"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
+        android:layout_height="@dimen/indent_60dp"
         android:gravity="center"
         android:text="@string/clear_filters_button"
         android:textColor="@color/red"
