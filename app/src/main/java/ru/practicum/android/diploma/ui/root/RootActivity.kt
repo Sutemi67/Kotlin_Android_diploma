@@ -29,7 +29,7 @@ class RootActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.detailsFragment -> {
+                R.id.detailsFragment, R.id.filterFragment -> {
                     binding?.bottomNavigation?.isVisible = false
                 }
 
