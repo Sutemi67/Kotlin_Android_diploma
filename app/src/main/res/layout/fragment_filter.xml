@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.screens.filter.FilterFragment">
+    tools:context=".ui.screens.filter.FilterFragment"
+    android:background="@color/white_black">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/indent_16dp"
             android:src="@drawable/outline_arrow_forward_ios_24"
-            app:tint="@color/black_universal" />
+            app:tint="@color/black_white" />
 
     </LinearLayout>
 
@@ -64,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:src="@drawable/outline_arrow_forward_ios_24"
-            app:tint="@color/black_universal" />
+            app:tint="@color/black_white" />
 
     </LinearLayout>
 
@@ -115,12 +116,13 @@
             android:layout_marginStart="@dimen/indent_16dp"
             android:layout_weight="1"
             android:text="@string/not_show_without_salary"
-            android:textColor="@color/black_universal" />
+            android:textColor="@color/black_white" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/indent_16dp" />
+            android:layout_marginEnd="@dimen/indent_16dp"
+            android:buttonTint="@color/blue"/>
 
     </LinearLayout>
 
