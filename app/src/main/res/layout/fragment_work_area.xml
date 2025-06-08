@@ -16,11 +16,12 @@
         app:titleMargin="@dimen/indent_8dp"
         app:titleTextAppearance="@style/Medium22" />
 
-    <TextView
-        android:id="@+id/sampleText"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/industriesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Нажми на меня" />
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/indent_8dp"
+        tools:listitem="@layout/item_industry" />
 
 </LinearLayout>

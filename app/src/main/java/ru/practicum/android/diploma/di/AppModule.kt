@@ -16,7 +16,7 @@ val AppModule = module {
             interactor = get()
         )
     }
-    viewModel<FilterViewModel> { FilterViewModel() }
+    viewModel<FilterViewModel> { FilterViewModel(get()) }
     viewModel<VacancyDetailsViewModel> {
         VacancyDetailsViewModel(
             interactor = get(),

@@ -7,6 +7,7 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dto.AllVacancyRequest
 import ru.practicum.android.diploma.data.dto.Response
 import ru.practicum.android.diploma.data.dto.VacancyRequest
+import ru.practicum.android.diploma.domain.network.models.Industry
 import java.io.IOException
 
 class RetrofitNetworkClient(
@@ -30,6 +31,20 @@ class RetrofitNetworkClient(
                 } catch (e: IOException) {
                     Log.e("TAG", "Network error", e)
                     createErrorResponse(ERROR_IO_EXCEPTION)
+                }
+            }
+        }
+    }
+
+    override suspend fun getIndustries(): List<Industry>? {
+        return when {
+            !connectManager.isConnected() -> null
+            else -> withContext(Dispatchers.IO) {
+                try {
+                    api.getIndustries(token = token)
+                } catch (e: IOException) {
+                    Log.e("TAG", "Network error while getting industries", e)
+                    null
                 }
             }
         }
