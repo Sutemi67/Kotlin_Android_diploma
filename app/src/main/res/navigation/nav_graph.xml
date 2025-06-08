@@ -52,12 +52,12 @@
         tools:layout="@layout/fragment_filter" >
         <action
             android:id="@+id/action_filterFragment_to_workAreaFragment"
-            app:destination="@id/workAreaFragment" />
+            app:destination="@id/industryFragment" />
     </fragment>
     <fragment
-        android:id="@+id/workAreaFragment"
-        android:name="ru.practicum.android.diploma.ui.screens.filter.WorkAreaFragment"
+        android:id="@+id/industryFragment"
+        android:name="ru.practicum.android.diploma.ui.screens.filter.IndustryFragment"
         android:label="fragment_work_area"
-        tools:layout="@layout/fragment_work_area" />
+        tools:layout="@layout/fragment_industry" />
 
 </navigation>

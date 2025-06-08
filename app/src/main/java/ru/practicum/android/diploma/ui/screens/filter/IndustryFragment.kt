@@ -10,13 +10,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.practicum.android.diploma.databinding.FragmentWorkAreaBinding
+import ru.practicum.android.diploma.databinding.FragmentIndustryBinding
 
-class WorkAreaFragment : Fragment() {
+class IndustryFragment : Fragment() {
 
     private val viewModel by viewModel<FilterViewModel>(ownerProducer = { requireActivity() })
-    private var _binding: FragmentWorkAreaBinding? = null
-    private val binding: FragmentWorkAreaBinding get() = requireNotNull(_binding)
+    private var _binding: FragmentIndustryBinding? = null
+    private val binding: FragmentIndustryBinding get() = requireNotNull(_binding)
     private val adapter = IndustryAdapter { industry ->
         viewModel.setWorkingArea(industry.name)
         findNavController().popBackStack()
@@ -27,7 +27,7 @@ class WorkAreaFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentWorkAreaBinding.inflate(inflater, container, false)
+        _binding = FragmentIndustryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,7 +41,7 @@ class WorkAreaFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.industriesRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@WorkAreaFragment.adapter
+            adapter = this@IndustryFragment.adapter
         }
     }
 
