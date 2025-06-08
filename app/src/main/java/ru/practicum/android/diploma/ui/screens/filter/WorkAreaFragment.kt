@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 import ru.practicum.android.diploma.databinding.FragmentWorkAreaBinding
 
 class WorkAreaFragment : Fragment() {

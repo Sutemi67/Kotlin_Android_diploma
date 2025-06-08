@@ -11,11 +11,17 @@ import ru.practicum.android.diploma.ui.screens.vacancy.VacancyDetailsViewModel
 
 val AppModule = module {
 
-    viewModel<MainViewModel> { MainViewModel(interactor = get()) }
+    viewModel<MainViewModel> {
+        MainViewModel(
+            interactor = get()
+        )
+    }
     viewModel<FilterViewModel> { FilterViewModel() }
     viewModel<VacancyDetailsViewModel> {
         VacancyDetailsViewModel(
-            interactor = get(), connectManager = get(), converter = get()
+            interactor = get(),
+            connectManager = get(),
+            converter = get()
         )
     }
 
