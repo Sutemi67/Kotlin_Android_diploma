@@ -7,4 +7,4 @@ data class Industry(
     @SerializedName("name") val name: String,
     @SerializedName("parent_id") val parentId: String?,
     @SerializedName("industries") val industries: List<Industry>?
-) 
+)

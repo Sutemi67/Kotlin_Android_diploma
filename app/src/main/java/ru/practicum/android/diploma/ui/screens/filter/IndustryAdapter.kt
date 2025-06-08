@@ -55,4 +55,4 @@ class IndustryAdapter(
             return oldItem == newItem
         }
     }
-} 
+}
