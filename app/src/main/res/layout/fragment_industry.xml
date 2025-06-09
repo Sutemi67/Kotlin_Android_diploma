@@ -19,9 +19,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/industriesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clipToPadding="false"
         android:paddingTop="@dimen/indent_8dp"
         tools:listitem="@layout/item_industry" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/applyButton"
+        style="@style/Medium16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/indent_60dp"
+        android:layout_marginStart="@dimen/indent_16dp"
+        android:layout_marginEnd="@dimen/indent_16dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/select"
+        android:textColor="@color/white_universal"
+        android:visibility="invisible"
+        app:cornerRadius="@dimen/indent_12dp" />
 
 </LinearLayout>

@@ -39,6 +39,7 @@
     <string name="clear_filters_button">Сбросить</string>
     <string name="apply">Применить</string>
     <string name="filtering_settings">Настройки фильтрации</string>
+    <string name="select">Выбрать</string>
     <plurals name="vacancies_count">
         <item quantity="one">Найдена %d вакансия</item>
         <item quantity="few">Найдено %d вакансии</item>

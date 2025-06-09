@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,10 +18,12 @@ class IndustryFragment : Fragment() {
     private val viewModel by viewModel<FilterViewModel>(ownerProducer = { requireActivity() })
     private var _binding: FragmentIndustryBinding? = null
     private val binding: FragmentIndustryBinding get() = requireNotNull(_binding)
+    private var selectedIndustry = ""
+
     private val adapter = IndustryAdapter { industry ->
         viewModel.onSelectIndustry(industry)
-//        viewModel.setWorkingArea(industry.name)
-//        findNavController().popBackStack()
+        selectedIndustry = industry.name
+        binding.applyButton.isVisible = true
     }
 
     override fun onCreateView(
@@ -37,6 +40,14 @@ class IndustryFragment : Fragment() {
         setupRecyclerView()
         setupToolbar()
         observeIndustries()
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
+        binding.applyButton.setOnClickListener {
+            viewModel.setWorkingArea(selectedIndustry)
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupRecyclerView() {
