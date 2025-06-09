@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_black"
     android:orientation="vertical"
-    tools:context=".ui.screens.filter.FilterFragment"
-    android:background="@color/white_black">
+    tools:context=".ui.screens.filter.FilterFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -25,6 +25,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/areaText"
             style="@style/Medium19"
             android:layout_width="0dp"
             android:layout_height="@dimen/indent_60dp"
@@ -49,7 +50,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/working_area_text"
+            android:id="@+id/industryText"
             style="@style/Medium19"
             android:layout_width="0dp"
             android:layout_height="@dimen/indent_60dp"
@@ -101,7 +102,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
-        android:id="@+id/salaryCheckBox"
+        android:id="@+id/salaryCheckBoxLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -117,10 +118,11 @@
             android:textColor="@color/black_white" />
 
         <CheckBox
+            android:id="@+id/checkboxFrame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/indent_16dp"
-            android:buttonTint="@color/blue"/>
+            android:buttonTint="@color/blue" />
 
     </LinearLayout>
 
