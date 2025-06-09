@@ -12,6 +12,7 @@ import ru.practicum.android.diploma.data.dto.VacancyRequest
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.VacancyRepository
+import ru.practicum.android.diploma.domain.network.models.Area
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
 
@@ -94,6 +95,10 @@ class VacancyRepositoryImpl(
     override fun getAllFavoriteVacancy(): Flow<List<VacancyDetails>> = flow {
         val vacancyEntity = db.vacancyDao().getAllVacancy()
         emit(convertFromVacancyEntity(vacancyEntity))
+    }
+
+    override suspend fun getAreas(): List<Area>? {
+      return networkClient.getAreas()
     }
 
     private fun convertFromVacancyEntity(vacancy: List<VacancyEntity>): List<VacancyDetails> {

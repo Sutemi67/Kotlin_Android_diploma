@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.data.db.entity.VacancyEntity
 import ru.practicum.android.diploma.domain.VacancyInteractor
 import ru.practicum.android.diploma.domain.VacancyRepository
+import ru.practicum.android.diploma.domain.network.models.Area
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.sharing.domain.ExternalNavigator
 import ru.practicum.android.diploma.util.Resource
@@ -38,5 +39,9 @@ class VacancyInteractorImpl(
 
     override fun getAllFavoriteVacancy(): Flow<List<VacancyDetails>> {
         return repository.getAllFavoriteVacancy()
+    }
+
+    override suspend fun getAreas(): List<Area>? {
+        return repository.getAreas()
     }
 }
