@@ -7,6 +7,7 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dto.AllVacancyRequest
 import ru.practicum.android.diploma.data.dto.Response
 import ru.practicum.android.diploma.data.dto.VacancyRequest
+import ru.practicum.android.diploma.domain.network.models.Area
 import ru.practicum.android.diploma.domain.network.models.Industry
 import java.io.IOException
 
@@ -42,6 +43,20 @@ class RetrofitNetworkClient(
             else -> withContext(Dispatchers.IO) {
                 try {
                     api.getIndustries(token = token)
+                } catch (e: IOException) {
+                    Log.e("TAG", "Network error while getting industries", e)
+                    null
+                }
+            }
+        }
+    }
+
+    override suspend fun getAreas(): List<Area>? {
+        return when {
+            !connectManager.isConnected() -> null
+            else -> withContext(Dispatchers.IO) {
+                try {
+                    api.getAreas(token = token)
                 } catch (e: IOException) {
                     Log.e("TAG", "Network error while getting industries", e)
                     null

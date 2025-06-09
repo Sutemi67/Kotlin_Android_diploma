@@ -6,6 +6,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.dto.AllVacancyResponse
+import ru.practicum.android.diploma.domain.network.models.Area
 import ru.practicum.android.diploma.domain.network.models.Industry
 
 interface HhApi {
@@ -27,4 +28,7 @@ interface HhApi {
     suspend fun getIndustries(
         @Header("Authorization") token: String
     ): List<Industry>
+
+    @GET("areas")
+    suspend fun getAreas(@Header("Authorization") token: String): List<Area>
 }
