@@ -98,7 +98,7 @@ class VacancyRepositoryImpl(
     }
 
     override suspend fun getAreas(): List<Area>? {
-      return networkClient.getAreas()
+        return networkClient.getAreas()
     }
 
     private fun convertFromVacancyEntity(vacancy: List<VacancyEntity>): List<VacancyDetails> {
