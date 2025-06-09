@@ -129,12 +129,14 @@ class FilterFragment : Fragment() {
         }
     }
 
-    private fun allFieldsCheck() {
-        if (binding.industryText.text == getString(R.string.work_area) &&
+    private fun FragmentFilterBinding.checkFields(): Boolean =
+        binding.industryText.text == getString(R.string.work_area) &&
             binding.areaText.text == getString(R.string.area) &&
             binding.salaryInput.text.isNullOrEmpty() &&
             !binding.checkboxFrame.isChecked
-        ) {
+
+    private fun allFieldsCheck() {
+        if (binding.checkFields()) {
             isButtonsGroupVisible(false)
         } else {
             isButtonsGroupVisible(true)
