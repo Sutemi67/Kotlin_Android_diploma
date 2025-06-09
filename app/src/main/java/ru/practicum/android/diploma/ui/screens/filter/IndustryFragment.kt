@@ -18,8 +18,9 @@ class IndustryFragment : Fragment() {
     private var _binding: FragmentIndustryBinding? = null
     private val binding: FragmentIndustryBinding get() = requireNotNull(_binding)
     private val adapter = IndustryAdapter { industry ->
-        viewModel.setWorkingArea(industry.name)
-        findNavController().popBackStack()
+        viewModel.onSelectIndustry(industry)
+//        viewModel.setWorkingArea(industry.name)
+//        findNavController().popBackStack()
     }
 
     override fun onCreateView(

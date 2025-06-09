@@ -41,7 +41,8 @@ class FilterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupBindings()
-        setupWorkAreaField()
+        setupIndustryField()
+        allFieldsCheck()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -52,9 +53,16 @@ class FilterFragment : Fragment() {
             val direction = FilterFragmentDirections.actionFilterFragmentToWorkAreaFragment()
             findNavController().navigate(direction)
         }
-        binding.clearButton.isVisible = true
-        binding.applyButton.isVisible = true
-
+        binding.salaryCheckBoxLinearLayout.setOnClickListener {
+            binding.checkboxFrame.isChecked = !binding.checkboxFrame.isChecked
+            allFieldsCheck()
+        }
+        binding.checkboxFrame.setOnClickListener {
+            allFieldsCheck()
+        }
+        binding.clearButton.setOnClickListener {
+            allClear()
+        }
         binding.salaryInput.setOnTouchListener { _, event ->
             if (event.action == android.view.MotionEvent.ACTION_UP) {
                 val drawableEnd = binding.salaryInput.compoundDrawablesRelative[2]
@@ -77,30 +85,34 @@ class FilterFragment : Fragment() {
 
         binding.salaryInput.addTextChangedListener(
             onTextChanged = { text: CharSequence?, _, _, _ ->
-                binding.salaryInput.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    null,
-                    null,
-                    imageChooser(text),
-                    null
-                )
+                if (!text.isNullOrEmpty()) {
+                    binding.salaryInput.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        null,
+                        null,
+                        imageChooser(text),
+                        null
+                    )
+                }
+                allFieldsCheck()
             },
             afterTextChanged = { _: Editable? -> }
         )
     }
 
-    private fun setupWorkAreaField() {
+    private fun setupIndustryField() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.workArea.collect { data ->
-                binding.workingAreaText.text = data
+                binding.industryText.text = data
                 Log.d("area", "Значение $data установлено")
-                if (binding.workingAreaText.text != "Отрасль") {
+                if (binding.industryText.text != getString(R.string.work_area)) {
                     binding.workAreaIcon.setImageResource(R.drawable.close_24px)
-                    binding.workingAreaText.setTextColor(resources.getColor(R.color.black_universal))
+                    binding.industryText.setTextColor(resources.getColor(R.color.black_universal))
                     binding.workAreaIcon.setOnClickListener {
-                        viewModel.setWorkingArea("Отрасль")
+                        viewModel.setWorkingArea(getString(R.string.work_area))
                         binding.workAreaIcon.setImageResource(R.drawable.outline_arrow_forward_ios_24)
-                        binding.workingAreaText.setTextColor(resources.getColor(R.color.gray))
+                        binding.industryText.setTextColor(resources.getColor(R.color.gray))
                     }
+                    allFieldsCheck()
                 }
             }
         }
@@ -115,5 +127,43 @@ class FilterFragment : Fragment() {
                 R.drawable.close_24px
             )
         }
+    }
+
+    private fun allFieldsCheck() {
+        if (binding.industryText.text == getString(R.string.work_area) &&
+            binding.areaText.text == getString(R.string.area) &&
+            binding.salaryInput.text.isNullOrEmpty() &&
+            !binding.checkboxFrame.isChecked
+        ) {
+            isButtonsGroupVisible(false)
+        } else {
+            isButtonsGroupVisible(true)
+        }
+    }
+
+    private fun isButtonsGroupVisible(state: Boolean) {
+        when (state) {
+            true -> {
+                binding.apply {
+                    clearButton.isVisible = true
+                    applyButton.isVisible = true
+                }
+            }
+
+            false -> {
+                binding.apply {
+                    clearButton.isVisible = false
+                    applyButton.isVisible = false
+                }
+            }
+        }
+    }
+
+    private fun allClear() {
+        binding.areaText.text = getString(R.string.area)
+        binding.industryText.text = getString(R.string.work_area)
+        binding.salaryInput.text = null
+        binding.checkboxFrame.isChecked = false
+        allFieldsCheck()
     }
 }

@@ -31,6 +31,11 @@ class FilterViewModel(
         }
     }
 
+    fun onSelectIndustry(industry: Industry) {
+        val list = industries.value
+        _industries.value = list.filter { it.id == industry.id }
+    }
+
     fun setWorkingArea(area: String) {
         _workArea.value = area
         Log.d("area", "текст установлен на: ${workArea.value}")
