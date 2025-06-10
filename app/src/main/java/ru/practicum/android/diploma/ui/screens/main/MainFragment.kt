@@ -174,7 +174,11 @@ class MainFragment : Fragment() {
                     showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
                     binding.infoSearch.isVisible = false
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), getString(R.string.check_your_internet_connection), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.check_your_internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is UiState.Idle -> {
