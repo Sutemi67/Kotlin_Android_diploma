@@ -3,7 +3,6 @@ package ru.practicum.android.diploma.ui.screens.filter
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +59,20 @@ class FilterFragment : Fragment() {
                 binding.checkboxFrame.isChecked = onlyWithSalary
             }
         }
+        binding.salaryInput.addTextChangedListener(
+            onTextChanged = { text: CharSequence?, _, _, _ ->
+                viewModel.setSalary(text?.toString() ?: "")
+                if (!text.isNullOrEmpty()) {
+                    binding.salaryInput.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        null,
+                        null,
+                        imageChooser(text),
+                        null
+                    )
+                }
+                allFieldsCheck()
+            },
+        )
     }
 
     override fun onResume() {
@@ -95,21 +108,6 @@ class FilterFragment : Fragment() {
                 false
             }
         }
-        binding.salaryInput.addTextChangedListener(
-            onTextChanged = { text: CharSequence?, _, _, _ ->
-                viewModel.setSalary(text?.toString() ?: "")
-                if (!text.isNullOrEmpty()) {
-                    binding.salaryInput.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        null,
-                        null,
-                        imageChooser(text),
-                        null
-                    )
-                }
-                allFieldsCheck()
-            },
-            afterTextChanged = { _: Editable? -> }
-        )
         binding.applyButton.setOnClickListener {
             val selectedIndustry = viewModel.selectedIndustry.value
             val filterSettings = FilterSettings(
