@@ -136,7 +136,7 @@ class FilterFragment : Fragment() {
                     binding.workAreaIcon.setImageResource(R.drawable.close_24px)
                     binding.industryText.setTextColor(resources.getColor(R.color.black_universal))
                     binding.workAreaIcon.setOnClickListener {
-                        viewModel.setWorkingArea(getString(R.string.work_area))
+                        viewModel.setIndustry(getString(R.string.work_area))
                         binding.workAreaIcon.setImageResource(R.drawable.outline_arrow_forward_ios_24)
                         binding.industryText.setTextColor(resources.getColor(R.color.gray))
                     }

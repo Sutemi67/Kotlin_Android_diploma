@@ -16,6 +16,21 @@
         app:titleMargin="@dimen/indent_8dp"
         app:titleTextAppearance="@style/Medium22" />
 
+    <EditText
+        android:id="@+id/industryFilterField"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/indent_56dp"
+        android:layout_marginHorizontal="@dimen/indent_16dp"
+        android:layout_marginVertical="@dimen/indent_8dp"
+        android:autofillHints=""
+        android:background="@drawable/edittext"
+        android:hint="@string/enter_industry"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingStart="@dimen/indent_16dp"
+        android:paddingEnd="@dimen/indent_16dp"
+        android:textAppearance="@style/Regular16" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/industriesRecyclerView"
         android:layout_width="match_parent"
@@ -35,7 +50,7 @@
         android:backgroundTint="@color/blue"
         android:text="@string/select"
         android:textColor="@color/white_universal"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:cornerRadius="@dimen/indent_12dp" />
 
     <LinearLayout

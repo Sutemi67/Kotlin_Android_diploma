@@ -3,6 +3,9 @@ package ru.practicum.android.diploma.ui.screens.filter
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,6 +36,10 @@ class FilterViewModel(
     private val _isError = MutableStateFlow(false)
     val isError: StateFlow<Boolean> = _isError.asStateFlow()
 
+    private var firstList: List<Industry> = emptyList()
+
+    private var filterJob: Job? = null
+
     init {
         loadIndustries()
     }
@@ -43,6 +50,7 @@ class FilterViewModel(
                 val industries = interactor.getIndustries()
                 if (industries != null) {
                     _industries.value = industries
+                    firstList = industries
                     _isError.value = false
                 } else {
                     _isError.value = true
@@ -72,7 +80,24 @@ class FilterViewModel(
         _onlyWithSalary.value = false
     }
 
-    fun setWorkingArea(area: String) {
+    fun filterList(text: CharSequence?) {
+        filterJob?.cancel()
+        filterJob = viewModelScope.launch(Dispatchers.Default) {
+            delay(FILTER_DELAY)
+            if (text.isNullOrEmpty()) {
+                resetList()
+            } else {
+                _industries.value = firstList.filter { it.name.contains(text, ignoreCase = true) }
+            }
+        }
+    }
+
+    fun resetList() {
+        Log.d("list", "количество элементов сейчас: ${firstList.size}")
+        _industries.value = firstList
+    }
+
+    fun setIndustry(area: String) {
         _workArea.value = area
         Log.d("area", "текст установлен на: ${workArea.value}")
     }
@@ -80,5 +105,9 @@ class FilterViewModel(
     override fun onCleared() {
         super.onCleared()
         Log.d("area", "ViewModel удалена")
+    }
+
+    companion object {
+        const val FILTER_DELAY = 500L
     }
 }

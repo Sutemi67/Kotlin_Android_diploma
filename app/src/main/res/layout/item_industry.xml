@@ -18,9 +18,8 @@
 
     <RadioButton
         android:id="@+id/radioButton"
-        android:layout_width="@dimen/indent_48dp"
-        android:layout_height="@dimen/indent_48dp"
-        android:clickable="true"
-        android:focusable="false" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"/>
 
 </LinearLayout> 

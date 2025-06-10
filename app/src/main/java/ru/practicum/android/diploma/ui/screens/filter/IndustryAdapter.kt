@@ -39,7 +39,9 @@ class IndustryAdapter(
         fun bind(industry: Industry) {
             binding.apply {
                 industryName.text = industry.name
+                radioButton.setOnClickListener { onIndustrySelected(industry) }
                 root.setOnClickListener {
+                    radioButton.isChecked = !radioButton.isChecked
                     onIndustrySelected(industry)
                 }
             }
