@@ -14,7 +14,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -54,7 +53,8 @@ class FilterFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setupBindings() {
         binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
-        binding.area.setOnClickListener { }
+        binding.area.setOnClickListener {val direction = FilterFragmentDirections.actionFilterFragmentToCountriesFragment()
+            findNavController().navigate(direction) }
         binding.workingArea.setOnClickListener {
             val direction = FilterFragmentDirections.actionFilterFragmentToWorkAreaFragment()
             findNavController().navigate(direction)
