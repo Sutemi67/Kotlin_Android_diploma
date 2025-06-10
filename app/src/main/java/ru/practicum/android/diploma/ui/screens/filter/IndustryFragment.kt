@@ -129,6 +129,11 @@ class IndustryFragment : Fragment() {
                 adapter.submitList(industries)
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isError.collect { isError ->
+                binding.errorImage.isVisible = isError
+            }
+        }
     }
 
     override fun onDestroyView() {

@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
+import ru.practicum.android.diploma.domain.network.models.FilterSettings
 
 class FilterFragment : Fragment() {
 
@@ -53,12 +54,12 @@ class FilterFragment : Fragment() {
             val direction = FilterFragmentDirections.actionFilterFragmentToWorkAreaFragment()
             findNavController().navigate(direction)
         }
-        binding.salaryCheckBoxLinearLayout.setOnClickListener {
-            binding.checkboxFrame.isChecked = !binding.checkboxFrame.isChecked
-            allFieldsCheck()
-        }
+//        binding.salaryCheckBoxLinearLayout.setOnClickListener {
+//            binding.checkboxFrame.isChecked = !binding.checkboxFrame.isChecked
+//            allFieldsCheck()
+//        }
         binding.checkboxFrame.setOnClickListener {
-            allFieldsCheck()
+            viewModel.setOnlyWithSalary(binding.checkboxFrame.isChecked)
         }
         binding.clearButton.setOnClickListener {
             allClear()
@@ -85,6 +86,7 @@ class FilterFragment : Fragment() {
 
         binding.salaryInput.addTextChangedListener(
             onTextChanged = { text: CharSequence?, _, _, _ ->
+                viewModel.setSalary(text?.toString() ?: "")
                 if (!text.isNullOrEmpty()) {
                     binding.salaryInput.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         null,
@@ -97,6 +99,32 @@ class FilterFragment : Fragment() {
             },
             afterTextChanged = { _: Editable? -> }
         )
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.salary.collect { salary ->
+                if (binding.salaryInput.text.toString() != salary) {
+                    binding.salaryInput.setText(salary)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onlyWithSalary.collect { onlyWithSalary ->
+                binding.checkboxFrame.isChecked = onlyWithSalary
+            }
+        }
+
+        binding.applyButton.setOnClickListener {
+            val selectedIndustry = viewModel.selectedIndustry.value
+            val filterSettings = FilterSettings(
+                selectedIndustry = selectedIndustry,
+                salary = viewModel.salary.value,
+                onlyWithSalary = viewModel.onlyWithSalary.value
+            )
+            sendFilterAndNavigateBack(filterSettings)
+            findNavController().popBackStack()
+
+        }
     }
 
     private fun setupIndustryField() {
@@ -162,10 +190,24 @@ class FilterFragment : Fragment() {
     }
 
     private fun allClear() {
+        viewModel.resetFilters()
         binding.areaText.text = getString(R.string.area)
         binding.industryText.text = getString(R.string.work_area)
         binding.salaryInput.text = null
         binding.checkboxFrame.isChecked = false
         allFieldsCheck()
+        val clearedFilter = FilterSettings(
+            selectedIndustry = null,
+            salary = "",
+            onlyWithSalary = false
+        )
+        sendFilterAndNavigateBack(clearedFilter)
     }
+
+    private fun sendFilterAndNavigateBack(filterSettings: FilterSettings) {
+        findNavController().previousBackStackEntry
+            ?.savedStateHandle
+            ?.set("filter_settings", filterSettings)
+    }
+
 }

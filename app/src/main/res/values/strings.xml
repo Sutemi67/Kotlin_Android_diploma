@@ -47,5 +47,6 @@
         <item quantity="many">Найдено %d вакансий</item>
         <item quantity="other">Найдено %d вакансий</item>
     </plurals>
+    <string name="empty_industry_list">Не удалось получить список</string>
 </resources>
 
