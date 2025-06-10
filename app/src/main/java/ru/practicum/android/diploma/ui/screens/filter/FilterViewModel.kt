@@ -3,6 +3,9 @@ package ru.practicum.android.diploma.ui.screens.filter
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +22,10 @@ class FilterViewModel(
     private var _industries = MutableStateFlow<List<Industry>>(emptyList())
     val industries: StateFlow<List<Industry>> = _industries.asStateFlow()
 
+    private var firstList: List<Industry> = emptyList()
+
+    private var filterJob: Job? = null
+
     init {
         loadIndustries()
     }
@@ -27,6 +34,7 @@ class FilterViewModel(
         viewModelScope.launch {
             networkClient.getIndustries()?.let { industries ->
                 _industries.value = industries
+                firstList = industries
             }
         }
     }
@@ -36,7 +44,25 @@ class FilterViewModel(
         _industries.value = list.filter { it.id == industry.id }
     }
 
-    fun setWorkingArea(area: String) {
+    fun filterList(text: CharSequence?) {
+        filterJob?.cancel()
+        filterJob = viewModelScope.launch(Dispatchers.Default) {
+            delay(FILTER_DELAY)
+            if (text.isNullOrEmpty()) {
+                resetList()
+            } else {
+                _industries.value = firstList.filter { it.name.contains(text, ignoreCase = true) }
+            }
+        }
+    }
+
+
+    fun resetList() {
+        Log.d("list", "количество элементов сейчас: ${firstList.size}")
+        _industries.value = firstList
+    }
+
+    fun setIndustry(area: String) {
         _workArea.value = area
         Log.d("area", "текст установлен на: ${workArea.value}")
     }
@@ -44,5 +70,9 @@ class FilterViewModel(
     override fun onCleared() {
         super.onCleared()
         Log.d("area", "ViewModel удалена")
+    }
+
+    companion object {
+        const val FILTER_DELAY = 500L
     }
 }
