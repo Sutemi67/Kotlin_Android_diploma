@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white_black"
     tools:context=".ui.screens.filter.IndustryFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/arrow_back_24px"
-        app:title="Выбор отрасли"
+        app:title="@string/enter_industry"
         app:titleMargin="@dimen/indent_8dp"
         app:titleTextAppearance="@style/Medium22" />
 

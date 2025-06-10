@@ -18,7 +18,7 @@ import java.io.IOException
 class FilterViewModel(
     private val interactor: FilterInteractor
 ) : ViewModel() {
-    private var _workArea = MutableStateFlow("Отрасль")
+    private var _workArea = MutableStateFlow("")
     val workArea: StateFlow<String> = _workArea.asStateFlow()
 
     private var _industries = MutableStateFlow<List<Industry>>(emptyList())
