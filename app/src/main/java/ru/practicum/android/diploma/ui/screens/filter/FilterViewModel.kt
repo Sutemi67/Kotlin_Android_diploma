@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.FilterInteractor
 import ru.practicum.android.diploma.domain.network.models.Industry
 import java.io.IOException

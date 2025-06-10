@@ -42,7 +42,24 @@ class FilterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupBindings()
+        setupListeners()
         allFieldsCheck()
+    }
+
+    private fun setupListeners() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.salary.collect { salary ->
+                if (binding.salaryInput.text.toString() != salary) {
+                    binding.salaryInput.setText(salary)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onlyWithSalary.collect { onlyWithSalary ->
+                binding.checkboxFrame.isChecked = onlyWithSalary
+            }
+        }
     }
 
     override fun onResume() {
@@ -87,7 +104,6 @@ class FilterFragment : Fragment() {
                 false
             }
         }
-
         binding.salaryInput.addTextChangedListener(
             onTextChanged = { text: CharSequence?, _, _, _ ->
                 viewModel.setSalary(text?.toString() ?: "")
@@ -103,21 +119,6 @@ class FilterFragment : Fragment() {
             },
             afterTextChanged = { _: Editable? -> }
         )
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.salary.collect { salary ->
-                if (binding.salaryInput.text.toString() != salary) {
-                    binding.salaryInput.setText(salary)
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.onlyWithSalary.collect { onlyWithSalary ->
-                binding.checkboxFrame.isChecked = onlyWithSalary
-            }
-        }
-
         binding.applyButton.setOnClickListener {
             val selectedIndustry = viewModel.selectedIndustry.value
             val filterSettings = FilterSettings(
@@ -127,7 +128,6 @@ class FilterFragment : Fragment() {
             )
             sendFilterAndNavigateBack(filterSettings)
             findNavController().popBackStack()
-
         }
     }
 
