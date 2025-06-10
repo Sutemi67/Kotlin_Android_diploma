@@ -58,10 +58,10 @@ class FilterFragment : Fragment() {
             val direction = FilterFragmentDirections.actionFilterFragmentToWorkAreaFragment()
             findNavController().navigate(direction)
         }
-//        binding.salaryCheckBoxLinearLayout.setOnClickListener {
-//            binding.checkboxFrame.isChecked = !binding.checkboxFrame.isChecked
-//            allFieldsCheck()
-//        }
+        binding.industryText.setOnClickListener {
+            val direction = FilterFragmentDirections.actionFilterFragmentToWorkAreaFragment()
+            findNavController().navigate(direction)
+        }
         binding.checkboxFrame.setOnClickListener {
             viewModel.setOnlyWithSalary(binding.checkboxFrame.isChecked)
         }

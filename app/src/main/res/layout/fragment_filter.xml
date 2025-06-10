@@ -26,25 +26,25 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/indent_60dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:hintTextAppearance="@style/hintRegular12"
+            android:background="@null"
             android:hint="@string/area"
             android:textColorHint="@color/gray"
-            android:background="@null"
             app:boxBackgroundMode="none"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextAppearance="@style/hintRegular12">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/Regular16"
                 android:id="@+id/areaText"
+                style="@style/Regular16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
                 android:cursorVisible="false"
-                android:longClickable="false"
-                android:inputType="none"/>
+                android:focusable="false"
+                android:inputType="none"
+                android:longClickable="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
@@ -64,26 +64,27 @@
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
-            app:hintTextAppearance="@style/hintRegular12"
             android:layout_width="0dp"
-            android:layout_height="@dimen/indent_60dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:hint="@string/work_area"
             android:textColorHint="@color/gray"
-            android:background="@null"
             app:boxBackgroundMode="none"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextAppearance="@style/hintRegular12">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/Regular16"
                 android:id="@+id/industryText"
+                style="@style/Regular16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
                 android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none"
                 android:longClickable="false"
-                android:inputType="none"/>
+                tools:text="СМИ и маркетинг и всевсевсевсе всевсев севсевс евсе" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
