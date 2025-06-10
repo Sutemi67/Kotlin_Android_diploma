@@ -56,7 +56,13 @@ class MainViewModel(
         _isLoading.postValue(true)
         _searchState.postValue(UiState.Loading)
         viewModelScope.launch {
-            interactor.searchVacancy(query, page, industryId, salary, onlyWithSalary) // Важно: нужен метод с поддержкой страниц!
+            interactor.searchVacancy(
+                query,
+                page,
+                industryId,
+                salary,
+                onlyWithSalary
+            ) // Важно: нужен метод с поддержкой страниц!
                 .collect { triple ->
                     processResult(
                         vacancies = triple.first,

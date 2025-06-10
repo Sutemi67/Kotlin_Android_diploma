@@ -114,7 +114,6 @@ class FilterFragment : Fragment() {
             }
         }
 
-
         binding.applyButton.setOnClickListener {
             val selectedIndustry = viewModel.selectedIndustry.value
             val filterSettings = FilterSettings(

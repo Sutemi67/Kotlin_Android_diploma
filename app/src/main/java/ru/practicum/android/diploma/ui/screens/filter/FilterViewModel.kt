@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.FilterInteractor
 import ru.practicum.android.diploma.domain.network.models.Industry
+import java.io.IOException
 
 class FilterViewModel(
     private val interactor: FilterInteractor
@@ -46,7 +47,7 @@ class FilterViewModel(
                 } else {
                     _isError.value = true
                 }
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 Log.e("FilterViewModel", "Ошибка при загрузке отраслей", e)
                 _isError.value = true
             }
