@@ -53,8 +53,7 @@ class FilterFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setupBindings() {
         binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
-        binding.area.setOnClickListener {val direction = FilterFragmentDirections.actionFilterFragmentToCountriesFragment()
-            findNavController().navigate(direction) }
+        binding.area.setOnClickListener { }
         binding.workingArea.setOnClickListener {
             val direction = FilterFragmentDirections.actionFilterFragmentToWorkAreaFragment()
             findNavController().navigate(direction)
