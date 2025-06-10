@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -172,6 +173,8 @@ class MainFragment : Fragment() {
                 is UiState.Error -> {
                     showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
                     binding.infoSearch.isVisible = false
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(requireContext(), getString(R.string.check_your_internet_connection), Toast.LENGTH_SHORT).show()
                 }
 
                 is UiState.Idle -> {
