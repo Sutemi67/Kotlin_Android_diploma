@@ -63,28 +63,33 @@ class IndustryFragment : Fragment() {
                         imageChooser(text),
                         null
                     )
-                    binding.industryFilterField.setOnTouchListener { _, event ->
-                        if (event.action == android.view.MotionEvent.ACTION_UP) {
-                            val drawableEnd = binding.industryFilterField.compoundDrawablesRelative[2]
-                            if (drawableEnd != null) {
-                                val touchableWidth = drawableEnd.intrinsicWidth + binding.industryFilterField.paddingEnd
-                                val isClickOnDrawable = event.rawX >= binding.industryFilterField.right - touchableWidth
-                                if (isClickOnDrawable) {
-                                    binding.industryFilterField.text?.clear()
-                                    true
-                                } else {
-                                    false
-                                }
-                            } else {
-                                false
-                            }
-                        } else {
-                            false
-                        }
-                    }
+                    setClearIcon()
                 }
             },
         )
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setClearIcon() {
+        binding.industryFilterField.setOnTouchListener { _, event ->
+            if (event.action == android.view.MotionEvent.ACTION_UP) {
+                val drawableEnd = binding.industryFilterField.compoundDrawablesRelative[2]
+                if (drawableEnd != null) {
+                    val touchableWidth = drawableEnd.intrinsicWidth + binding.industryFilterField.paddingEnd
+                    val isClickOnDrawable = event.rawX >= binding.industryFilterField.right - touchableWidth
+                    if (isClickOnDrawable) {
+                        binding.industryFilterField.text?.clear()
+                        true
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        }
     }
 
     private fun imageChooser(text: CharSequence?): Drawable? {

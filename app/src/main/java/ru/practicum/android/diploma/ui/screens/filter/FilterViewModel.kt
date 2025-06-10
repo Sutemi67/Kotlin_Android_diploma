@@ -56,7 +56,6 @@ class FilterViewModel(
         }
     }
 
-
     fun resetList() {
         Log.d("list", "количество элементов сейчас: ${firstList.size}")
         _industries.value = firstList
