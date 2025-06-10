@@ -42,8 +42,12 @@ class FilterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupBindings()
-        setupIndustryField()
         allFieldsCheck()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupIndustryField()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -130,15 +134,13 @@ class FilterFragment : Fragment() {
     private fun setupIndustryField() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.workArea.collect { data ->
-                binding.industryText.text = data
-                Log.d("area", "Значение $data установлено")
-                if (binding.industryText.text != getString(R.string.work_area)) {
+                binding.industryText.setText(data)
+                Log.d("area1", "Значение $data установлено")
+                if (!binding.industryText.text.isNullOrEmpty()) {
                     binding.workAreaIcon.setImageResource(R.drawable.close_24px)
-                    binding.industryText.setTextColor(resources.getColor(R.color.black_universal))
                     binding.workAreaIcon.setOnClickListener {
-                        viewModel.setIndustry(getString(R.string.work_area))
+                        viewModel.setIndustry("")
                         binding.workAreaIcon.setImageResource(R.drawable.outline_arrow_forward_ios_24)
-                        binding.industryText.setTextColor(resources.getColor(R.color.gray))
                     }
                     allFieldsCheck()
                 }
@@ -158,8 +160,8 @@ class FilterFragment : Fragment() {
     }
 
     private fun FragmentFilterBinding.checkFields(): Boolean =
-        binding.industryText.text == getString(R.string.work_area) &&
-            binding.areaText.text == getString(R.string.area) &&
+        binding.industryText.text.isNullOrEmpty() &&
+            binding.areaText.text.isNullOrEmpty() &&
             binding.salaryInput.text.isNullOrEmpty() &&
             !binding.checkboxFrame.isChecked
 
@@ -191,8 +193,8 @@ class FilterFragment : Fragment() {
 
     private fun allClear() {
         viewModel.resetFilters()
-        binding.areaText.text = getString(R.string.area)
-        binding.industryText.text = getString(R.string.work_area)
+        binding.areaText.setText("")
+        binding.industryText.setText("")
         binding.salaryInput.text = null
         binding.checkboxFrame.isChecked = false
         allFieldsCheck()
