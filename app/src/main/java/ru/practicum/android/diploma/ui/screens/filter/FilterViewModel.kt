@@ -8,10 +8,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.data.network.NetworkClient
+import ru.practicum.android.diploma.domain.FilterInteractor
 import ru.practicum.android.diploma.domain.network.models.Industry
 
 class FilterViewModel(
-    private val networkClient: NetworkClient
+    private val interactor: FilterInteractor
 ) : ViewModel() {
     private var _workArea = MutableStateFlow("Отрасль")
     val workArea: StateFlow<String> = _workArea.asStateFlow()
@@ -19,21 +20,55 @@ class FilterViewModel(
     private var _industries = MutableStateFlow<List<Industry>>(emptyList())
     val industries: StateFlow<List<Industry>> = _industries.asStateFlow()
 
+    private val _selectedIndustry = MutableStateFlow<Industry?>(null)
+    val selectedIndustry: StateFlow<Industry?> = _selectedIndustry.asStateFlow()
+
+    private val _salary = MutableStateFlow("")
+    val salary: StateFlow<String> = _salary.asStateFlow()
+
+    private val _onlyWithSalary = MutableStateFlow(false)
+    val onlyWithSalary: StateFlow<Boolean> = _onlyWithSalary.asStateFlow()
+
+    private val _isError = MutableStateFlow(false)
+    val isError: StateFlow<Boolean> = _isError.asStateFlow()
+
     init {
         loadIndustries()
     }
 
     private fun loadIndustries() {
         viewModelScope.launch {
-            networkClient.getIndustries()?.let { industries ->
-                _industries.value = industries
+            try {
+                val industries = interactor.getIndustries()
+                if (industries != null) {
+                    _industries.value = industries
+                    _isError.value = false
+                } else {
+                    _isError.value = true
+                }
+            } catch (e: Exception) {
+                Log.e("FilterViewModel", "Ошибка при загрузке отраслей", e)
+                _isError.value = true
             }
         }
     }
 
     fun onSelectIndustry(industry: Industry) {
-        val list = industries.value
-        _industries.value = list.filter { it.id == industry.id }
+        _selectedIndustry.value = industry
+    }
+
+    fun setSalary(salaryFilter: String) {
+        _salary.value = salaryFilter
+    }
+
+    fun setOnlyWithSalary(onlyWithSalary: Boolean) {
+        _onlyWithSalary.value = onlyWithSalary
+    }
+
+    fun resetFilters() {
+        _selectedIndustry.value = null
+        _salary.value = ""
+        _onlyWithSalary.value = false
     }
 
     fun setWorkingArea(area: String) {

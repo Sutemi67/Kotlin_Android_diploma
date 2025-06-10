@@ -26,7 +26,10 @@ class RetrofitNetworkClient(
                     val response = api.searchVacancies(
                         token = token,
                         query = dto.expression,
-                        page = dto.page
+                        page = dto.page,
+                        industry = dto.industry,
+                        salary = dto.salary,
+                        onlyWithSalary = dto.onlyWithSalary
                     )
                     response.apply { resultCode = SUCCESS }
                 } catch (e: IOException) {

@@ -22,8 +22,22 @@ class VacancyRepositoryImpl(
     private val convertor: VacancyDbConvertor,
 ) : VacancyRepository {
 
-    override fun searchVacancy(query: String, page: Int): Flow<Triple<List<VacancyDetails>?, String?, String?>> = flow {
-        val response = networkClient.doSearchRequest(AllVacancyRequest(query, page))
+    override fun searchVacancy(
+        query: String,
+        page: Int,
+        industry: String?,
+        salary: Int?,
+        onlyWithSalary: Boolean?
+    ): Flow<Triple<List<VacancyDetails>?, String?, String?>> = flow {
+        val response = networkClient.doSearchRequest(
+            AllVacancyRequest(
+                expression = query,
+                page = page,
+                industry = industry,
+                salary = salary,
+                onlyWithSalary = onlyWithSalary
+            )
+        )
         when (response.resultCode) {
             ERROR_NO_CONNECTION -> emit(Triple(null, R.string.error.toString(), null))
             SUCCESS -> {

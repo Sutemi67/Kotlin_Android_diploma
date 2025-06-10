@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.VacancyInteractor
+import ru.practicum.android.diploma.domain.network.models.FilterSettings
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 
 class MainViewModel(
@@ -21,30 +22,41 @@ class MainViewModel(
 
     var lastSearchQuery: String? = null
     private var searchJob: Job? = null
+    var currentFilterSettings: FilterSettings? = null
 
     private var currentPage = 0
     private var currentQuery = ""
     private var isLoadingMore = false
     private val allVacancies = mutableListOf<VacancyDetails>()
 
-    fun searchVacancies(query: String, isNewSearch: Boolean = true) {
+    fun searchVacancies(query: String, isNewSearch: Boolean = true, filterSettings: FilterSettings? = null) {
         if (query.isNotEmpty()) {
             if (isNewSearch) {
                 currentPage = 0
                 isLoadingMore = false
                 allVacancies.clear()
                 currentQuery = query
+                currentFilterSettings = filterSettings ?: currentFilterSettings
             }
-            loadPage(query, currentPage)
+            val salary = filterSettings?.salary ?: currentFilterSettings?.salary
+            val onlyWithSalary = filterSettings?.onlyWithSalary ?: currentFilterSettings?.onlyWithSalary
+            val industryId = filterSettings?.selectedIndustry?.id ?: currentFilterSettings?.selectedIndustry?.id
+            loadPage(query, currentPage, industryId, salary?.toIntOrNull(), onlyWithSalary)
         }
     }
 
-    private fun loadPage(query: String, page: Int) {
+    private fun loadPage(
+        query: String,
+        page: Int,
+        industryId: String?,
+        salary: Int? = null,
+        onlyWithSalary: Boolean? = null
+    ) {
         searchJob?.cancel()
         _isLoading.postValue(true)
         _searchState.postValue(UiState.Loading)
         viewModelScope.launch {
-            interactor.searchVacancy(query, page) // Важно: нужен метод с поддержкой страниц!
+            interactor.searchVacancy(query, page, industryId, salary, onlyWithSalary) // Важно: нужен метод с поддержкой страниц!
                 .collect { triple ->
                     processResult(
                         vacancies = triple.first,
@@ -86,7 +98,10 @@ class MainViewModel(
     fun loadMoreItems() {
         if (_isLoading.value == true || isLoadingMore) return
         currentPage++
-        loadPage(currentQuery, currentPage)
+        val industryId = currentFilterSettings?.selectedIndustry?.id
+        val salary = currentFilterSettings?.salary
+        val onlyWithSalary = currentFilterSettings?.onlyWithSalary
+        loadPage(currentQuery, currentPage, industryId, salary?.toIntOrNull(), onlyWithSalary)
     }
 
     fun clearSearchResults() {

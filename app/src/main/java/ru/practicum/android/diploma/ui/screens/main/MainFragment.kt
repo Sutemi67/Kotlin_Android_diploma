@@ -21,6 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.domain.OnItemClickListener
+import ru.practicum.android.diploma.domain.network.models.FilterSettings
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.AppFormatters
 import ru.practicum.android.diploma.util.debounce
@@ -48,6 +49,7 @@ class MainFragment : Fragment() {
         setupRecyclerView()
         setupSearchView()
         observeViewModel()
+        observeFilterSettings()
     }
 
     private fun setupToolbar() {
@@ -225,6 +227,22 @@ class MainFragment : Fragment() {
             binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
             binding.buttonCleanSearch.isVisible = !binding.searchView.text.isNullOrEmpty()
         }
+    }
+
+    private fun observeFilterSettings() {
+        findNavController().currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<FilterSettings>("filter_settings")
+            ?.observe(viewLifecycleOwner) { filterSettings ->
+                filterSettings?.let {
+                    viewModel.currentFilterSettings = it
+                    viewModel.searchVacancies(
+                        query = viewModel.lastSearchQuery ?: "",
+                        isNewSearch = true,
+                        filterSettings = filterSettings
+                    )
+                }
+            }
     }
 
     companion object {

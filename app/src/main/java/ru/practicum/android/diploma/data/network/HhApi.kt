@@ -15,7 +15,10 @@ interface HhApi {
         @Header("Authorization") token: String,
         @Query("text") query: String,
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int = 20
+        @Query("per_page") perPage: Int = 20,
+        @Query("industry") industry: String?,
+        @Query("salary") salary: Int?,
+        @Query("only_with_salary") onlyWithSalary: Boolean?
     ): AllVacancyResponse
 
     @GET("vacancies/{id}")

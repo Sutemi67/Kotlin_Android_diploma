@@ -14,8 +14,14 @@ class VacancyInteractorImpl(
     private val externalNavigator: ExternalNavigator
 ) : VacancyInteractor {
 
-    override fun searchVacancy(query: String, page: Int): Flow<Triple<List<VacancyDetails>?, String?, String?>> {
-        return repository.searchVacancy(query, page)
+    override fun searchVacancy(
+        query: String,
+        page: Int,
+        industry: String?,
+        salary: Int?,
+        onlyWithSalary: Boolean?
+    ): Flow<Triple<List<VacancyDetails>?, String?, String?>> {
+        return repository.searchVacancy(query, page, industry, salary, onlyWithSalary)
     }
 
     override suspend fun getVacancyDetails(id: String): Flow<Resource<VacancyDetails>> {
@@ -33,6 +39,7 @@ class VacancyInteractorImpl(
     override suspend fun getFavoriteVacancy(vacancyId: Int): VacancyEntity? {
         return repository.getFavoriteVacancy(vacancyId)
     }
+
     override fun shareVacancy(url: String) {
         externalNavigator.shareVacancy(url)
     }
