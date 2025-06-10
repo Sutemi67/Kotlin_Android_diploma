@@ -17,7 +17,6 @@ class RetrofitNetworkClient(
 ) : NetworkClient {
 
     private val token = "Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
-    private val token1 = "Bearer APPLIPKQ37D33OTAKDG005QH3FHC9UMI2MA1VMHIH8IHGL5THOG4P5AQJH8MCULD"
 
     override suspend fun doSearchRequest(dto: AllVacancyRequest): Response {
         return when {
@@ -25,7 +24,7 @@ class RetrofitNetworkClient(
             else -> withContext(Dispatchers.IO) {
                 try {
                     val response = api.searchVacancies(
-                        token = token1,
+                        token = token,
                         query = dto.expression,
                         page = dto.page,
                         industry = dto.industry,
@@ -46,7 +45,7 @@ class RetrofitNetworkClient(
             !connectManager.isConnected() -> null
             else -> withContext(Dispatchers.IO) {
                 try {
-                    api.getIndustries(token = token1)
+                    api.getIndustries(token = token)
                 } catch (e: IOException) {
                     Log.e("TAG", "Network error while getting industries", e)
                     null
@@ -60,7 +59,7 @@ class RetrofitNetworkClient(
             !connectManager.isConnected() -> null
             else -> withContext(Dispatchers.IO) {
                 try {
-                    api.getAreas(token = token1)
+                    api.getAreas(token = token)
                 } catch (e: IOException) {
                     Log.e("TAG", "Network error while getting industries", e)
                     null
@@ -75,7 +74,7 @@ class RetrofitNetworkClient(
             else -> withContext(Dispatchers.IO) {
                 try {
                     val response = api.getVacancyDetails(
-                        token = token1,
+                        token = token,
                         id = dto.id
                     )
                     response.apply { resultCode = SUCCESS }
