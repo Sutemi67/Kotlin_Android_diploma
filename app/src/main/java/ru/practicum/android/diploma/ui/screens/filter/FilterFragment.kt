@@ -70,21 +70,12 @@ class FilterFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setupBindings() {
         binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
-        binding.area.setOnClickListener { }
         binding.workingArea.setOnClickListener {
             val direction = FilterFragmentDirections.actionFilterFragmentToWorkAreaFragment()
             findNavController().navigate(direction)
         }
-        binding.industryText.setOnClickListener {
-            val direction = FilterFragmentDirections.actionFilterFragmentToWorkAreaFragment()
-            findNavController().navigate(direction)
-        }
-        binding.checkboxFrame.setOnClickListener {
-            viewModel.setOnlyWithSalary(binding.checkboxFrame.isChecked)
-        }
-        binding.clearButton.setOnClickListener {
-            allClear()
-        }
+        binding.checkboxFrame.setOnClickListener { viewModel.setOnlyWithSalary(binding.checkboxFrame.isChecked) }
+        binding.clearButton.setOnClickListener { allClear() }
         binding.salaryInput.setOnTouchListener { _, event ->
             if (event.action == android.view.MotionEvent.ACTION_UP) {
                 val drawableEnd = binding.salaryInput.compoundDrawablesRelative[2]
