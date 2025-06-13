@@ -9,8 +9,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.FilterInteractor
 import ru.practicum.android.diploma.domain.network.models.Industry
 import java.io.IOException
@@ -18,26 +18,11 @@ import java.io.IOException
 class FilterViewModel(
     private val interactor: FilterInteractor
 ) : ViewModel() {
-    private var _workArea = MutableStateFlow("")
-    val workArea: StateFlow<String> = _workArea.asStateFlow()
 
-    private var _industries = MutableStateFlow<List<Industry>>(emptyList())
-    val industries: StateFlow<List<Industry>> = _industries.asStateFlow()
-
-    private val _selectedIndustry = MutableStateFlow<Industry?>(null)
-    val selectedIndustry: StateFlow<Industry?> = _selectedIndustry.asStateFlow()
-
-    private val _salary = MutableStateFlow("")
-    val salary: StateFlow<String> = _salary.asStateFlow()
-
-    private val _onlyWithSalary = MutableStateFlow(false)
-    val onlyWithSalary: StateFlow<Boolean> = _onlyWithSalary.asStateFlow()
-
-    private val _isError = MutableStateFlow(false)
-    val isError: StateFlow<Boolean> = _isError.asStateFlow()
+    private val _uiState = MutableStateFlow(FilterUiState())
+    val uiState: StateFlow<FilterUiState> = _uiState.asStateFlow()
 
     private var firstList: List<Industry> = emptyList()
-
     private var filterJob: Job? = null
 
     init {
@@ -49,57 +34,67 @@ class FilterViewModel(
             try {
                 val industries = interactor.getIndustries()
                 if (industries != null) {
-                    _industries.value = industries
                     firstList = industries
-                    _isError.value = false
+                    _uiState.update {
+                        it.copy(
+                            industries = industries,
+                            isError = false
+                        )
+                    }
                 } else {
-                    _isError.value = true
+                    _uiState.update { it.copy(isError = true) }
                 }
             } catch (e: IOException) {
                 Log.e("FilterViewModel", "Ошибка при загрузке отраслей", e)
-                _isError.value = true
+                _uiState.update { it.copy(isError = true) }
             }
         }
     }
 
     fun onSelectIndustry(industry: Industry) {
-        _selectedIndustry.value = industry
+        _uiState.update { it.copy(selectedIndustry = industry) }
     }
 
     fun setSalary(salaryFilter: String) {
-        _salary.value = salaryFilter
+        _uiState.update { it.copy(salary = salaryFilter) }
     }
 
     fun setOnlyWithSalary(onlyWithSalary: Boolean) {
-        _onlyWithSalary.value = onlyWithSalary
+        _uiState.update { it.copy(onlyWithSalary = onlyWithSalary) }
     }
 
     fun resetFilters() {
-        _selectedIndustry.value = null
-        _salary.value = ""
-        _onlyWithSalary.value = false
+        _uiState.update {
+            it.copy(
+                selectedIndustry = null,
+                workArea = "",
+                salary = "",
+                onlyWithSalary = false
+            )
+        }
     }
 
     fun filterList(text: CharSequence?) {
         filterJob?.cancel()
         filterJob = viewModelScope.launch(Dispatchers.Default) {
             delay(FILTER_DELAY)
-            if (text.isNullOrEmpty()) {
-                resetList()
+            val filteredList = if (text.isNullOrEmpty()) {
+                firstList
             } else {
-                _industries.value = firstList.filter { it.name.contains(text, ignoreCase = true) }
+                firstList.filter { it.name.contains(text, ignoreCase = true) }
             }
+            _uiState.update { it.copy(industries = filteredList) }
         }
     }
 
     fun resetList() {
         Log.d("list", "количество элементов сейчас: ${firstList.size}")
-        _industries.value = firstList
+        _uiState.update { it.copy(industries = firstList) }
     }
 
     fun setIndustry(area: String) {
-        _workArea.value = area
-        Log.d("area", "текст установлен на: ${workArea.value}")
+        _uiState.update { it.copy(workArea = area) }
+        Log.d("area", "текст установлен на: $area")
     }
 
     override fun onCleared() {
@@ -108,6 +103,6 @@ class FilterViewModel(
     }
 
     companion object {
-        const val FILTER_DELAY = 500L
+        private const val FILTER_DELAY = 500L
     }
 }

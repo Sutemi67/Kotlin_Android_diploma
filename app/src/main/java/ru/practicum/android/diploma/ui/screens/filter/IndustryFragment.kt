@@ -24,11 +24,9 @@ class IndustryFragment : Fragment() {
     private val viewModel by viewModel<FilterViewModel>(ownerProducer = { requireActivity() })
     private var _binding: FragmentIndustryBinding? = null
     private val binding: FragmentIndustryBinding get() = requireNotNull(_binding)
-    private var selectedIndustry = ""
 
     private val adapter = IndustryAdapter { industry ->
         viewModel.onSelectIndustry(industry)
-        selectedIndustry = industry.name
         binding.applyButton.isVisible = true
         binding.industryFilterField.setText(industry.name)
     }
@@ -105,7 +103,7 @@ class IndustryFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.applyButton.setOnClickListener {
-            viewModel.setIndustry(selectedIndustry)
+            viewModel.setIndustry(binding.industryFilterField.text.toString())
             findNavController().popBackStack()
         }
     }
@@ -125,13 +123,9 @@ class IndustryFragment : Fragment() {
 
     private fun observeIndustries() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.industries.collect { industries ->
-                adapter.submitList(industries)
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isError.collect { isError ->
-                binding.errorImage.isVisible = isError
+            viewModel.uiState.collect { state ->
+                adapter.submitList(state.industries)
+                binding.errorImage.isVisible = state.isError
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -34,6 +35,7 @@ class MainFragment : Fragment() {
     private var adapter: VacancyAdapter? = null
     private val viewModel by viewModel<MainViewModel>()
     private var isClickAllowed = true
+    private var filterMenuItem: MenuItem? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +56,9 @@ class MainFragment : Fragment() {
     }
 
     private fun setupToolbar() {
+        filterMenuItem = binding.toolbar.menu.findItem(R.id.action_filter)
+        viewModel.currentFilterSettings?.let { updateFilterIcon(isFilterApplied(it)) }
+
         binding.toolbar.setOnMenuItemClickListener {
             val action = MainFragmentDirections.actionHomeFragmentToFilterFragment()
             findNavController().navigate(action)
@@ -243,6 +248,8 @@ class MainFragment : Fragment() {
             ?.observe(viewLifecycleOwner) { filterSettings ->
                 filterSettings?.let {
                     viewModel.currentFilterSettings = it
+                    val isApplied = isFilterApplied(it)
+                    updateFilterIcon(isApplied)
                     viewModel.searchVacancies(
                         query = viewModel.lastSearchQuery ?: "",
                         isNewSearch = true,
@@ -250,6 +257,21 @@ class MainFragment : Fragment() {
                     )
                 }
             }
+    }
+
+    private fun isFilterApplied(filter: FilterSettings): Boolean {
+        return !filter.salary.isNullOrBlank() ||
+            filter.selectedIndustry != null ||
+            filter.onlyWithSalary!!
+    }
+
+    private fun updateFilterIcon(isApplied: Boolean) {
+        val iconRes = if (isApplied) {
+            R.drawable.filter_on_24px // активный фильтр
+        } else {
+            R.drawable.filter_off__24px // неактивный фильтр
+        }
+        filterMenuItem?.icon = AppCompatResources.getDrawable(requireContext(), iconRes)
     }
 
     companion object {

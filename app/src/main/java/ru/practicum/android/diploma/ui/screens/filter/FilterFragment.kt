@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,9 +44,13 @@ class FilterFragment : Fragment() {
         allFieldsCheck()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onResume() {
         super.onResume()
-        setupIndustryField()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -98,6 +101,13 @@ class FilterFragment : Fragment() {
                         imageChooser(text),
                         null
                     )
+                } else {
+                    binding.salaryInput.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        null,
+                        null,
+                        null,
+                        null
+                    )
                 }
                 allFieldsCheck()
             },
@@ -105,46 +115,37 @@ class FilterFragment : Fragment() {
         )
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.salary.collect { salary ->
-                if (binding.salaryInput.text.toString() != salary) {
-                    binding.salaryInput.setText(salary)
+            viewModel.uiState.collect { state ->
+                if (binding.salaryInput.text.toString() != state.salary) {
+                    binding.salaryInput.setText(state.salary)
                 }
-            }
-        }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.onlyWithSalary.collect { onlyWithSalary ->
-                binding.checkboxFrame.isChecked = onlyWithSalary
-            }
-        }
+                binding.checkboxFrame.isChecked = state.onlyWithSalary
 
-        binding.applyButton.setOnClickListener {
-            val selectedIndustry = viewModel.selectedIndustry.value
-            val filterSettings = FilterSettings(
-                selectedIndustry = selectedIndustry,
-                salary = viewModel.salary.value,
-                onlyWithSalary = viewModel.onlyWithSalary.value
-            )
-            sendFilterAndNavigateBack(filterSettings)
-            findNavController().popBackStack()
-
-        }
-    }
-
-    private fun setupIndustryField() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.workArea.collect { data ->
-                binding.industryText.setText(data)
-                Log.d("area1", "Значение $data установлено")
-                if (!binding.industryText.text.isNullOrEmpty()) {
+                binding.industryText.setText(state.workArea)
+                if (state.workArea.isNotEmpty()) {
                     binding.workAreaIcon.setImageResource(R.drawable.close_24px)
                     binding.workAreaIcon.setOnClickListener {
                         viewModel.setIndustry("")
                         binding.workAreaIcon.setImageResource(R.drawable.outline_arrow_forward_ios_24)
                     }
-                    allFieldsCheck()
+                } else {
+                    binding.workAreaIcon.setImageResource(R.drawable.outline_arrow_forward_ios_24)
                 }
+
+                allFieldsCheck()
             }
+        }
+
+        binding.applyButton.setOnClickListener {
+            val state = viewModel.uiState.value
+            val filterSettings = FilterSettings(
+                selectedIndustry = state.selectedIndustry,
+                salary = state.salary,
+                onlyWithSalary = state.onlyWithSalary
+            )
+            sendFilterAndNavigateBack(filterSettings)
+            findNavController().popBackStack()
         }
     }
 
