@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentDetailsBinding
 import ru.practicum.android.diploma.domain.network.models.Salary
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
+import ru.practicum.android.diploma.util.AppFormatters.getCurrencyIcon
 
 class VacancyDetailsFragment : Fragment() {
 
@@ -123,19 +124,19 @@ class VacancyDetailsFragment : Fragment() {
                     R.string.salary_range,
                     it.from.toString(),
                     it.to.toString(),
-                    it.currency
+                    getCurrencyIcon(it.currency.toString())
                 )
 
                 it.from != null -> getString(
                     R.string.salary_from,
                     it.from.toString(),
-                    it.currency
+                    getCurrencyIcon(it.currency.toString())
                 )
 
                 it.to != null -> getString(
                     R.string.salary_to,
                     it.to.toString(),
-                    it.currency
+                    getCurrencyIcon(it.currency.toString())
                 )
 
                 else -> getString(R.string.salary_not_specified)
@@ -153,7 +154,7 @@ class VacancyDetailsFragment : Fragment() {
         Glide.with(this)
             .load(logoUrl)
             .placeholder(R.drawable.empty_image)
-            .fitCenter()
+            .centerCrop()
             .transform(RoundedCorners(this.resources.getDimensionPixelSize(R.dimen.indent_12dp)))
             .into(binding.companyLogo)
     }

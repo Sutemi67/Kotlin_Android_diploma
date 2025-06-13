@@ -5,6 +5,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
 import ru.practicum.android.diploma.ui.screens.favourites.FavouritesViewModel
+import ru.practicum.android.diploma.ui.screens.filter.FilterViewModel
 import ru.practicum.android.diploma.ui.screens.main.MainViewModel
 import ru.practicum.android.diploma.ui.screens.vacancy.VacancyDetailsViewModel
 
@@ -15,7 +16,7 @@ val AppModule = module {
             interactor = get()
         )
     }
-
+    viewModel<FilterViewModel> { FilterViewModel(get()) }
     viewModel<VacancyDetailsViewModel> {
         VacancyDetailsViewModel(
             interactor = get(),
@@ -24,11 +25,7 @@ val AppModule = module {
         )
     }
 
-    viewModel<FavouritesViewModel> {
-        FavouritesViewModel(
-            interactor = get()
-        )
-    }
+    viewModel<FavouritesViewModel> { FavouritesViewModel(interactor = get()) }
 
     singleOf(::VacancyDbConvertor)
 }

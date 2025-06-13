@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/LayoutStyle">
@@ -16,9 +15,7 @@
         app:menu="@menu/toolbar_menu"
         app:title="@string/app_name"
         app:titleMargin="@dimen/indent_8dp"
-        app:titleTextAppearance="@style/Medium22">
-
-    </androidx.appcompat.widget.Toolbar>
+        app:titleTextAppearance="@style/Medium22" />
 
     <FrameLayout
         android:id="@+id/frameSearch"
@@ -80,48 +77,48 @@
         android:textAppearance="@style/Regular16"
         android:textColor="@color/white_universal"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/frameSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frameSearch"
         tools:visibility="visible" />
 
-        <ImageView
-            android:id="@+id/imageStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
-            android:src="@drawable/image_man_big_eyes"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frameSearch" />
+    <ImageView
+        android:id="@+id/imageStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:src="@drawable/image_man_big_eyes"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frameSearch" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="@dimen/indent_48dp"
-            android:layout_height="@dimen/indent_48dp"
-            android:layout_gravity="center"
-            android:indeterminateTint="@color/blue"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/indent_48dp"
+        android:layout_height="@dimen/indent_48dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/bottom_progress_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/infoSearch"
-            tools:listitem="@layout/item_vacancy"
-            tools:visibility="invisible">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/bottom_progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/infoSearch"
+        tools:listitem="@layout/item_vacancy"
+        tools:visibility="invisible">
 
-        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/errorMessage"
@@ -130,40 +127,40 @@
         android:visibility="invisible"
         app:constraint_referenced_ids="imageView,errorText" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/indent_328dp"
-            android:layout_height="@dimen/indent_223dp"
-            android:contentDescription="@string/search_screen_image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_kat"
-            app:layout_constraintBottom_toTopOf="@+id/errorText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/infoSearch"
-            app:layout_constraintVertical_chainStyle="packed" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/indent_328dp"
+        android:layout_height="@dimen/indent_223dp"
+        android:contentDescription="@string/search_screen_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_kat"
+        app:layout_constraintBottom_toTopOf="@+id/errorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/infoSearch"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:id="@+id/errorText"
-            style="@style/placeholderMessageStyle"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAppearance="@style/Medium22"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView" />
+    <TextView
+        android:id="@+id/errorText"
+        style="@style/placeholderMessageStyle"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/Medium22"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
-        <ProgressBar
-            android:id="@+id/bottom_progress_bar"
-            android:layout_width="@dimen/indent_48dp"
-            android:layout_height="@dimen/indent_48dp"
-            android:layout_gravity="center"
-            android:indeterminateTint="@color/blue"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+    <ProgressBar
+        android:id="@+id/bottom_progress_bar"
+        android:layout_width="@dimen/indent_48dp"
+        android:layout_height="@dimen/indent_48dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

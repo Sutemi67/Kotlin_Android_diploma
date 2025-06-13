@@ -4,18 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.domain.VacancyInteractorInterface
+import ru.practicum.android.diploma.domain.VacancyInteractor
 
 class FavouritesViewModel(
-    private val interactor: VacancyInteractorInterface
+    private val interactor: VacancyInteractor
 ) : ViewModel() {
 
     private val _favouriteState = MutableLiveData<UiStateFavourites>()
     val favouriteState: LiveData<UiStateFavourites> = _favouriteState
+    private var getFavoriteVacanciesJob: Job? = null
 
     fun getFavoriteVacancy() {
-        viewModelScope.launch {
+        getFavoriteVacanciesJob?.cancel()
+        getFavoriteVacanciesJob = viewModelScope.launch {
             interactor
                 .getAllFavoriteVacancy()
                 .collect {

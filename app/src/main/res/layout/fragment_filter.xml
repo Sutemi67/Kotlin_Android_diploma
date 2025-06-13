@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_black"
+    android:orientation="vertical"
+    tools:context=".ui.screens.filter.FilterFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/arrow_back_24px"
+        app:title="@string/filtering_settings"
+        app:titleMargin="@dimen/indent_8dp"
+        app:titleTextAppearance="@style/Medium22" />
+
+    <LinearLayout
+        android:id="@+id/area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/area"
+            android:textColorHint="@color/gray"
+            app:boxBackgroundMode="none"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextAppearance="@style/hintRegular12">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/areaText"
+                style="@style/Regular16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none"
+                android:longClickable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/indent_16dp"
+            android:src="@drawable/outline_arrow_forward_ios_24"
+            app:tint="@color/black_white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/working_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/work_area"
+            android:textColorHint="@color/gray"
+            app:boxBackgroundMode="none"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextAppearance="@style/hintRegular12">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/industryText"
+                style="@style/Regular16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none"
+                android:longClickable="false"
+                tools:text="СМИ и маркетинг и всевсевсевсе всевсев севсевс евсе" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/workAreaIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/indent_16dp"
+            android:src="@drawable/outline_arrow_forward_ios_24"
+            app:tint="@color/black_white" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/salaryInputLayout"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/indent_16dp"
+        android:layout_marginTop="@dimen/indent_24dp"
+        android:layout_marginEnd="@dimen/indent_16dp"
+        android:layout_marginBottom="@dimen/indent_24dp"
+        android:background="@drawable/edittext"
+        android:hint="@string/expect_salary"
+        app:expandedHintEnabled="false"
+        app:hintTextAppearance="@style/hintMedium16">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/salaryInput"
+            style="@style/Medium19"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/indent_56dp"
+            android:background="@drawable/edittext"
+            android:hint="@string/enter_value"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:paddingStart="@dimen/indent_16dp"
+            android:paddingEnd="@dimen/indent_16dp"
+            android:singleLine="true"
+            android:textColor="@color/black_universal"
+            android:textColorHint="@color/gray_white"
+            android:textCursorDrawable="@drawable/cursor_color" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/salaryCheckBoxLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/Medium19"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/indent_60dp"
+            android:layout_marginStart="@dimen/indent_16dp"
+            android:layout_weight="1"
+            android:text="@string/not_show_without_salary"
+            android:textColor="@color/black_white" />
+
+        <CheckBox
+            android:id="@+id/checkboxFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/indent_16dp"
+            android:buttonTint="@color/blue" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/applyButton"
+        style="@style/Medium16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/indent_60dp"
+        android:layout_marginStart="@dimen/indent_16dp"
+        android:layout_marginEnd="@dimen/indent_16dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/apply"
+        android:textColor="@color/white_universal"
+        android:visibility="invisible"
+        app:cornerRadius="@dimen/indent_12dp" />
+
+    <TextView
+        android:id="@+id/clearButton"
+        style="@style/Medium16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/indent_60dp"
+        android:gravity="center"
+        android:text="@string/clear_filters_button"
+        android:textColor="@color/red"
+        android:visibility="invisible" />
+</LinearLayout>

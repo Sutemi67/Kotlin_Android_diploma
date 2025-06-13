@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white_black"
+    tools:context=".ui.screens.filter.IndustryFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/arrow_back_24px"
+        app:title="@string/enter_industry"
+        app:titleMargin="@dimen/indent_8dp"
+        app:titleTextAppearance="@style/Medium22" />
+
+    <EditText
+        android:id="@+id/industryFilterField"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/indent_56dp"
+        android:layout_marginHorizontal="@dimen/indent_16dp"
+        android:layout_marginVertical="@dimen/indent_8dp"
+        android:autofillHints=""
+        android:background="@drawable/edittext"
+        android:hint="@string/enter_industry"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingStart="@dimen/indent_16dp"
+        android:paddingEnd="@dimen/indent_16dp"
+        android:textAppearance="@style/Regular16" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/industriesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/indent_8dp"
+        tools:listitem="@layout/item_industry" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/applyButton"
+        style="@style/Medium16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/indent_60dp"
+        android:layout_marginStart="@dimen/indent_16dp"
+        android:layout_marginEnd="@dimen/indent_16dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/select"
+        android:textColor="@color/white_universal"
+        android:visibility="gone"
+        app:cornerRadius="@dimen/indent_12dp" />
+
+    <LinearLayout
+        android:id="@+id/errorImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_kat"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_industry_list"
+            android:layout_gravity="center"
+            style="@style/Medium22"/>
+
+    </LinearLayout>
+
+</LinearLayout>

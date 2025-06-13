@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.data.converters.VacancyDbConvertor
 import ru.practicum.android.diploma.data.db.AppDatabase
 import ru.practicum.android.diploma.data.db.entity.VacancyEntity
@@ -10,20 +11,35 @@ import ru.practicum.android.diploma.data.dto.AllVacancyResponse
 import ru.practicum.android.diploma.data.dto.VacancyRequest
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.NetworkClient
-import ru.practicum.android.diploma.domain.VacancyRepositoryInterface
+import ru.practicum.android.diploma.domain.VacancyRepository
+import ru.practicum.android.diploma.domain.network.models.Area
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
 
-class VacancyRepository(
+class VacancyRepositoryImpl(
     private val networkClient: NetworkClient,
     private val db: AppDatabase,
     private val convertor: VacancyDbConvertor,
-) : VacancyRepositoryInterface {
+) : VacancyRepository {
 
-    override fun searchVacancy(query: String, page: Int): Flow<Triple<List<VacancyDetails>?, String?, String?>> = flow {
-        val response = networkClient.doSearchRequest(AllVacancyRequest(query, page))
+    override fun searchVacancy(
+        query: String,
+        page: Int,
+        industry: String?,
+        salary: Int?,
+        onlyWithSalary: Boolean?
+    ): Flow<Triple<List<VacancyDetails>?, String?, String?>> = flow {
+        val response = networkClient.doSearchRequest(
+            AllVacancyRequest(
+                expression = query,
+                page = page,
+                industry = industry,
+                salary = salary,
+                onlyWithSalary = onlyWithSalary
+            )
+        )
         when (response.resultCode) {
-            ERROR_NO_CONNECTION -> emit(Triple(null, "Ошибка", null))
+            ERROR_NO_CONNECTION -> emit(Triple(null, R.string.error.toString(), null))
             SUCCESS -> {
                 with(response as AllVacancyResponse) {
                     val data = items.map {
@@ -47,9 +63,9 @@ class VacancyRepository(
     }
 
     override suspend fun getVacancyDetails(id: String): Flow<Resource<VacancyDetails>> = flow {
-        val response = networkClient.doSearchRequest(VacancyRequest(id))
+        val response = networkClient.getVacancyDetails(VacancyRequest(id))
         when (response.resultCode) {
-            ERROR_NO_CONNECTION -> emit(Resource.Error("Проверьте подключение к интернету"))
+            ERROR_NO_CONNECTION -> emit(Resource.Error(R.string.check_your_internet_connection.toString()))
             SUCCESS -> {
                 with(response as VacancyResponse) {
                     emit(
@@ -73,7 +89,7 @@ class VacancyRepository(
             }
 
             else -> {
-                emit(Resource.Error("Ошибка сервера"))
+                emit(Resource.Error(R.string.error_service.toString()))
             }
         }
     }
@@ -93,6 +109,10 @@ class VacancyRepository(
     override fun getAllFavoriteVacancy(): Flow<List<VacancyDetails>> = flow {
         val vacancyEntity = db.vacancyDao().getAllVacancy()
         emit(convertFromVacancyEntity(vacancyEntity))
+    }
+
+    override suspend fun getAreas(): List<Area>? {
+        return networkClient.getAreas()
     }
 
     private fun convertFromVacancyEntity(vacancy: List<VacancyEntity>): List<VacancyDetails> {

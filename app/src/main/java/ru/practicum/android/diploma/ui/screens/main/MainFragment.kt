@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -21,6 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.domain.OnItemClickListener
+import ru.practicum.android.diploma.domain.network.models.FilterSettings
 import ru.practicum.android.diploma.domain.network.models.VacancyDetails
 import ru.practicum.android.diploma.util.AppFormatters
 import ru.practicum.android.diploma.util.debounce
@@ -44,10 +46,19 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupToolbar()
         setupRecyclerView()
         setupSearchView()
         observeViewModel()
+        observeFilterSettings()
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.setOnMenuItemClickListener {
+            val action = MainFragmentDirections.actionHomeFragmentToFilterFragment()
+            findNavController().navigate(action)
+            true
+        }
     }
 
     override fun onDestroyView() {
@@ -102,7 +113,7 @@ class MainFragment : Fragment() {
         }
 
         binding.searchView.setText(viewModel.lastSearchQuery ?: "")
-        val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
+        updateClearButtonVisibility()
         val debouncedSearch = debounce(
             delayMillis = CLICK_DEBOUNCE_DELAY,
             coroutineScope = viewLifecycleOwner.lifecycleScope,
@@ -122,14 +133,8 @@ class MainFragment : Fragment() {
         binding.searchView.addTextChangedListener(
             onTextChanged = { p0: CharSequence?, _, _, _ ->
                 debouncedSearch(p0?.toString() ?: "")
-                if (binding.searchView.hasFocus() && binding.searchView.text.isEmpty()) {
-                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)
-                    binding.buttonCleanSearch.isVisible = false
-                    binding.imageStart.isVisible = true
-                } else {
-                    binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-                    binding.buttonCleanSearch.isVisible = true
-                }
+                updateClearButtonVisibility()
+
             },
             afterTextChanged = { _: Editable? ->
                 binding.errorMessage.isVisible = false
@@ -141,7 +146,7 @@ class MainFragment : Fragment() {
         viewModel.searchState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
-                    binding.progressBar.isVisible = true
+                    binding.progressBar.isVisible = adapter?.currentList.isNullOrEmpty()
                     binding.imageStart.isVisible = false
                     binding.infoSearch.isVisible = false
                 }
@@ -152,7 +157,10 @@ class MainFragment : Fragment() {
                     binding.imageStart.isVisible = false
                     binding.progressBar.isVisible = false
                     binding.infoSearch.isVisible = true
-                    binding.infoSearch.text = AppFormatters.vacanciesCountTextFormatter(state.allCount)
+                    binding.infoSearch.text = AppFormatters.vacanciesCountTextFormatter(
+                        context = requireContext(),
+                        count = state.allCount.toInt()
+                    )
                     adapter?.submitList(state.vacancies)
                 }
 
@@ -165,6 +173,12 @@ class MainFragment : Fragment() {
                 is UiState.Error -> {
                     showMessage(getString(R.string.no_internet), "1", R.drawable.image_skull)
                     binding.infoSearch.isVisible = false
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.check_your_internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is UiState.Idle -> {
@@ -208,6 +222,34 @@ class MainFragment : Fragment() {
             }
         }
         return true
+    }
+
+    private fun updateClearButtonVisibility() {
+        val searchDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.search_24px)
+        if (binding.searchView.text.isEmpty()) {
+            binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, searchDrawable, null)
+            binding.buttonCleanSearch.isVisible = false
+            binding.imageStart.isVisible = true
+        } else {
+            binding.searchView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+            binding.buttonCleanSearch.isVisible = !binding.searchView.text.isNullOrEmpty()
+        }
+    }
+
+    private fun observeFilterSettings() {
+        findNavController().currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<FilterSettings>("filter_settings")
+            ?.observe(viewLifecycleOwner) { filterSettings ->
+                filterSettings?.let {
+                    viewModel.currentFilterSettings = it
+                    viewModel.searchVacancies(
+                        query = viewModel.lastSearchQuery ?: "",
+                        isNewSearch = true,
+                        filterSettings = filterSettings
+                    )
+                }
+            }
     }
 
     companion object {
