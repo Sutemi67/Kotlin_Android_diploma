@@ -51,7 +51,7 @@ class FilterViewModel(
         }
     }
 
-    fun onSelectIndustry(industry: Industry) {
+    fun onSelectIndustry(industry: Industry?) {
         _uiState.update { it.copy(selectedIndustry = industry) }
     }
 
