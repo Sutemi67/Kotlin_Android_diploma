@@ -46,7 +46,12 @@ class IndustryFragment : Fragment() {
     }
 
     private fun setupFilterField() {
-        binding.clearIndustry.setOnClickListener { binding.industryFilterField.text?.clear() }
+        binding.clearIndustry.setOnClickListener {
+            binding.industryFilterField.text?.clear()
+            adapter.clearSelectedItem()
+            viewModel.onSelectIndustry(null)
+            binding.applyButton.isVisible = false
+        }
         binding.industryFilterField.addTextChangedListener(
             onTextChanged = { text: CharSequence?, _, _, _ ->
                 viewModel.filterList(text)

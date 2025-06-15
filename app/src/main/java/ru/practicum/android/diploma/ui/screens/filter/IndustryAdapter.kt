@@ -12,6 +12,9 @@ class IndustryAdapter(
     private val onIndustrySelected: (Industry) -> Unit
 ) : ListAdapter<Industry, IndustryAdapter.IndustryViewHolder>(IndustryDiffCallback()) {
 
+    private var selectedItemId: String? = null
+    private var selectedItemPosition: Int? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -28,7 +31,33 @@ class IndustryAdapter(
         holder: IndustryViewHolder,
         position: Int
     ) {
-        holder.bind(getItem(position))
+        val item = getItem(position)
+        holder.bind(
+            item,
+            selectedItemId == item.id
+        ) {
+            if (selectedItemPosition != position) {
+                selectItem(position, item.id)
+            }
+        }
+    }
+
+    fun clearSelectedItem() {
+        val oldPosition = selectedItemPosition
+        selectedItemId = null
+        selectedItemPosition = null
+        oldPosition?.let {
+            notifyItemChanged(it)
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun selectItem(position: Int, id: String) {
+        val oldPosition = selectedItemPosition
+        selectedItemPosition = position
+        selectedItemId = id
+        oldPosition?.let { notifyItemChanged(it) }
+        notifyItemChanged(position)
     }
 
     class IndustryViewHolder(
@@ -36,13 +65,27 @@ class IndustryAdapter(
         private val onIndustrySelected: (Industry) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(industry: Industry) {
+        fun bind(
+            industry: Industry,
+            isSelected: Boolean,
+            selectItemCallback: () -> Unit
+        ) {
             binding.apply {
                 industryName.text = industry.name
-                radioButton.setOnClickListener { onIndustrySelected(industry) }
+                radioButton.isChecked = isSelected
+
+                radioButton.setOnClickListener {
+                    if (!isSelected) {
+                        selectItemCallback()
+                        onIndustrySelected(industry)
+                    }
+                }
+
                 root.setOnClickListener {
-                    radioButton.isChecked = !radioButton.isChecked
-                    onIndustrySelected(industry)
+                    if (!isSelected) {
+                        selectItemCallback()
+                        onIndustrySelected(industry)
+                    }
                 }
             }
         }
